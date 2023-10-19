@@ -82,7 +82,7 @@ export default function Home() {
                 <h2>Все скидки Красноармейского района!</h2>
 
 
-                {/* TODO - карта яндекс */}
+                {/* TODO - карта яндекс 888*/}
                 {/* <div className="contacts__map" id="map">
                   <iframe id="iframe-map" src="https://yandex.ru/map-widget/v1/?um=constructor%3A5c026c8b1d39d8438c5a2f7eca3c7779041f6c19eac5844e20ab76f1c95a0cdd&amp;source=constructor" width="100%" height="400" frameBorder="0"></iframe>
                 </div> */}
