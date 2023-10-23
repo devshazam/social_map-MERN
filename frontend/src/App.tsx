@@ -11,6 +11,7 @@ import LayoutAdmin from "./LayoutAdmin"
 import Home from "./pages/main/Home"
 import Empty from "./pages/main/Empty"
 import Test from "./pages/main/Test"
+import CreateDiscount from "./pages/discounts/CreateDiscount";
 import {useDispatch, useSelector} from "react-redux";
 
 
@@ -31,7 +32,8 @@ const App: React.FC = () => {
           <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="/test" element={<Test />} />
-              <Route path="*" element={<Empty />} />
+              <Route path="/*" element={<Empty />} />
+              <Route path="/discounts/create" element={<CreateDiscount />} />
           </Route>
           {/* <Route path="/admin/" element={<LayoutAdmin />}>
               <Route index element={<AllOrdersAdmin />} />

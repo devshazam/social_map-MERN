@@ -16,7 +16,6 @@ const LoginPage = () => {
     //     helpers.setModalLogin(false);
     // };
 
-    // TODO - доделать аинхронную отправку
     const makeLogin = () => {
         if (!email || !password) {
             alert("Оба поля должны быть заполнены!");
