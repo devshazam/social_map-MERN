@@ -1,3 +1,5 @@
+```js
+
 const {Dog} = require("../models/models");
 
 app.get("api/hello", async (req, res) => {
