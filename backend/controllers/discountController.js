@@ -8,11 +8,11 @@ const ApiError = require("../error/ApiError");
 const { fileUploadCustom, fileDelete } = require("../S3/s3Upload");
 
 
-class DeviceController {
+class DiscountController {
 
 
     // POST(_1_):
-    async createDevice(req, res, next) {
+    async createDiscount(req, res, next) {
         let { name, value, description, descriptionText, userId, goodId } =
             req.body;
         goodId = goodId || null;
@@ -91,4 +91,4 @@ class DeviceController {
 
 }
 
-module.exports = new DeviceController();
+module.exports = new DiscountController();

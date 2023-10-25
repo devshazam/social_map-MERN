@@ -1,11 +1,11 @@
 const Router = require('express')
 const router = new Router()
-const deviceRouter = require('./deviceRouter')
+const discountRouter = require('./discountRouter')
 const userRouter = require('./userRouter')
 
 
 router.use('/user', userRouter)
-router.use('/device', deviceRouter)
+router.use('/discount', discountRouter)
 
 
 module.exports = router

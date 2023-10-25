@@ -1,13 +1,13 @@
 const ApiError = require('../error/ApiError');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const { User } = require('../models/models')
+const { User } = require('../models/user')
 const uuid = require('uuid');
 const { appendFiles } = require("../error-log/LogHandling");
 
-const generateJwt = (id, email, role, phone, basket) => {
+const generateJwt = (id, email, role, phone) => {
     return jwt.sign(
-        {id, email, role, phone, basket},
+        {id, email, role, phone},
         process.env.SECRET_KEY,
         {expiresIn: '24h'}
     )
@@ -20,11 +20,15 @@ class UserController {
     async registration(req, res, next) {
             const {name, email, password, phone} = req.body
             const role = 'USER';
+        console.log(email, password)
+        console.log(122414)
             if (!email || !password) {
                 return next(ApiError.internal('Некорректный email или password'))
             }
         // проверка дублирования
-            const candidate = await User.findOne({where: {email}})
+            const candidate = await User.findOne({where: email}).exec();
+console.log(candidate)
+        return;
             if (candidate) {
                 return next(ApiError.internal('Пользователь с таким email уже существует'))
             }
@@ -33,7 +37,7 @@ class UserController {
         // Вставка паролейй в БД
             const user = await User.create({name, phone, email, role, password: hashPassword})
         // Генерирование токена
-            const token = generateJwt(user.id, user.email, user.role, user.phone, user.basket)
+            const token = generateJwt(user.id, user.email, user.role, user.phone)
             return res.json({token})
     }
 
@@ -51,7 +55,7 @@ class UserController {
         if (!comparePassword) {
             return next(ApiError.internal('Указан неверный пароль'))
         }
-        const token = generateJwt(user.id, user.email, user.role, user.phone, user.basket)
+        const token = generateJwt(user.id, user.email, user.role, user.phone)
         return res.json({token})
     }
 
@@ -59,7 +63,7 @@ class UserController {
     // GET(_3_): `api/user/` + `/auth`
     // Проверка авторизации ползователя при обращении к сайту в файле APP.js
     async check(req, res, next) {
-        const token = generateJwt(req.user.id, req.user.email, req.user.role, req.user.phone, req.user.basket)
+        const token = generateJwt(req.user.id, req.user.email, req.user.role, req.user.phone)
         return res.json({token})
     }
 
@@ -71,7 +75,7 @@ class UserController {
         try{await User.update({email, phone}, {where: {id : req.user.id}});
                 try{
                     const user = await User.findOne({where: {id: req.user.id}})
-                const token = generateJwt(user.id, user.email, user.role, user.phone, user.basket)
+                const token = generateJwt(user.id, user.email, user.role, user.phone)
                 return res.json({token})
                 }catch(e){
                     appendFiles(`\n618: ${e.message}`)
