@@ -27,8 +27,7 @@ class UserController {
             }
         // проверка дублирования
             const candidate = await User.findOne({where: email}).exec();
-console.log(candidate)
-        return;
+
             if (candidate) {
                 return next(ApiError.internal('Пользователь с таким email уже существует'))
             }
@@ -45,7 +44,8 @@ console.log(candidate)
     // POST(_2_): `api/user/` + `/login`
     async login(req, res, next) {
         const {email, password} = req.body
-        const user = await User.findOne({where: {email}})
+        console.log(email, password)
+        const user = await User.findOne({ email: email }).exec();
         if (!user) {
             return next(ApiError.internal('Пользователь не найден'))
         }

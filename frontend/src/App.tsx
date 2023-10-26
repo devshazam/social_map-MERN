@@ -13,17 +13,36 @@ import Empty from "./pages/main/Empty"
 import Test from "./pages/main/Test"
 import CreateDiscount from "./pages/discounts/CreateDiscount";
 import {useDispatch, useSelector} from "react-redux";
+import { check } from "../src/api/userAPI";
 
 
 
 
 const App: React.FC = () => {
+    const [loading, setLoading] = useState(true)
+    const dispatch = useDispatch();
 
-    const state = useSelector((state:any) => state.cash.cash);
-    console.log(state)
-  // if (loading) {
-  //   return <div id="mail-spinner"><Spinner animation="border" /></div>;
-  // }
+    useEffect(() => {
+        check().then(data => {
+            // console.log('dev', data)
+            if(data){
+                dispatch({type: "AUTH", payload: true})
+                dispatch({type: "USER", payload: data})
+            }
+        }).catch((error) => {
+            if(error.response.data){
+                alert(`${error.response.data.message} - (${error.response.status})`);
+            }else{
+                console.log('dev', error);
+                alert('Ошибка 103 - Обратитесь к администратору!');
+            }
+        }).finally(() => setLoading(false))
+    }, [])
+
+    if (loading) {
+
+        return <div id="mail-spinner"><Spinner animation="border" /></div>;
+    }
 
   return (
     <div className="App">

@@ -43,8 +43,8 @@ const Header = () => {
                                     title="Все скидки"
                                     id="offcanvasNavbarDropdown-expand-lg"
                                 >
-                                    <NavDropdown.Item href="/produce/vizitki">
-                                        Товары
+                                    <NavDropdown.Item href="/discounts/create">
+                                        Создать скидку
                                     </NavDropdown.Item>
                                     <NavDropdown.Item href="/produce/banner">
                                         Услуги

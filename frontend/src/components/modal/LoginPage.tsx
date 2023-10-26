@@ -4,17 +4,20 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 
-// import { login } from "../../http/userAPI";
+import { login } from "../../api/userAPI";
 import isEmail from "validator/lib/isEmail";
+import {useDispatch, useSelector} from "react-redux";
 
 const LoginPage = () => {
     // const { helpers, user } = useContext(Context);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const state = useSelector((state:any) => state.user);
+    const dispatch = useDispatch();
 
-    // const hideModal = () => {
-    //     helpers.setModalLogin(false);
-    // };
+    const hideModal = () => {
+        dispatch({type: "LOGIN", payload: false})
+    };
 
     const makeLogin = () => {
         if (!email || !password) {
@@ -30,29 +33,29 @@ const LoginPage = () => {
             return;
         }
 
-        // login(email, password)
-        //     .then((data) => {
-        //         alert("Успешный Вход в систему!");
-        //         helpers.setModalLogin(false);
-        //         // user.setIsAuth(true);
-        //         window.location.reload();
-        //     })
-        //     .catch((error) => {
-        //         if (error.response.data) {
-        //             alert(
-        //                 `${error.response.data.message}${error.response.status}`
-        //             );
-        //         } else {
-        //             console.log("dev", error);
-        //             alert("Ошибка 111 - Обратитесь к администратору!");
-        //         }
-        //     });
+        login(email, password)
+            .then((data: any) => {
+                alert("Успешный Вход в систему!");
+                // helpers.setModalLogin(false);
+                // user.setIsAuth(true);
+                window.location.reload();
+            })
+            .catch((error: any) => {
+                if (error.response.data) {
+                    alert(
+                        `${error.response.data.message}${error.response.status}`
+                    );
+                } else {
+                    console.log("dev", error);
+                    alert("Ошибка 111 - Обратитесь к администратору!");
+                }
+            });
     };
 
     return (
         <>
           {/* <Modal   show={helpers.modalLogin} onHide={hideModal}> */}
-          <Modal >
+          <Modal show={state.modalLogin} onHide={hideModal} >
                 <Modal.Header closeButton>
                     <Modal.Title>Форма входа на сайт</Modal.Title>
                 </Modal.Header>

@@ -1,9 +1,9 @@
 import {createStore, combineReducers} from "redux";
-import {cashReducer} from "./cashReducer";
+import {userReducer} from "./userReducer";
 import {customerReducer} from "./customerReducer";
 
 const rootReducer = combineReducers({
-    cash: cashReducer,
+    user: userReducer,
     customer: customerReducer,
 })
 

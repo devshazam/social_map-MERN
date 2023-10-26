@@ -3,12 +3,11 @@ import React, { useContext, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import {useDispatch, useSelector} from "react-redux";
 
-// import isEmail from "validator/lib/isEmail";
+import isEmail from "validator/lib/isEmail";
 
-// import { observer } from "mobx-react-lite";
-
-// import { registration } from "../../http/userAPI";
+import { registration } from "../../api/userAPI";
 
 const RegPage = () => {
     // const { helpers } = useContext(Context);
@@ -17,52 +16,55 @@ const RegPage = () => {
     const [phone, setPhone] = useState("");
     const [name, setName] = useState("");
 
-    // const hideModal = () => {
-    //     helpers.setModalRegistration(false);
-    // };
+    const state = useSelector((state:any) => state.user);
+    const dispatch = useDispatch();
+    const hideModal = () => {
+        dispatch({type: "REG", payload: false})
+    };
 
-    // const makeReg = async () => {
-    //     if (!email || !password || !phone || !name) {
-    //         alert("Оба поля должны быть заполнены!");
-    //         return;
-    //     }
-    //     if (
-    //         email.split("").length > 200 ||
-    //         password.split("").length > 200 ||
-    //         phone.split("").length > 200 ||
-    //         name.split("").length > 200
-    //     ) {
-    //         alert("Одно из значений более 200 символов!");
-    //         return;
-    //     } // длинну строки
-    //     if (!isEmail(email)) {
-    //         alert("Email не корректен!");
-    //         return;
-    //     }
+    const makeReg = async () => {
+        if (!email || !password || !phone || !name) {
+            alert("Оба поля должны быть заполнены!");
+            return;
+        }
+        if (
+            email.split("").length > 200 ||
+            password.split("").length > 200 ||
+            phone.split("").length > 200 ||
+            name.split("").length > 200
+        ) {
+            alert("Одно из значений более 200 символов!");
+            return;
+        } // длинну строки
+        if (!isEmail(email)) {
+            alert("Email не корректен!");
+            return;
+        }
 
-    //     registration(email, password, name, phone)
-    //         .then((data) => {
-    //             alert("Успешная регистрация!");
-    //             helpers.setModalRegistration(false);
-    //             // user.setIsAuth(true);
-    //             window.location.reload();
-    //         })
-    //         .catch((error) => {
-    //             if (error.response.data) {
-    //                 alert(
-    //                     `${error.response.data.message}${error.response.status}`
-    //                 );
-    //             } else {
-    //                 console.log("dev", error);
-    //                 alert("Ошибка 112 - Обратитесь к администратору!");
-    //             }
-    //         });
-    // };
+        registration(email, password, name, phone)
+            .then((data) => {
+                alert("Успешная регистрация!");
+                dispatch({type: "REG", payload: false})
+                dispatch({type: "isAuth", payload: true})
+                // user.setIsAuth(true);
+                window.location.reload();
+            })
+            .catch((error) => {
+                if (error.response.data) {
+                    alert(
+                        `${error.response.data.message}${error.response.status}`
+                    );
+                } else {
+                    console.log("dev", error);
+                    alert("Ошибка 112 - Обратитесь к администратору!");
+                }
+            });
+    };
 
     return (
         <>
-            {/* <Modal show={helpers.modalRegistration} onHide={hideModal}> */}
-            <Modal>
+             <Modal show={state.modalReg} onHide={hideModal}>
+
                 <Modal.Header closeButton>
                     <Modal.Title>Форма регистрации на сайте</Modal.Title>
                 </Modal.Header>
@@ -116,9 +118,9 @@ const RegPage = () => {
                                 value={password}
                             />
                         </Form.Group>
-                        {/* <Button variant="primary" onClick={makeReg}>
+                         <Button variant="primary" onClick={makeReg}>
                             Регистрация
-                        </Button> */}
+                        </Button>
                     </Form>
                 </Modal.Body>
             </Modal>

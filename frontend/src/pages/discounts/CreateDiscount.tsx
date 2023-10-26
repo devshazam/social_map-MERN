@@ -6,6 +6,7 @@ import {TextField} from "@mui/material";
 
 const CreateDiscount = () => {
     const [orderNumber, setOrderNumber] = useState([]);
+    const [addressString, setAddressString] = useState('');
 
     return (
         <>
@@ -54,10 +55,12 @@ const CreateDiscount = () => {
                 <Col xs={12} md={{ span: 6, order: 1 }}>
                     <h3>Адрес: г. Волгоград,</h3>
                     <TextField id="outlined-basic" label="ПРИМЕР: проспект Энгельса" variant="outlined" fullWidth
-                               margin="normal"  sx={{ width: { sm: 'none', md: '75%' }}} helperText="Название улицы и слово улица (проспект) полностью!"
-                    /><TextField id="outlined-basic" label="ПРИМЕР: 29Б" variant="outlined" fullWidth
-                               margin="normal"  sx={{ width: { sm: 'none', md: '75%' }}}
+                               margin="normal" helperText="Название улицы и слово улица (проспект) полностью!"
+                               type="text"
+                               onChange={(e) => setPassword(e.target.value)}
+                               value={password}
                     />
+                    {/*<TextField id="outlined-basic" label="Название акции/скидки:" variant="outlined" fullWidth />*/}
 
 
                 </Col>
@@ -69,3 +72,14 @@ const CreateDiscount = () => {
 };
 
 export default CreateDiscount;
+
+
+// name: {  type: String, required: true },
+// description: {  type: String, required: true },
+// cost: { type: String, required: true },
+// cost_old: { type: String, required: true },
+// discount: { type: Number, required: true },
+// address: { type: String, required: true },
+// coordinates: { type: [String], required: true },
+// image: { type: String, required: true },
+// category: { type: String, required: true },
