@@ -30,12 +30,12 @@ const App: React.FC = () => {
                 dispatch({type: "USER", payload: data})
             }
         }).catch((error) => {
-            if(error.response.data){
-                alert(`${error.response.data.message} - (${error.response.status})`);
-            }else{
-                console.log('dev', error);
-                alert('Ошибка 103 - Обратитесь к администратору!');
-            }
+            // if(error.response.data){
+            //     alert(`${error.response.data.message} - (${error.response.status})`);
+            // }else{
+            //     console.log('dev', error);
+            //     alert('Ошибка 103 - Обратитесь к администратору!');
+            // }
         }).finally(() => setLoading(false))
     }, [])
 

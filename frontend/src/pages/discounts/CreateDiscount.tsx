@@ -1,12 +1,46 @@
-import React, { useState }from 'react';
+import React, { useState, useEffect }from 'react';
 import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps'
 import Col from "react-bootstrap/Col";
 import {Row} from "react-bootstrap";
-import {TextField} from "@mui/material";
+import {Autocomplete, TextField} from "@mui/material";
+import { createDiscount } from "../../api/discountAPI";
 
 const CreateDiscount = () => {
-    const [orderNumber, setOrderNumber] = useState([]);
+    // const [orderNumber, setOrderNumber] = useState([]);
     const [addressString, setAddressString] = useState('');
+    const [searchLocations, setSearchLocations] = useState([1,2]);
+    const [coordinats, setCoordinats] = useState([48.512741, 44.535905]);
+
+
+    useEffect(() => {
+        // if (!email || !password) {
+        //     alert("Оба поля должны быть заполнены!");
+        //     return;
+        // }
+        // if (email.split("").length > 200 || password.split("").length > 200) {
+        //     alert("Одно из значений более 200 символов!");
+        //     return;
+        // } // длинну строки
+        if(!addressString) return
+
+        createDiscount({address: addressString})
+            .then((data: any) => {
+                alert("Успешный Вход в систему!");
+                setSearchLocations(data)
+                setCoordinats(data)
+            })
+            .catch((error: any) => {
+                if (error.response.data) {
+                    alert(
+                        `${error.response.data.message}${error.response.status}`
+                    );
+                } else {
+                    console.log("dev", error);
+                    alert("Ошибка 111 - Обратитесь к администратору!");
+                }
+        });
+    }, [addressString]);
+
 
     return (
         <>
@@ -17,7 +51,7 @@ const CreateDiscount = () => {
                 <section className="map container">
                     <Map
                         state={{
-                            center: [48.512741, 44.535905], // координаты центра карты 48.512741, 44.535905
+                            center: coordinats, // координаты центра карты 48.512741, 44.535905
                             zoom: 15,
                         }}
                         width="100%"
@@ -27,7 +61,7 @@ const CreateDiscount = () => {
                     >
                         {/* Рисуем метку */}
                         <Placemark
-                            geometry={[48.512741, 44.535905]}
+                            geometry={coordinats}
                             options={{
                                 preset: 'islands#oliveStretchyIcon', // список темплейтов на сайте яндекса
                                 iconColor: 'green', // цвет иконки
@@ -57,12 +91,20 @@ const CreateDiscount = () => {
                     <TextField id="outlined-basic" label="ПРИМЕР: проспект Энгельса" variant="outlined" fullWidth
                                margin="normal" helperText="Название улицы и слово улица (проспект) полностью!"
                                type="text"
-                               onChange={(e) => setPassword(e.target.value)}
-                               value={password}
+
                     />
+
+
+                    <Autocomplete
+                        id="free-solo-demo"
+                        freeSolo
+                        options={searchLocations.map((option) => option)}
+                        renderInput={(params) => <TextField {...params}
+                                                            onChange={(e) => setAddressString(e.target.value)}
+                                                            label="freeSolo" />}
+                    />
+
                     {/*<TextField id="outlined-basic" label="Название акции/скидки:" variant="outlined" fullWidth />*/}
-
-
                 </Col>
 
 
