@@ -19,12 +19,13 @@ class DiscountController {
         let addressVar;
         try {
             addressVar = await axios.get(`https://geocode-maps.yandex.ru/1.x/?apikey=${process.env.API_KEY_YANDEX_GEO}&geocode=${address.split(' ').join('+')}&format=json`)
-        console.log(addressVar)
+
+            return res.json(addressVar.data);
         }catch (error) {
             console.log(error)
         }
 
-        return;
+
         // export const createDevice = async (device) => {
         //     const {data} = await $authHost.post('/api/device/create-device', device)
         //     console.log(data)

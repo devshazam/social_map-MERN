@@ -3,31 +3,35 @@ import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps'
 import Col from "react-bootstrap/Col";
 import {Row} from "react-bootstrap";
 import {Autocomplete, TextField} from "@mui/material";
+import Divider from '@mui/material/Divider';
 import { createDiscount } from "../../api/discountAPI";
+import Button from '@mui/material/Button';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import {check} from "../../api/userAPI";
 
 const CreateDiscount = () => {
     // const [orderNumber, setOrderNumber] = useState([]);
-    const [addressString, setAddressString] = useState('');
-    const [searchLocations, setSearchLocations] = useState([1,2]);
-    const [coordinats, setCoordinats] = useState([48.512741, 44.535905]);
+    const [addressString, setAddressString] = useState('Волгоград, ');
+    const [searchLocations, setSearchLocations] = useState(['Волгоград, проспект Героев Сталинграда, 50 А']);
+    const [coordinats, setCoordinats] = useState([48.512971, 44.543728]);
+    const [discountObject, setDiscountObject] = useState({name: '', description: '', cost: '', costOld: '', discount: '', category: ''});
+    const discountObjectArray:any[] = [['name', 'Название'], ['description', 'Описание'], ['cost', 'Цена'], ['costOld', 'Старая цена']];
+    const [imageOne, setImageOne] = useState<File>();
+    const [imageUrl, setImageUrl] = useState<string>('');
 
+    console.log(imageOne)
+    console.log(discountObject)
+    let callcreateDiscount = ():void => {
 
-    useEffect(() => {
-        // if (!email || !password) {
-        //     alert("Оба поля должны быть заполнены!");
-        //     return;
-        // }
-        // if (email.split("").length > 200 || password.split("").length > 200) {
-        //     alert("Одно из значений более 200 символов!");
-        //     return;
-        // } // длинну строки
-        if(!addressString) return
+        if(!addressString) return;
 
         createDiscount({address: addressString})
             .then((data: any) => {
-                alert("Успешный Вход в систему!");
-                setSearchLocations(data)
-                setCoordinats(data)
+                setSearchLocations(data.response.GeoObjectCollection.featureMember.map((elem: any )=> { return elem.GeoObject.metaDataProperty.GeocoderMetaData.text}));
+                setCoordinats(data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(' ').reverse())
             })
             .catch((error: any) => {
                 if (error.response.data) {
@@ -39,7 +43,29 @@ const CreateDiscount = () => {
                     alert("Ошибка 111 - Обратитесь к администратору!");
                 }
         });
-    }, [addressString]);
+    };
+    useEffect(() => {
+        let img: any = document.querySelector("#img");
+        console.log(img.clientHeight)
+    }, [imageUrl])
+
+    let asd = (event:any):void =>{
+        if (event.target.files && event.target.files[0]) {
+            setImageUrl(URL.createObjectURL(event.target.files[0]));
+            setImageOne(event.target.files[0])
+
+        }
+    }
+    // const formData = new FormData();
+    // formData.append("name", name);
+    // formData.append("description", description);
+    // formData.append("group", group);
+    // formData.append("image", image);
+    // formData.append("price", `${Math.ceil(+price)}`);
+    // formData.append("priceImg", `${Math.ceil(+priceImg)}`);
+    // formData.append("userId", `${user.user.id}`);
+    // formData.append("artikul", artikul);
+    // formData.append("barcode", barcode);
 
 
     return (
@@ -52,7 +78,7 @@ const CreateDiscount = () => {
                     <Map
                         state={{
                             center: coordinats, // координаты центра карты 48.512741, 44.535905
-                            zoom: 15,
+                            zoom: 12,
                         }}
                         width="100%"
                         height={300}
@@ -67,7 +93,7 @@ const CreateDiscount = () => {
                                 iconColor: 'green', // цвет иконки
                             }}
                             properties={{
-                                iconContent: 'Кофе', // пару символов помещается
+                                iconContent: {}, // пару символов помещается
                                 hintContent: '<em>кликни меня</em>',
                                 balloonContent: `<div class="my-balloon">
                                       <h4>КофеМаг</h4>
@@ -83,28 +109,101 @@ const CreateDiscount = () => {
                     </Map>
                 </section>
             </YMaps>
+
+                    <img id="img" alt="preview image" src={imageUrl} style={{width: '50%', margin: '30px'}}/>
                 </Col>
 
 
                 <Col xs={12} md={{ span: 6, order: 1 }}>
-                    <h3>Адрес: г. Волгоград,</h3>
-                    <TextField id="outlined-basic" label="ПРИМЕР: проспект Энгельса" variant="outlined" fullWidth
-                               margin="normal" helperText="Название улицы и слово улица (проспект) полностью!"
-                               type="text"
+                        <h6>Шаг №1: Заполните адрес и сопоставьте его с картой</h6>
+                        <Autocomplete sx={{ p: 1}}
+                            id="free-solo-demo"
+                            fullWidth
+                            freeSolo
+                                      value={addressString}
+                            options={searchLocations.map((option) => option)}
+                            renderInput={(params) => <TextField {...params}
 
-                    />
+                                                                onChange={(e) => setAddressString(e.target.value)}
+                                                                label="Введите адрес" />}
+                        />
+                        <Button variant="contained"  sx={{ p: 1}}
+                                onClick={callcreateDiscount}>Найти</Button>
+
+                    <hr/>
+                        <h6>Шаг №2: Заполните хар-ки</h6>
+
+                    {discountObjectArray.map((elem) => (
+                            <TextField sx={{ p: 1, width: { sm: 'none', md: '50%' } }} id="outlined-basic" label={elem[1]} variant="outlined" fullWidth
+                                       onChange={(e) => setDiscountObject({...discountObject, [elem[0]]: e.target.value})}/>
+                        )
+                    )
+                    }
 
 
-                    <Autocomplete
-                        id="free-solo-demo"
-                        freeSolo
-                        options={searchLocations.map((option) => option)}
-                        renderInput={(params) => <TextField {...params}
-                                                            onChange={(e) => setAddressString(e.target.value)}
-                                                            label="freeSolo" />}
-                    />
+                    <FormControl fullWidth sx={{ p: 1, width: { sm: 'none', md: '50%' } }}>
+                        <InputLabel id="demo-simple-select-label">Скидка</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={discountObject.discount}
+                            label="Age"
+                            onChange={(e: any) => setDiscountObject({...discountObject, discount: e.target.value})}
+                        >
+                            <MenuItem value={5}>5% скидка</MenuItem>
+                            <MenuItem value={10}>10% скидка</MenuItem>
+                            <MenuItem value={15}>15% скидка</MenuItem>
+                            <MenuItem value={20}>20% скидка</MenuItem>
+                            <MenuItem value={25}>25% скидка</MenuItem>
+                            <MenuItem value={30}>30% скидка</MenuItem>
+                            <MenuItem value={35}>35% скидка</MenuItem>
+                            <MenuItem value={40}>40% скидка</MenuItem>
+                            <MenuItem value={45}>45% скидка</MenuItem>
+                            <MenuItem value={50}>50% скидка</MenuItem>
+                        </Select>
+                    </FormControl>
 
-                    {/*<TextField id="outlined-basic" label="Название акции/скидки:" variant="outlined" fullWidth />*/}
+                    <FormControl fullWidth sx={{ p: 1, width: { sm: 'none', md: '50%' } }}>
+                        <InputLabel id="demo-simple-select-label">Категория товаров и услуг</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={discountObject.category}
+                            label="Age"
+                            onChange={(e: any) => setDiscountObject({...discountObject, category: e.target.value})}
+                        >
+                            <MenuItem value={5}>Красота и здоровье</MenuItem>
+                            <MenuItem value={10}>Все для животных</MenuItem>
+                            <MenuItem value={15}>Одежда и обувь</MenuItem>
+                            <MenuItem value={20}>Товары для детей</MenuItem>
+                            <MenuItem value={25}>Автомобиль</MenuItem>
+                            <MenuItem value={30}>Электроника</MenuItem>
+                            <MenuItem value={35}>Дом и дача</MenuItem>
+                            <MenuItem value={40}>Услуги</MenuItem>
+                            <MenuItem value={45}>Хобби и отдых</MenuItem>
+                            <MenuItem value={50}>50% скидка</MenuItem>
+                        </Select>
+                    </FormControl>
+
+                    <hr/>
+                    <h6>Шаг №3: Загрузите картинку (600х600 пикселей, до 1 Мбайт)</h6>
+
+                    <Button
+                        variant="contained"
+                        component="label"
+                    >
+                       Загрузить файл
+                        <input accept="image/*"
+                            type="file"
+                            hidden
+                               onChange={asd}
+                        />
+                    </Button>
+
+
+                    {/*<TextField sx={{ p: 1, width: { sm: 'none', md: '50%' } }} id="outlined-basic" label={elem[1]} variant="outlined" fullWidth*/}
+                    {/*           onChange={(e) => setDiscountObject({...discountObject, [elem[0]]: e.target.value})}/>*/}
+
                 </Col>
 
 
