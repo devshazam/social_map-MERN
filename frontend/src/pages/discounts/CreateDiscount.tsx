@@ -3,15 +3,15 @@ import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps'
 import Col from "react-bootstrap/Col";
 import {Row} from "react-bootstrap";
 import {Autocomplete, TextField} from "@mui/material";
-import Divider from '@mui/material/Divider';
-import { createDiscount } from "../../api/discountAPI";
 import Button from '@mui/material/Button';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import {check} from "../../api/userAPI";
+import Resizer from "react-image-file-resizer";
 
+import MapChoice from "../../components/create/MapChoice";
 const CreateDiscount = () => {
     // const [orderNumber, setOrderNumber] = useState([]);
     const [addressString, setAddressString] = useState('Волгоград, ');
@@ -22,125 +22,109 @@ const CreateDiscount = () => {
     const [imageOne, setImageOne] = useState<File>();
     const [imageUrl, setImageUrl] = useState<string>('');
 
-    console.log(imageOne)
-    console.log(discountObject)
-    let callcreateDiscount = ():void => {
+    const [countOne, setCountOne] = useState<number>(0);
+    // console.log(imageOne)
+    // console.log(discountObject)
 
-        if(!addressString) return;
-
-        createDiscount({address: addressString})
-            .then((data: any) => {
-                setSearchLocations(data.response.GeoObjectCollection.featureMember.map((elem: any )=> { return elem.GeoObject.metaDataProperty.GeocoderMetaData.text}));
-                setCoordinats(data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(' ').reverse())
-            })
-            .catch((error: any) => {
-                if (error.response.data) {
-                    alert(
-                        `${error.response.data.message}${error.response.status}`
-                    );
-                } else {
-                    console.log("dev", error);
-                    alert("Ошибка 111 - Обратитесь к администратору!");
-                }
-        });
-    };
     useEffect(() => {
+        // console.log(Boolean(!imageUrl))
+    if(!imageUrl) return
         let img: any = document.querySelector("#img");
-        console.log(img.clientHeight)
-    }, [imageUrl])
 
-    let asd = (event:any):void =>{
+        if(Number(img.clientHeight) < 44 ){
+            setCountOne(countOne+ 1)
+        }else{
+            console.log(img.clientHeight, img.clientWidth, countOne)
+        }
+    }, [countOne, imageUrl])
+
+
+
+    const resizeFile = (file:any) =>
+        new Promise((resolve) => {
+            Resizer.imageFileResizer(
+                file,
+                300,
+                300,
+                "JPEG",
+                100,
+                0,
+                (uri:any) => {
+                    // setImageUrl(uri)
+                    resolve(uri);
+                },
+                "base64"
+            );
+        });
+
+
+    const dataURIToBlob = (dataURI: any) => {
+        const splitDataURI = dataURI.split(",");
+        const byteString =
+            splitDataURI[0].indexOf("base64") >= 0
+                ? atob(splitDataURI[1])
+                : decodeURI(splitDataURI[1]);
+        const mimeString = splitDataURI[0].split(":")[1].split(";")[0];
+        const ia = new Uint8Array(byteString.length);
+        for (let i = 0; i < byteString.length; i++){ ia[i] = byteString.charCodeAt(i)}
+        return new Blob([ia], { type: mimeString });
+    };
+
+
+    let asd = async (event:any):Promise<void> =>{
         if (event.target.files && event.target.files[0]) {
-            setImageUrl(URL.createObjectURL(event.target.files[0]));
-            setImageOne(event.target.files[0])
+            try {
+                const file = event.target.files[0];
+                const image:any = await resizeFile(file);
+                setImageOne(image)
+                // setImageUrl(URL.createObjectURL(image));
+                // console.log(image);
+            } catch (err) {
+                console.log(err);
+            }
 
         }
     }
-    // const formData = new FormData();
-    // formData.append("name", name);
-    // formData.append("description", description);
-    // formData.append("group", group);
-    // formData.append("image", image);
-    // formData.append("price", `${Math.ceil(+price)}`);
-    // formData.append("priceImg", `${Math.ceil(+priceImg)}`);
-    // formData.append("userId", `${user.user.id}`);
-    // formData.append("artikul", artikul);
-    // formData.append("barcode", barcode);
+    useEffect(() => {
+        if(!imageOne) return
+        setImageUrl(URL.createObjectURL(dataURIToBlob(imageOne)));
+        console.log(dataURIToBlob(imageOne))
+    }, [imageOne])
+    let sendToServer = () => {
 
+
+        const formData = new FormData();
+        formData.append("name", discountObject.name);
+        formData.append("description", discountObject.description);
+        formData.append("category", discountObject.category);
+        formData.append("discount", discountObject.discount);
+        formData.append("cost", discountObject.cost);
+        formData.append("costOld", discountObject.costOld);
+        formData.append("image", dataURIToBlob(imageOne));
+        // formData.append("priceImg", `${Math.ceil(+priceImg)}`);
+        // formData.append("userId", `${user.user.id}`);
+
+    }
+
+    //
+
+    // ==========================================================================================================
 
     return (
         <>
-            <Row className="mb-3">
+            <MapChoice />
 
-                <Col xs={12} md={{ span: 6, order: 2 }}>
-            <YMaps>
-                <section className="map container">
-                    <Map
-                        state={{
-                            center: coordinats, // координаты центра карты 48.512741, 44.535905
-                            zoom: 12,
-                        }}
-                        width="100%"
-                        height={300}
-                        // включаем модули, отвечающие за всплывающие окна над геообъектами
-                        modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
-                    >
-                        {/* Рисуем метку */}
-                        <Placemark
-                            geometry={coordinats}
-                            options={{
-                                preset: 'islands#oliveStretchyIcon', // список темплейтов на сайте яндекса
-                                iconColor: 'green', // цвет иконки
-                            }}
-                            properties={{
-                                iconContent: {}, // пару символов помещается
-                                hintContent: '<em>кликни меня</em>',
-                                balloonContent: `<div class="my-balloon">
-                                      <h4>КофеМаг</h4>
-                                      <p>
-                                        Скидка 50% на кофе
-                                      </p>
-                                      <a href="#">Смотреть магазин</a>
-                                    </div>`,
-                            }}
-                        />
-
-
-                    </Map>
-                </section>
-            </YMaps>
-
-                    <img id="img" alt="preview image" src={imageUrl} style={{width: '50%', margin: '30px'}}/>
-                </Col>
-
-
-                <Col xs={12} md={{ span: 6, order: 1 }}>
-                        <h6>Шаг №1: Заполните адрес и сопоставьте его с картой</h6>
-                        <Autocomplete sx={{ p: 1}}
-                            id="free-solo-demo"
-                            fullWidth
-                            freeSolo
-                                      value={addressString}
-                            options={searchLocations.map((option) => option)}
-                            renderInput={(params) => <TextField {...params}
-
-                                                                onChange={(e) => setAddressString(e.target.value)}
-                                                                label="Введите адрес" />}
-                        />
-                        <Button variant="contained"  sx={{ p: 1}}
-                                onClick={callcreateDiscount}>Найти</Button>
-
-                    <hr/>
-                        <h6>Шаг №2: Заполните хар-ки</h6>
-
+            <Row className="mb-3"><h6>Шаг №2: Заполните хар-ки</h6>
+                <hr/>
+                <Col xs={12} md={6}>
                     {discountObjectArray.map((elem) => (
                             <TextField sx={{ p: 1, width: { sm: 'none', md: '50%' } }} id="outlined-basic" label={elem[1]} variant="outlined" fullWidth
                                        onChange={(e) => setDiscountObject({...discountObject, [elem[0]]: e.target.value})}/>
                         )
                     )
                     }
-
-
+                </Col>
+                <Col xs={12} md={6}>
                     <FormControl fullWidth sx={{ p: 1, width: { sm: 'none', md: '50%' } }}>
                         <InputLabel id="demo-simple-select-label">Скидка</InputLabel>
                         <Select
@@ -184,9 +168,22 @@ const CreateDiscount = () => {
                             <MenuItem value={50}>50% скидка</MenuItem>
                         </Select>
                     </FormControl>
+                </Col>
+            </Row>
 
-                    <hr/>
-                    <h6>Шаг №3: Загрузите картинку (600х600 пикселей, до 1 Мбайт)</h6>
+
+
+
+
+
+
+
+
+
+            <Row className="mb-3">
+                <h6>Шаг №3: Загрузите картинку (600х600 пикселей, до 1 Мбайт)</h6><hr/>
+                <Col xs={12} md={6}>
+
 
                     <Button
                         variant="contained"
@@ -199,12 +196,12 @@ const CreateDiscount = () => {
                                onChange={asd}
                         />
                     </Button>
+            </Col>
+            <Col xs={12} md={6}>
+                <h6>Здесь появится ваша картинка после оптимизации:</h6>
+                <img id="img" alt="preview image" src={imageUrl} style={{maxWidth: '300px', maxHeight: '300px', margin: '30px'}}/>
 
-
-                    {/*<TextField sx={{ p: 1, width: { sm: 'none', md: '50%' } }} id="outlined-basic" label={elem[1]} variant="outlined" fullWidth*/}
-                    {/*           onChange={(e) => setDiscountObject({...discountObject, [elem[0]]: e.target.value})}/>*/}
-
-                </Col>
+            </Col>
 
 
             </Row>
