@@ -1,24 +1,23 @@
-import React, { useState, useEffect }from 'react';
+import React, { useState  }from 'react';
 import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps'
 import Col from "react-bootstrap/Col";
 import {Row} from "react-bootstrap";
-import {Autocomplete, TextField} from "@mui/material";
+import { TextField } from "@mui/material";
 import { createDiscount } from "../../api/discountAPI";
 import Button from '@mui/material/Button';
-import Badge from '@mui/material/Badge';
+import {useDispatch} from "react-redux";
+
 const MapChoice = () => {
-    // const [orderNumber, setOrderNumber] = useState([]);
     const [addressString, setAddressString] = useState('Волгоград, ');
-    const [searchLocations, setSearchLocations] = useState(['Волгоград, проспект Героев Сталинграда, 50 А']);
     const [coordinats, setCoordinats] = useState([]);
+    const dispatch = useDispatch();
+    console.log(addressString)
 
-
-
-    let callcreateDiscount = ():void => {
+    let callСreateDiscount = ():void => {
         if(!addressString) return;
         createDiscount({address: addressString})
             .then((data: any) => {
-                setSearchLocations(data.response.GeoObjectCollection.featureMember.map((elem: any )=> { return elem.GeoObject.metaDataProperty.GeocoderMetaData.text}));
+                dispatch({type: "MAP", payload: {address: addressString, coordinats: data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(' ').reverse()}})
                 setCoordinats(data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(' ').reverse())
             })
             .catch((error: any) => {
@@ -91,19 +90,14 @@ const MapChoice = () => {
 
 
                 <Col xs={12} md={{ span: 6, order: 1 }}>
-                        <Autocomplete
-                            id="free-solo-demo"
-                            // fullWidth
-                            freeSolo
-                            sx={{ my: 1}}
-                                      value={addressString}
-                            options={searchLocations.map((option) => option)}
-                            renderInput={(params) => <TextField {...params}
-                                                                onChange={(e) => setAddressString(e.target.value)}
-                                                                label="Введите адрес" />}
-                        />
-                        <Button variant="contained"    sx={{  width: '100%'}}
-                                onClick={callcreateDiscount}>Найти на карте</Button>
+                        <TextField id="outlined-basic"  variant="outlined" fullWidth
+                                   sx={{ mb: 1 }}
+                                   value={addressString}
+                                   onChange={(e) => setAddressString(e.target.value)}
+                                   label="Введите адрес (начните со слова Волгоград)" />
+
+                        <Button variant="contained"
+                                onClick={callСreateDiscount}>Найти на карте</Button>
 
 
                 </Col>
