@@ -7,7 +7,7 @@ import { createDiscount } from "../../api/discountAPI";
 import Button from '@mui/material/Button';
 import {useDispatch} from "react-redux";
 
-const MapChoice = () => {
+const MapChoiceComp = () => {
     const [addressString, setAddressString] = useState('Волгоград, ');
     const [coordinats, setCoordinats] = useState([]);
     const dispatch = useDispatch();
@@ -48,7 +48,7 @@ const MapChoice = () => {
                                 <Map
                                     state={{
                                         center: coordinats, // координаты центра карты 48.512741, 44.535905
-                                        zoom: 12,
+                                        zoom: 13,
                                     }}
                                     width="100%"
                                     height={300}
@@ -62,7 +62,7 @@ const MapChoice = () => {
                                             iconColor: 'green', // цвет иконки
                                         }}
                                         properties={{
-                                            iconContent: "Вы сдесь!", // пару символов помещается
+                                            iconContent: "Вы здесь!", // пару символов помещается
                                             hintContent: '<em>кликни меня</em>',
                                             balloonContent: `<div class="my-balloon">
                                                   <h4>КофеМаг</h4>
@@ -77,8 +77,8 @@ const MapChoice = () => {
                             :
                                 <Map
                                     state={{
-                                    center: [48.512971, 44.543728],
-                                    zoom: 12,
+                                    center: [48.707067, 44.516975],
+                                    zoom: 10,
                                 }}
                                      width="100%"
                                      height={300} >
@@ -92,6 +92,8 @@ const MapChoice = () => {
                 <Col xs={12} md={{ span: 6, order: 1 }}>
                         <TextField id="outlined-basic"  variant="outlined" fullWidth
                                    sx={{ mb: 1 }}
+
+                                    error={coordinats.length !== 0}
                                    value={addressString}
                                    onChange={(e) => setAddressString(e.target.value)}
                                    label="Введите адрес (начните со слова Волгоград)" />
@@ -106,5 +108,5 @@ const MapChoice = () => {
     );
 };
 
-export default MapChoice;
+export default MapChoiceComp;
 

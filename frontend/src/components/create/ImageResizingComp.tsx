@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Resizer from "react-image-file-resizer";
 import {useDispatch} from "react-redux";
 
-const ImageResizing = () => {
+const ImageResizingComp = () => {
     const [imageUrl, setImageUrl] = useState<string>('');
     const [countOne, setCountOne] = useState<number>(0);
     const dispatch = useDispatch();
@@ -106,5 +106,5 @@ const ImageResizing = () => {
     );
 };
 
-export default ImageResizing;
+export default ImageResizingComp;
 

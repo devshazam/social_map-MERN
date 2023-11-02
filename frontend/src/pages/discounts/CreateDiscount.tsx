@@ -8,19 +8,26 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import {useDispatch, useSelector} from "react-redux";
+import { TextareaAutosize as BaseTextareaAutosize } from '@mui/base/TextareaAutosize';
 
+import { Dayjs } from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-
-
-import MapChoice from "../../components/create/MapChoice";
-import ImageResizing from "../../components/create/ImageResizing";
+import MapChoiceComp from "../../components/create/MapChoiceComp";
+import ImageResizingComp from "../../components/create/ImageResizingComp";
+import CommonFieldsComp from "../../components/create/CommonFieldsComp";
+import DatePickerComp from "../../components/create/DatePickerComp";
 const CreateDiscount = () => {
     const [discountObject, setDiscountObject] = useState({name: '', description: '', cost: '', costOld: '', discount: '', category: ''});
-
+    const [value, setValue] = React.useState<Dayjs | null>(null);
     // получить
     const stateImg = useSelector((state:any) => state.app.img);
     const stateMap = useSelector((state:any) => state.app.map);
     console.log(stateImg, stateMap, 123)
+    console.log(value)
     // console.log(imageOne)
     // console.log(discountObject)
 
@@ -49,13 +56,15 @@ const CreateDiscount = () => {
 
     return (
         <>
-            <MapChoice />
+            <MapChoiceComp />
+            <CommonFieldsComp />
 
-            <Row className="mb-3"><h6>Шаг №2: Заполните общие хар-ки</h6>
-                <hr/>
+            <Row className="mb-3">
+                <h6>Шаг №2: Заполните общие хар-ки</h6>
+                <hr style={{marginBottom: '4px'}} />
                 <Col xs={12} md={6}>
-                            <TextField sx={{ p: 1, width: { sm: 'none', md: '50%' } }} id="outlined-basic" label="Название" variant="outlined" fullWidth
-                                       onChange={(e) => setDiscountObject({...discountObject, name: e.target.value})}/>
+
+                    <DatePickerComp />
 
                 </Col>
                 <Col xs={12} md={6}>
@@ -99,13 +108,13 @@ const CreateDiscount = () => {
                             <MenuItem value={35}>Дом и дача</MenuItem>
                             <MenuItem value={40}>Услуги</MenuItem>
                             <MenuItem value={45}>Хобби и отдых</MenuItem>
-                            <MenuItem value={50}>50% скидка</MenuItem>
+                            <MenuItem value={50}>Продукты</MenuItem>
                         </Select>
                     </FormControl>
                 </Col>
             </Row>
 
-            <ImageResizing />
+            <ImageResizingComp />
         </>
     );
 };
