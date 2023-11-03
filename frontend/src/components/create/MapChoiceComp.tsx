@@ -1,4 +1,4 @@
-import React, { useState  }from 'react';
+import React, {useEffect, useState} from 'react';
 import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps'
 import Col from "react-bootstrap/Col";
 import {Row} from "react-bootstrap";
@@ -7,12 +7,17 @@ import { createDiscount } from "../../api/discountAPI";
 import Button from '@mui/material/Button';
 import {useDispatch} from "react-redux";
 
-const MapChoiceComp = () => {
+const MapChoiceComp = (props:any) => {
     const [addressString, setAddressString] = useState('Волгоград, ');
     const [coordinats, setCoordinats] = useState([]);
+
     const dispatch = useDispatch();
     console.log(addressString)
 
+
+    useEffect(() => {
+
+    }, [coordinats])
     let callСreateDiscount = ():void => {
         if(!addressString) return;
         createDiscount({address: addressString})
@@ -36,9 +41,7 @@ const MapChoiceComp = () => {
 
     return (
         <>
-            <Row className="mb-3">
-                <h6>Шаг №1: Заполните полный адрес, включая номер и литеру дома.</h6>
-                <hr/>
+
                 <Col xs={12} md={{ span: 6, order: 2 }}>
 
                         <YMaps>
@@ -93,7 +96,7 @@ const MapChoiceComp = () => {
                         <TextField id="outlined-basic"  variant="outlined" fullWidth
                                    sx={{ mb: 1 }}
 
-                                    error={coordinats.length !== 0}
+                                    error={Boolean(+coordinats.length == 0 && props.flag == 0)}
                                    value={addressString}
                                    onChange={(e) => setAddressString(e.target.value)}
                                    label="Введите адрес (начните со слова Волгоград)" />
@@ -103,7 +106,7 @@ const MapChoiceComp = () => {
 
 
                 </Col>
-            </Row>
+
         </>
     );
 };

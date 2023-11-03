@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Resizer from "react-image-file-resizer";
 import {useDispatch} from "react-redux";
 
-const ImageResizingComp = () => {
+const ImageResizingComp = (props:any) => {
     const [imageUrl, setImageUrl] = useState<string>('');
     const [countOne, setCountOne] = useState<number>(0);
     const dispatch = useDispatch();
@@ -77,8 +77,7 @@ const ImageResizingComp = () => {
     return (
         <>
 
-            <Row className="mb-3">
-                <h6>Шаг №4: Загрузите картинку квадратной формы до 1 Мбайта в форматах: jpg, jpeg, png </h6><hr/>
+
                 <Col xs={12} md={6}>
                     <Button
                         variant="contained"
@@ -95,13 +94,16 @@ const ImageResizingComp = () => {
             </Col>
             <Col xs={12} md={6}>
                 <h6>Здесь появится ваша картинка после оптимизации:</h6>
-                <img id="img" alt="Место для картинки" src={imageUrl} style={{maxWidth: '300px', maxHeight: '300px', margin: '30px', width: '300px', height: '300px'}}/>
 
 
+                    <img id="img" alt="Место для картинки" src={imageUrl} style={{maxWidth: '300px', maxHeight: '300px', margin: '30px', width: '300px', height: '300px'}}/>
+                {Boolean(!imageUrl && props.flag == 0) &&
+                    <p style={{color: 'red', fontSize: '15px', border: '1px solid red'}}>Картинка не загружена!</p>
+                }
             </Col>
 
 
-            </Row>
+
         </>
     );
 };

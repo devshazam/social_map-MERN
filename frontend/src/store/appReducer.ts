@@ -2,10 +2,15 @@ interface actionState {
     type: string;
     payload: number
 }
-
-const defaultState = {
-    img: {},
-    map: {}
+interface def {
+    img: any,
+    map: any,
+    common: any
+}
+const defaultState:def = {
+    img: null,
+    map: null,
+    common: {}
 }
 
 export const appReducer = (state = defaultState, action: actionState) =>{
@@ -14,6 +19,8 @@ export const appReducer = (state = defaultState, action: actionState) =>{
             return {...state, img: action.payload}
         case "MAP":
             return {...state, map: action.payload}
+        case "COMMON":
+            return {...state, common: action.payload}
         default:
             return state
 

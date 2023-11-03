@@ -12,17 +12,15 @@ import {useDispatch, useSelector} from "react-redux";
 import { TextareaAutosize as BaseTextareaAutosize } from '@mui/base/TextareaAutosize';
 import { styled } from '@mui/system';
 
-const CommonFieldsComp = () => {
+const CommonFieldsComp = (props:any) => {
     const [discountObject, setDiscountObject] = useState({name: '', description: '', district: ''});
-    const [test, setTest] = useState('')
+    const dispatch = useDispatch();
 
-    const handleMessageChange = (event: any) => {
-        // 👇️ access textarea value
-        setTest(event.target.value);
-        console.log(event.target.value);
-    };
-    console.log(test)
-    console.log(discountObject)
+    useEffect(() => {
+
+        dispatch({type: "COMMON", payload: discountObject})
+    }, [discountObject])
+
 
 
     // ==========================================================================================================
@@ -31,20 +29,21 @@ const CommonFieldsComp = () => {
         <>
 
 
-            <Row className="mb-3"><h6>Шаг №2: Заполните общие хар-ки</h6>
-                <hr/>
+
                 <Col xs={12} md={6}>
                             <TextField  id="outlined-basic" label="Ваше название:" variant="outlined" fullWidth
                                         sx={{mb: 1}}
+                                        error={Boolean(!discountObject.name && props.flag == 0)}
                                        onChange={(e) => setDiscountObject({...discountObject, name: e.target.value})}/>
 
                     <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Ваш район:</InputLabel>
+                    <InputLabel id="demo-simple-select-label" error={Boolean(!discountObject.district && props.flag == 0)}>Ваш район:</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={discountObject.district}
                         label="Age"
+                        error={Boolean(!discountObject.district && props.flag == 0)}
                         onChange={(e: any) => setDiscountObject({...discountObject, district: e.target.value})} >
                         <MenuItem value={1}>Ворошиловский</MenuItem>
                         <MenuItem value={2}>Дзержинский</MenuItem>
@@ -63,11 +62,12 @@ const CommonFieldsComp = () => {
                                 multiline
                                 rows={4}
                                 sx={{mb: 1}}
-                                onChange={(e) => setDiscountObject({...discountObject, name: e.target.value})}/>
+                                error={Boolean(!Boolean(discountObject.description) && props.flag == 0)}
+                                onChange={(e) => setDiscountObject({...discountObject, description: e.target.value})}/>
 
 
                 </Col>
-            </Row>
+
 
 
         </>

@@ -1,34 +1,34 @@
 import React, { useState, useEffect }from 'react';
 import Col from "react-bootstrap/Col";
 import {Row} from "react-bootstrap";
-import { TextField} from "@mui/material";
-
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import {useDispatch, useSelector} from "react-redux";
-import { TextareaAutosize as BaseTextareaAutosize } from '@mui/base/TextareaAutosize';
-
-import { Dayjs } from 'dayjs';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-
 import MapChoiceComp from "../../components/create/MapChoiceComp";
 import ImageResizingComp from "../../components/create/ImageResizingComp";
 import CommonFieldsComp from "../../components/create/CommonFieldsComp";
 import DatePickerComp from "../../components/create/DatePickerComp";
+import Button from "@mui/material/Button";
+import {TextField} from "@mui/material";
+
+
 const CreateDiscount = () => {
-    const [discountObject, setDiscountObject] = useState({name: '', description: '', cost: '', costOld: '', discount: '', category: ''});
-    const [value, setValue] = React.useState<Dayjs | null>(null);
+    const [discountObject, setDiscountObject] = useState({cost: '',  discount: '', category: ''});
+
+    const [flag, setFalg] = useState(1)
+    const flagYu = 0;
     // получить
     const stateImg = useSelector((state:any) => state.app.img);
     const stateMap = useSelector((state:any) => state.app.map);
+    const stateCommon = useSelector((state:any) => state.app.common);
     console.log(stateImg, stateMap, 123)
-    console.log(value)
     // console.log(imageOne)
+
+    useEffect(() => {
+        let vv = {...discountObject, ...stateCommon};
+    }, [stateImg, stateMap, stateCommon, discountObject])
     // console.log(discountObject)
 
     // useEffect(() => {
@@ -36,14 +36,21 @@ const CreateDiscount = () => {
     // }, [state])
 
     let sendToServer = () => {
-
+        let mOne = {...discountObject, ...stateCommon};
+        if(!stateImg || !stateMap || !Object.values(mOne).every(age => Boolean(age))) {
+            setFalg(0)
+            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+            return;
+        }
+alert(111)
+        return;
         const formData = new FormData();
-        formData.append("name", discountObject.name);
-        formData.append("description", discountObject.description);
-        formData.append("category", discountObject.category);
-        formData.append("discount", discountObject.discount);
-        formData.append("cost", discountObject.cost);
-        formData.append("costOld", discountObject.costOld);
+        // formData.append("name", discountObject.name);
+        // formData.append("description", discountObject.description);
+        // formData.append("category", discountObject.category);
+        // formData.append("discount", discountObject.discount);
+        // formData.append("cost", discountObject.cost);
+        // formData.append("costOld", discountObject.costOld);
         // formData.append("image", dataURIToBlob(imageOne));
         // formData.append("priceImg", `${Math.ceil(+priceImg)}`);
         // formData.append("userId", `${user.user.id}`);
@@ -56,24 +63,31 @@ const CreateDiscount = () => {
 
     return (
         <>
-            <MapChoiceComp />
-            <CommonFieldsComp />
-
-            <Row className="mb-3">
-                <h6>Шаг №2: Заполните общие хар-ки</h6>
-                <hr style={{marginBottom: '4px'}} />
+            <Row className="mb-5">
+                <h5>Шаг №1: Заполните полный адрес, включая номер и литеру дома.</h5>
+                <hr/>
+                <MapChoiceComp flag={flag}/>
+            </Row>
+            <Row className="mb-2">
+                <h5>Шаг №2: Заполните общие хар-ки</h5>
+                <hr/>
+                <CommonFieldsComp  flag={flag}/>
+            </Row>
+            <Row className="mb-5">
+                {/*<h6>Шаг №2: Заполните общие хар-ки</h6>*/}
+                {/*<hr style={{marginBottom: '4px'}} />*/}
                 <Col xs={12} md={6}>
-
-                    <DatePickerComp />
-
-                </Col>
-                <Col xs={12} md={6}>
-                    <FormControl fullWidth sx={{ p: 1, width: { sm: 'none', md: '50%' } }}>
-                        <InputLabel id="demo-simple-select-label">Скидка</InputLabel>
+                    <TextField  id="outlined-basic" label="Цена со скидкой:" variant="outlined" fullWidth
+                                sx={{mb: 1, pr:1, width: { sm: 'none', md: '50%'}}}
+                                error={Boolean(!discountObject.cost && flag == 0)}
+                                onChange={(e) => setDiscountObject({...discountObject, cost: e.target.value})}/>
+                    <FormControl fullWidth sx={{mb: 1, pl:1, width: { sm: 'none', md: '50%'}}}>
+                        <InputLabel id="demo-simple-select-label" error={Boolean(!discountObject.discount && flag == 0)}>Размер скидки:</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             value={discountObject.discount}
+                            error={Boolean(!discountObject.discount && flag == 0)}
                             label="Age"
                             onChange={(e: any) => setDiscountObject({...discountObject, discount: e.target.value})}
                         >
@@ -89,13 +103,17 @@ const CreateDiscount = () => {
                             <MenuItem value={50}>50% скидка</MenuItem>
                         </Select>
                     </FormControl>
+                </Col>
+                <Col xs={12} md={6}>
 
-                    <FormControl fullWidth sx={{ p: 1, width: { sm: 'none', md: '50%' } }}>
-                        <InputLabel id="demo-simple-select-label">Категория товаров и услуг</InputLabel>
+
+                    <FormControl fullWidth >
+                        <InputLabel id="demo-simple-select-label" error={Boolean(!discountObject.category && flag == 0)}>Категория скидки:</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             value={discountObject.category}
+                            error={Boolean(!discountObject.category && flag == 0)}
                             label="Age"
                             onChange={(e: any) => setDiscountObject({...discountObject, category: e.target.value})}
                         >
@@ -113,8 +131,23 @@ const CreateDiscount = () => {
                     </FormControl>
                 </Col>
             </Row>
+            <Row className="mb-5">
+                <h5>Шаг №3: Загрузите картинку квадратной формы в формате: jpg, jpeg, png </h5><hr/>
+                <ImageResizingComp flag={flag}/>
+            </Row>
+            <Row className="mb-">
+                <h5>Шаг №4: Публикация объявление о скидки</h5>
+                <hr style={{marginBottom: '10px'}} />
 
-            <ImageResizingComp />
+                <h6>Нажимая на кнопку "Опубликовать" вы принимаете условия предоставления услуги:</h6>
+                <ol>
+                    <li>Срок проведения акции ограничен исключительно фактом публикации акции на сайте, т.е. предоставленная вами акция действительна в течении всего срока публикации на сайте, для прекращения действия акции вам нужно снять объявление об акции с публикации на сайте в личном кабинете!</li>
+                    <li>Общие условия предоставления услуги изложенные в договре-оферете по ссылке</li>
+                </ol>
+                <Button variant="contained" fullWidth
+                        onClick={sendToServer}>Опубликовать объявление</Button>
+
+            </Row>
         </>
     );
 };
