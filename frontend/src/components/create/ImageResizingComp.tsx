@@ -33,18 +33,20 @@ const ImageResizingComp = (props:any) => {
                 80,
                 0,
                 (uri: any) => {
+                    setImageUrl(uri);
                     resolve(uri)
                 },
-                "blob"
+                "file"
             );
         });
     }
     async function asd(event:any):Promise<void> {
         if (event.target.files && event.target.files[0]) {
+            console.log(event.target.files[0], 111)
             try {
                 const file = event.target.files[0];
                 const image:any = await resizeFile(file);
-                console.log(typeof image)
+                console.log(image, 222)
                 dispatch({type: "IMG", payload: image})
                 setImageUrl(URL.createObjectURL(image));
             } catch (err) {

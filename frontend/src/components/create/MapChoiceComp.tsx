@@ -3,7 +3,7 @@ import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps'
 import Col from "react-bootstrap/Col";
 import {Row} from "react-bootstrap";
 import { TextField } from "@mui/material";
-import { createDiscount } from "../../api/discountAPI";
+import { fetchYandexAddress } from "../../api/discountAPI";
 import Button from '@mui/material/Button';
 import {useDispatch} from "react-redux";
 
@@ -12,17 +12,17 @@ const MapChoiceComp = (props:any) => {
     const [coordinats, setCoordinats] = useState([]);
 
     const dispatch = useDispatch();
-    console.log(addressString)
+
 
 
     useEffect(() => {
 
     }, [coordinats])
-    let callСreateDiscount = ():void => {
+    let callFetchYandexAddress = ():void => {
         if(!addressString) return;
-        createDiscount({address: addressString})
+        fetchYandexAddress({address: addressString})
             .then((data: any) => {
-                dispatch({type: "MAP", payload: {address: addressString, coordinats: data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(' ').reverse()}})
+                dispatch({type: "MAP", payload: {address: addressString, coordinates: data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(' ').reverse()}})
                 setCoordinats(data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(' ').reverse())
             })
             .catch((error: any) => {
@@ -102,7 +102,7 @@ const MapChoiceComp = (props:any) => {
                                    label="Введите адрес (начните со слова Волгоград)" />
 
                         <Button variant="contained"
-                                onClick={callСreateDiscount}>Найти на карте</Button>
+                                onClick={callFetchYandexAddress}>Найти на карте</Button>
 
 
                 </Col>

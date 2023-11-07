@@ -15,12 +15,30 @@ const userSchema = new Schema({
         }},
     birthday: { type: Date },
     email_status: { type: Boolean, required: true, default: false },
-    reviews: { type: Schema.Types.ObjectId, ref: "Review" },
-    ads: { type: Schema.Types.ObjectId, ref: "Ad" },
-    discounts: { type: Schema.Types.ObjectId, ref: "Discount" }
 }, { timestamps: true });
 
 
-const User = mongoose.model("User", userSchema);
 
-module.exports = { User };
+const discountSchema = new Schema({
+    name: {  type: String, required: true },
+    description: {  type: String, required: true },
+    cost: { type: String, required: true },
+    district: { type: String, required: true },
+    discount: { type: Number, required: true },
+    address: { type: String, required: true },
+    coordinates: { type: [String], required: true },
+    image: { type: String, required: true },
+    category: { type: String, required: true },
+    userId: { type: Schema.Types.ObjectId, ref: "User" }
+
+
+}, { timestamps: true });
+
+
+
+const User = mongoose.model("User", userSchema);
+const Discount = mongoose.model("Discount", discountSchema);
+
+
+
+module.exports = { User, Discount };

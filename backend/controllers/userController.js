@@ -1,7 +1,7 @@
 const ApiError = require('../error/ApiError');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const { User } = require('../models/user')
+const { User } = require('../models/models')
 const uuid = require('uuid');
 const { appendFiles } = require("../error-log/LogHandling");
 
@@ -69,31 +69,31 @@ class UserController {
 
 
     // POST(_4_): `api/user/` + `/change`
-    async change(req, res, next) {
-        const {email, phone} = req.body
-
-        try{await User.update({email, phone}, {where: {id : req.user.id}});
-                try{
-                    const user = await User.findOne({where: {id: req.user.id}})
-                const token = generateJwt(user.id, user.email, user.role, user.phone)
-                return res.json({token})
-                }catch(e){
-                    appendFiles(`\n618: ${e.message}`)
-                    return next(
-                        ApiError.badRequest(
-                            `618: ${e.message}`
-                        )
-                    );
-                }
-        }catch(e){
-            appendFiles(`\n619: ${e.message}`)
-            return next(
-                ApiError.badRequest(
-                    `619: ${e.message}`
-                )
-            );
-        }
-    }
+    // async change(req, res, next) {
+    //     const {email, phone} = req.body
+    //
+    //     try{await User.update({email, phone}, {where: {id : req.user.id}});
+    //             try{
+    //                 const user = await User.findOne({where: {id: req.user.id}})
+    //             const token = generateJwt(user.id, user.email, user.role, user.phone)
+    //             return res.json({token})
+    //             }catch(e){
+    //                 appendFiles(`\n618: ${e.message}`)
+    //                 return next(
+    //                     ApiError.badRequest(
+    //                         `618: ${e.message}`
+    //                     )
+    //                 );
+    //             }
+    //     }catch(e){
+    //         appendFiles(`\n619: ${e.message}`)
+    //         return next(
+    //             ApiError.badRequest(
+    //                 `619: ${e.message}`
+    //             )
+    //         );
+    //     }
+    // }
     
 
 

@@ -12,7 +12,7 @@ import CommonFieldsComp from "../../components/create/CommonFieldsComp";
 import DatePickerComp from "../../components/create/DatePickerComp";
 import Button from "@mui/material/Button";
 import {TextField} from "@mui/material";
-
+import { createDiscount } from "../../api/discountAPI";
 
 const CreateDiscount = () => {
     const [discountObject, setDiscountObject] = useState({cost: '',  discount: '', category: ''});
@@ -23,6 +23,7 @@ const CreateDiscount = () => {
     const stateImg = useSelector((state:any) => state.app.img);
     const stateMap = useSelector((state:any) => state.app.map);
     const stateCommon = useSelector((state:any) => state.app.common);
+    const stateUser = useSelector((state:any) => state.user.user);
     console.log(stateImg, stateMap, 123)
     // console.log(imageOne)
 
@@ -42,19 +43,22 @@ const CreateDiscount = () => {
             window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
             return;
         }
-alert(111)
-        return;
-        const formData = new FormData();
-        // formData.append("name", discountObject.name);
-        // formData.append("description", discountObject.description);
-        // formData.append("category", discountObject.category);
-        // formData.append("discount", discountObject.discount);
-        // formData.append("cost", discountObject.cost);
-        // formData.append("costOld", discountObject.costOld);
-        // formData.append("image", dataURIToBlob(imageOne));
-        // formData.append("priceImg", `${Math.ceil(+priceImg)}`);
-        // formData.append("userId", `${user.user.id}`);
 
+        const formData = new FormData();
+        formData.append("name", mOne.name);
+        formData.append("description", mOne.description);
+        formData.append("district", mOne.district);
+        formData.append("category", mOne.category);
+        formData.append("discount", mOne.discount);
+        formData.append("cost", mOne.cost);
+        formData.append("img", stateImg);
+        formData.append("coordinates", stateMap.coordinates); // TODO coord... to string!!!!
+        formData.append("address", stateMap.address);
+        formData.append("userId", stateUser.id);
+
+        createDiscount(formData).then((data) => {
+            console.log(data)
+        } )
     }
 
     //
