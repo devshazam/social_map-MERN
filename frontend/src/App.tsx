@@ -14,6 +14,8 @@ import Test from "./pages/main/Test"
 import CreateDiscount from "./pages/discounts/CreateDiscount";
 import {useDispatch, useSelector} from "react-redux";
 import { check } from "../src/api/userAPI";
+import AllDiscounts from "./pages/discounts/AllDiscounts";
+import AllDiscountsMap from "./pages/discounts/AllDiscountsMap";
 
 
 
@@ -52,7 +54,9 @@ const App: React.FC = () => {
               <Route index element={<Home />} />
               <Route path="/test" element={<Test />} />
               <Route path="/*" element={<Empty />} />
-              <Route path="/discounts/create" element={<CreateDiscount />} />
+              <Route path="/discounts/create-discount" element={<CreateDiscount />} />
+              <Route path="/discounts/" element={<AllDiscounts />} />
+              <Route path="/discounts-map/" element={<AllDiscountsMap />} />
           </Route>
           {/* <Route path="/admin/" element={<LayoutAdmin />}>
               <Route index element={<AllOrdersAdmin />} />
