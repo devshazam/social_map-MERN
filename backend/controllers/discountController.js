@@ -29,8 +29,8 @@ class DiscountController {
 
 
     async createDiscount(req, res, next) {
-        const { address, name, description, district, category, discount, cost, coordinates, userId } = req.body;
-        console.log(typeof coordinates, coordinates)
+        const { address, name, description, district, category, discount, cost, latitude, longitude, userId } = req.body;
+
         try {
             let fileLocation = null;
             if (req.files) {
@@ -39,7 +39,8 @@ class DiscountController {
                     "davse/discounts/"
                 );
             }
-            const midDiscount = await Discount.create({ address, name, description, district, category, discount, cost, image: fileLocation, coordinates, userId });
+
+            const midDiscount = await Discount.create({ address, name, description, district, category, discount, cost, image: fileLocation, latitude, longitude, userId });
 
             return res.json(midDiscount);
         } catch (error) {

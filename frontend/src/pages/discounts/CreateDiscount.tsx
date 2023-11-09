@@ -52,7 +52,8 @@ const CreateDiscount = () => {
         formData.append("discount", mOne.discount);
         formData.append("cost", mOne.cost);
         formData.append("img", stateImg);
-        formData.append("coordinates", stateMap.coordinates); // TODO coord... to string!!!!
+        formData.append("latitude", stateMap.coordinates[0]);
+        formData.append("longitude", stateMap.coordinates[1]);
         formData.append("address", stateMap.address);
         formData.append("userId", stateUser.id);
 

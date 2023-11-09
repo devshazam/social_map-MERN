@@ -18,7 +18,6 @@ const userSchema = new Schema({
 }, { timestamps: true });
 
 
-
 const discountSchema = new Schema({
     name: {  type: String, required: true },
     description: {  type: String, required: true },
@@ -26,11 +25,11 @@ const discountSchema = new Schema({
     district: { type: String, required: true },
     discount: { type: Number, required: true },
     address: { type: String, required: true },
-    coordinates: { type: [String], required: true },
+    latitude: { type: String, required: true },
+    longitude: { type: String, required: true },
     image: { type: String, required: true },
     category: { type: String, required: true },
     userId: { type: Schema.Types.ObjectId, ref: "User" }
-
 
 }, { timestamps: true });
 

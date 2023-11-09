@@ -43,11 +43,14 @@ const Header = () => {
                                     title="Все скидки"
                                     id="offcanvasNavbarDropdown-expand-lg"
                                 >
-                                    <NavDropdown.Item href="/discounts/create">
+                                    <NavDropdown.Item href="/discounts/create-discount">
                                         Создать скидку
                                     </NavDropdown.Item>
-                                    <NavDropdown.Item href="/produce/banner">
-                                        Услуги
+                                    <NavDropdown.Item href="/discounts">
+                                        Все скидки
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item href="/discounts-map">
+                                        карта скидок
                                     </NavDropdown.Item>
                                     {/* <NavDropdown.Item href="/produce/samokleyka">
                                         Самоклейки
