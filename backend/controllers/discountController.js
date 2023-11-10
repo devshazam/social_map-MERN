@@ -48,8 +48,28 @@ class DiscountController {
             return next(ApiError.internal(`603: ${error.message}`));
         }
     }
+    
 
+    async fetchDiscountByMap(req, res, next) {
+        const { district, category, discount, cost, latitude, longitude } = req.body;
 
+        try {
+            let fileLocation = null;
+            if (req.files) {
+                fileLocation = await fileUploadCustom(
+                    req.files.img,
+                    "davse/discounts/"
+                );
+            }
+
+            const midDiscount = await Discount.create({ address, name, description, district, category, discount, cost, image: fileLocation, latitude, longitude, userId });
+
+            return res.json(midDiscount);
+        } catch (error) {
+            await appendFiles(`\n603: ${error.message}`);
+            return next(ApiError.internal(`603: ${error.message}`));
+        }
+    }
     // подбор скидок на странице
 
 
