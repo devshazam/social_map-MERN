@@ -29,6 +29,7 @@ const discountSchema = new Schema({
     longitude: { type: String, required: true },
     image: { type: String, required: true },
     category: { type: String, required: true },
+    currentTime: { type: Number, required: true },
     userId: { type: Schema.Types.ObjectId, ref: "User" }
 
 }, { timestamps: true });

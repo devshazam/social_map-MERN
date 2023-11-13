@@ -12,7 +12,7 @@ const MapChoiceComp = (props:any) => {
     const [coordinats, setCoordinats] = useState([]);
 
     const dispatch = useDispatch();
-
+console.log(coordinats, 393939393)
 
 
     useEffect(() => {

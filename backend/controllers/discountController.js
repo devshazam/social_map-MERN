@@ -39,8 +39,8 @@ class DiscountController {
                     "davse/discounts/"
                 );
             }
-
-            const midDiscount = await Discount.create({ address, name, description, district, category, discount, cost, image: fileLocation, latitude, longitude, userId });
+            const currentTime = new Date().getTime();
+            const midDiscount = await Discount.create({ address, name, description, district, category, discount, cost, image: fileLocation, latitude, longitude, userId, currentTime });
 
             return res.json(midDiscount);
         } catch (error) {
@@ -51,18 +51,24 @@ class DiscountController {
     
 
     async fetchDiscountByMap(req, res, next) {
-        const { district, category, discount, cost, latitude, longitude } = req.body;
+        const { category, xLatitude, xLongitude, yLatitude, yLongitude } = req.body;
 
         try {
-            let fileLocation = null;
-            if (req.files) {
-                fileLocation = await fileUploadCustom(
-                    req.files.img,
-                    "davse/discounts/"
-                );
+            let midDiscount;
+            if(category == 0 ){
+            midDiscount = await Discount.find()
+            .where("latitude").gt(xLatitude).lt(yLatitude) // Additional where query
+            .where("longitude").gt(xLongitude).lt(yLongitude) // Additional where query
+            .select("latitude longitude")
+            .exec();
+            }else{
+            midDiscount = await Discount.find()
+            .where("category").equals(category) // WHERE sport: Tennis 
+            .where("latitude").gt(xLatitude).lt(yLatitude) // Additional where query
+            .where("longitude").gt(xLongitude).lt(yLongitude) // Additional where query
+            .select("latitude longitude discount currentTime name")
+            .exec();
             }
-
-            const midDiscount = await Discount.create({ address, name, description, district, category, discount, cost, image: fileLocation, latitude, longitude, userId });
 
             return res.json(midDiscount);
         } catch (error) {

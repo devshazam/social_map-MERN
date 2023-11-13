@@ -122,16 +122,16 @@ const CreateDiscount = () => {
                             label="Age"
                             onChange={(e: any) => setDiscountObject({...discountObject, category: e.target.value})}
                         >
-                            <MenuItem value={5}>Красота и здоровье</MenuItem>
-                            <MenuItem value={10}>Все для животных</MenuItem>
-                            <MenuItem value={15}>Одежда и обувь</MenuItem>
-                            <MenuItem value={20}>Товары для детей</MenuItem>
-                            <MenuItem value={25}>Автомобиль</MenuItem>
-                            <MenuItem value={30}>Электроника</MenuItem>
-                            <MenuItem value={35}>Дом и дача</MenuItem>
-                            <MenuItem value={40}>Услуги</MenuItem>
-                            <MenuItem value={45}>Хобби и отдых</MenuItem>
-                            <MenuItem value={50}>Продукты</MenuItem>
+                            <MenuItem value={1}>Красота и здоровье</MenuItem>
+                            <MenuItem value={2}>Все для животных</MenuItem>
+                            <MenuItem value={3}>Одежда и обувь</MenuItem>
+                            <MenuItem value={4}>Товары для детей</MenuItem>
+                            <MenuItem value={5}>Автомобиль</MenuItem>
+                            <MenuItem value={6}>Электроника</MenuItem>
+                            <MenuItem value={7}>Дом и дача</MenuItem>
+                            <MenuItem value={8}>Услуги</MenuItem>
+                            <MenuItem value={9}>Хобби и отдых</MenuItem>
+                            <MenuItem value={10}>Продукты</MenuItem>
                         </Select>
                     </FormControl>
                 </Col>
