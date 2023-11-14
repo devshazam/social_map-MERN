@@ -40,7 +40,7 @@ const Header = () => {
                         <Offcanvas.Body className="justify-content-between">
                             <Nav className="justify-content-end  pe-3 my-2 my-lg-0">
                                 <NavDropdown
-                                    title="Все скидки"
+                                    title="Все скидки города"
                                     id="offcanvasNavbarDropdown-expand-lg"
                                 >
                                     <NavDropdown.Item href="/discounts/create-discount">
@@ -57,7 +57,7 @@ const Header = () => {
                                     </NavDropdown.Item> */}
                                     {/* <NavDropdown.Divider /> */}
                                 </NavDropdown>
-
+                                <Nav.Link href="/contacts">Благотворительность</Nav.Link>
                                 <NavDropdown
                                     title="Доска объявлений"
                                     id="offcanvasNavbarDropdown-expand-lg"
@@ -65,40 +65,40 @@ const Header = () => {
                                    <NavDropdown.Item href="/goods/futbolki">
                                         Продажа вещей
                                     </NavDropdown.Item>
-                                     <NavDropdown.Item href="/goods/krujki">
+                                     
+                                    <Accordion defaultActiveKey="0" className="menu-accordion">
+                                        <Accordion.Item eventKey="1" className="item-accordion">
+                                            <Accordion.Header>Недвижимость</Accordion.Header>
+                                            <Accordion.Body>
+                                                <NavDropdown.Item href="/prices/1">
+                                                    Посуточная аренда
+                                                </NavDropdown.Item>
+                                                <NavDropdown.Item href="/prices/1">
+                                                    Длительная аренда
+                                                </NavDropdown.Item>
+                                                <NavDropdown.Item href="/prices/1">
+                                                    Продажа
+                                                </NavDropdown.Item>
+                                            </Accordion.Body>
+                                        </Accordion.Item>
+                                    </Accordion>
+                                    <NavDropdown.Item href="/goods/krujki">
                                         Услуги
                                     </NavDropdown.Item>
                                 </NavDropdown>
 
-                                <NavDropdown
-                                    title="Благотворительность"
-                                    id="offcanvasNavbarDropdown-expand-lg"
-                                >
-                                    <NavDropdown.Item href="/prices/vizits-price">
-                                        Вещи
-                                    </NavDropdown.Item>
-                                    <Accordion defaultActiveKey="0" className="menu-accordion">
-                                        <Accordion.Item eventKey="1" className="item-accordion">
-                                            <Accordion.Header>Еда</Accordion.Header>
-                                            <Accordion.Body>
-                                                <NavDropdown.Item href="/prices/1">
-                                                    Консервы
-                                                </NavDropdown.Item>
-                                    
-                                            </Accordion.Body>
-                                        </Accordion.Item>
-                                    </Accordion>
-                                    
-                                </NavDropdown>
+    
 
 
-                                <Nav.Link href="/contacts">Контакты</Nav.Link>
+                                <Nav.Link href="/contacts">Мероприятия</Nav.Link>
+                                <Nav.Link href="/contacts">Карта отзывов</Nav.Link>
+                                <Nav.Link href="/contacts">Социальная сеть</Nav.Link>
                             </Nav>
-                            <Navbar.Text>
+                            {/* <Navbar.Text>
                                 <span className="label">
                                     г. Волгоград       
                                 </span>
-                            </Navbar.Text>
+                            </Navbar.Text> */}
                             {/* <Form className="d-flex">
                   <Form.Control
                     type="search"

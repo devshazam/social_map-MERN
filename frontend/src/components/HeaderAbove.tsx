@@ -40,8 +40,10 @@ console.log(state)
     return (
         <Container>
             <Row>
-                <Col xs={12} lg={4}></Col>
-                <Col xs={12} lg={{ span: 6, offset: 2 }}>
+                <Col xs={12} lg={6}>
+                    <h5 className="h-five">Социальный проект города Волгограда!</h5>
+                </Col>
+                <Col xs={12} lg={6}>
                     <Nav
                         style={{
                             justifyContent: "right",
@@ -79,20 +81,20 @@ console.log(state)
                                         </>
                                     )}
                                 </NavDropdown>
-                                {/*<Nav.Item>*/}
-                                {/*    <Nav.Link href="/admin/user/private-office">*/}
-                                {/*        <Image*/}
-                                {/*            src="/file/icons8-box-50.png"*/}
-                                {/*            className="bascket_img"*/}
-                                {/*            rounded*/}
-                                {/*            alt="Заказы"*/}
-                                {/*            title="Заказы"*/}
-                                {/*        />*/}
-                                {/*        <span className="bascket-num">*/}
-                                {/*            {orderNumber}*/}
-                                {/*        </span>*/}
-                                {/*    </Nav.Link>*/}
-                                {/*</Nav.Item>*/}
+                                <Nav.Item>
+                                    <Nav.Link href="/admin/user/private-office">
+                                        <Image
+                                            src="/files/icons8-thumbs-60.png"
+                                            className="bascket_img"
+                                            rounded
+                                            alt="Рейтинг"
+                                            title="Рейтинг"
+                                        />
+                                        <span className="bascket-num">
+                                            {orderNumber}
+                                        </span>
+                                    </Nav.Link>
+                                </Nav.Item>
                                 {/*<Nav.Item>*/}
                                 {/*    <Nav.Link href="/admin/user/basket">*/}
                                 {/*        <Image*/}

@@ -129,9 +129,10 @@ const CreateDiscount = () => {
                             <MenuItem value={5}>Автомобиль</MenuItem>
                             <MenuItem value={6}>Электроника</MenuItem>
                             <MenuItem value={7}>Дом и дача</MenuItem>
-                            <MenuItem value={8}>Услуги</MenuItem>
+                            <MenuItem value={8}>Сад и огород</MenuItem>
                             <MenuItem value={9}>Хобби и отдых</MenuItem>
                             <MenuItem value={10}>Продукты</MenuItem>
+                            <MenuItem value={11}>Фитнес и спорт</MenuItem>
                         </Select>
                     </FormControl>
                 </Col>

@@ -213,8 +213,8 @@
     margin-right: 10px;
 }
 .justify-content-between{
-    background-color: white;
-    border-radius: 10px;
+    /* background-color: white;
+    border-radius: 10px; */
     /* margin-right: 10px; */
 }
 /* .navbar-expand-lg .navbar-nav .nav-link {
@@ -295,8 +295,9 @@ margin-right: 15px;
 }
 .bascket-num{
     color: white;
-    background-color: #63b03e;
-    width: 20px;
+    background-color: #c3ab5d;
+    padding: 3px;
+    /* width: 20px; */
     display: inline-block;
     text-align: center;
     border-radius: 15px;
@@ -452,4 +453,9 @@ margin-right: 15px;
 .vizits-price-spiner{
     margin-left: 45%;
     margin-top: 5px;
+}
+.h-five{
+    margin-bottom: 0px;
+    font-weight: 200;
+    margin-top: 10px;
 }
