@@ -21,3 +21,10 @@ export const fetchDiscountByMap = async (param: any) => { // TODO определ
     console.log(data)
     return data
 }
+
+export const fetchAdsList = async (param: any) => { // TODO определить тип переменной
+    const {data} = await $authHost.post('/api/discounts/fetch-ads-list', param)
+    console.log(data)
+    return data
+}
+

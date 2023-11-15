@@ -14,16 +14,15 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Spinner from "react-bootstrap/Spinner";
 import {Map, Placemark, YMaps} from "@pbe/react-yandex-maps";
 
-// import { fetchGoodsList, deleteItemByID } from "../../http/goodsAPI";
-
+import { fetchAdsList } from "../../api/discountAPI";
 
 const AllDiscounts = () => {
     const { AdCategory } = useParams();
 
     const [spiner, setSpiner] = useState(false);
-    const [goodsCustom, setGoodsCustom] = useState({});
+    const [adsList, setAdsList] = useState([]);
     const [count, setCount] = useState(0);
-    const [flag, setFlag] = useState(1);
+  
 
     const limit:number = 12;
     const [page, setPage] = useState(1);
@@ -31,50 +30,32 @@ const AllDiscounts = () => {
     const [itemSort, setItemSort] = useState("createdAt");
     const [orderSort, setOrderSort] = useState("ASC");
 
-    // useEffect(() => {
-    //     fetchGoodsList(limit, `${page}`, categoryIt, itemSort, orderSort)
-    //         .then((data) => {
-    //             console.log(data);
-    //             setGoodsCustom(data.rows);
-    //             setCount(data.count);
-    //         })
-    //         .catch((error) => {
-    //             if (error.response.data) {
-    //                 alert(
-    //                     `${error.response.data.message}${error.response.status}`
-    //                 );
-    //             } else {
-    //                 console.log("dev", error);
-    //                 alert("Ошибка 138 - Обратитесь к администратору!");
-    //             }
-    //         })
-    //         .finally(() => {
-    //             setSpiner(true);
-    //         });
-    // }, [page, flag, categoryIt, itemSort, orderSort]); // <- add the count variable here
+    useEffect(() => {
+            fetchAdsList({limit, page, categoryIt, itemSort, orderSort})
+            .then((data:any) => {
+                console.log(data);
+                setAdsList(data.rows);
+                setCount(data.count);
+            })
+            .catch((error:any) => {
+                if (error.response.data) {
+                    alert(
+                        `${error.response.data.message}${error.response.status}`
+                    );
+                } else {
+                    console.log("dev", error);
+                    alert("Ошибка 138 - Обратитесь к администратору!");
+                }
+            })
+            .finally(() => {
+                setSpiner(true);
+            });
+    }, [page, categoryIt, itemSort, orderSort]); // <- add the count variable here
 
     function choicePage(number:number) {
         setPage(number);
     }
 
-    // async function deleteItem(id) {
-    //     deleteItemByID(id)
-    //         .then((data) => {
-    //             // console.log(data)
-    //             setFlag(flag + 1);
-    //             alert("Товар удален!");
-    //         })
-    //         .catch((error) => {
-    //             if (error.response.data) {
-    //                 alert(
-    //                     `${error.response.data.message}${error.response.status}`
-    //                 );
-    //             } else {
-    //                 console.log("dev", error);
-    //                 alert("Ошибка 140 - Обратитесь к администратору!");
-    //             }
-    //         });
-    // }
 
     let midlItem1 = Math.ceil(count / limit);
     let items = [];
@@ -193,50 +174,36 @@ const AllDiscounts = () => {
 
                         {spiner ? (
                             <>
-                                {Object.keys(goodsCustom).length ? (
-                                    goodsCustom.map((goods) => (
+                                {adsList.length ? (
+                                    adsList.map((ad:any) => (
                                         <Col
                                             xs={12}
                                             sm={6}
                                             lg={3}
                                             className="mb-3"
-                                            key={goods.id}
+                                            key={ad.id}
                                         >
                                             <Card>
                                                 <a
                                                     href={
-                                                        "/goods/one/" + goods.id
+                                                        "/goods/one/" + ad.id
                                                     }
                                                 >
                                                     <Card.Img
                                                         variant="top"
-                                                        src={goods.image}
+                                                        src={ad.image}
                                                     />
                                                 </a>
                                                 <Card.Body>
                                                     <Card.Title>
-                                                        Цена: {goods.price} р <br/>
-                                                        Остаток: {goods.summa}
+                                                        Цена: {ad.price} р <br/>
+                                                        Остаток: {ad.summa}
                                                     </Card.Title>
                                                     <Card.Text>
-                                                        {goods.name}
+                                                        {ad.name}
                                                         
                                                     </Card.Text>
-                                                    {user.user.role ==
-                                                        "ADMIN" && (
-                                                        <>
-                                                            {/* <Button className="m-2" variant="danger" onClick={() => deleteItem(goods.id)}>Удалить</Button> */}
-                                                            <Button
-                                                                variant="primary"
-                                                                href={
-                                                                    "/admin/update-goods/" +
-                                                                    goods.id
-                                                                }
-                                                            >
-                                                                Править
-                                                            </Button>
-                                                        </>
-                                                    )}
+                                         
                                                 </Card.Body>
                                             </Card>
                                         </Col>

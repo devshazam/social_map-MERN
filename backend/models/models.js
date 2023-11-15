@@ -24,7 +24,7 @@ const discountSchema = new Schema({
 
     // cost: { type: String, required: true },
     // discount: { type: Number, required: true },
-    // category: { type: String, required: true },
+    adCategory: { type: String, required: true },
     
     uniquePart: { type: String, required: true },
     district: { type: String, required: true },

@@ -35,7 +35,7 @@ const CreateDiscount = () => {
         formData.append("name", stateCommon.name);
         formData.append("description", stateCommon.description);
         formData.append("district", stateCommon.district);
-        formData.append("category", String(adCategory));
+        formData.append("adCategory", String(adCategory));
         formData.append("uniquePart", stateUnique);
         formData.append("img", stateImg);
         formData.append("latitude", stateMap.coordinates[0]);
