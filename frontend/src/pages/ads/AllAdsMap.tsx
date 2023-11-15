@@ -1,5 +1,7 @@
 
 import React, { useState,  useRef, useEffect } from "react";
+import { useParams } from "react-router-dom";
+
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import {Map, Placemark, YMaps} from "@pbe/react-yandex-maps";
@@ -23,6 +25,8 @@ import ListItemText from '@mui/material/ListItemText';
 import { fetchDiscountByMap }from '../../api/discountAPI'
 
 const AllDiscountsMap = () => {
+    const { AdCategory } = useParams();
+
     const mapRef = useRef<any>();
     const [map, setMap] = useState<any>(null);
     const [drawerFilter, setDrawerFilter] = useState<any>(false);
@@ -107,7 +111,7 @@ console.log(currentTime)
                                                                     <p>
                                                                         Скидка ${item.discount}% на кофе
                                                                     </p>
-                                                                    <a href="#">Смотреть магазин</a>
+                                                                    <a href="/ad-view/${item._id}">Посмотреть</a>
                                                                     </div>`,
                                                             }}
                                                         />);

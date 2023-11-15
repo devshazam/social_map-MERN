@@ -5,7 +5,7 @@ interface actionState {
 
 const defaultState = {
     isAuth: false,
-    user: {},
+    user: null,
     modalLogin: false,
     modalReg: false
 }

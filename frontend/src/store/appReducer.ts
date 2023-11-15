@@ -5,12 +5,14 @@ interface actionState {
 interface def {
     img: any,
     map: any,
-    common: any
+    common: any,
+    unique: any,
 }
 const defaultState:def = {
     img: null,
     map: null,
-    common: {}
+    common: {}, 
+    unique: '',
 }
 
 export const appReducer = (state = defaultState, action: actionState) =>{
@@ -21,6 +23,8 @@ export const appReducer = (state = defaultState, action: actionState) =>{
             return {...state, map: action.payload}
         case "COMMON":
             return {...state, common: action.payload}
+        case "UNIQUE":
+            return {...state, unique: action.payload}
         default:
             return state
 

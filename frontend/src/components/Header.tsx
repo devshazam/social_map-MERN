@@ -39,33 +39,13 @@ const Header = () => {
                         </Offcanvas.Header>
                         <Offcanvas.Body className="justify-content-between">
                             <Nav className="justify-content-end  pe-3 my-2 my-lg-0">
+                                
+                                <Nav.Link href="/ads/1">Скидки города</Nav.Link>
+                                <Nav.Link href="/ads/2">Благотворительность</Nav.Link>
                                 <NavDropdown
-                                    title="Все скидки города"
+                                    title="Доска объявлений БУ"
                                     id="offcanvasNavbarDropdown-expand-lg"
                                 >
-                                    <NavDropdown.Item href="/discounts/create-discount">
-                                        Создать скидку
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Item href="/discounts">
-                                        Все скидки
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Item href="/discounts-map">
-                                        карта скидок
-                                    </NavDropdown.Item>
-                                    {/* <NavDropdown.Item href="/produce/samokleyka">
-                                        Самоклейки
-                                    </NavDropdown.Item> */}
-                                    {/* <NavDropdown.Divider /> */}
-                                </NavDropdown>
-                                <Nav.Link href="/contacts">Благотворительность</Nav.Link>
-                                <NavDropdown
-                                    title="Доска объявлений"
-                                    id="offcanvasNavbarDropdown-expand-lg"
-                                >
-                                   <NavDropdown.Item href="/goods/futbolki">
-                                        Продажа вещей
-                                    </NavDropdown.Item>
-                                     
                                     <Accordion defaultActiveKey="0" className="menu-accordion">
                                         <Accordion.Item eventKey="1" className="item-accordion">
                                             <Accordion.Header>Недвижимость</Accordion.Header>
@@ -82,6 +62,18 @@ const Header = () => {
                                             </Accordion.Body>
                                         </Accordion.Item>
                                     </Accordion>
+                                    <NavDropdown.Item href="/goods/futbolki">
+                                        Автотранспорт
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item href="/goods/futbolki">
+                                        Личные вещи
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item href="/goods/futbolki">
+                                        Электроника
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item href="/goods/futbolki">
+                                        Работа
+                                    </NavDropdown.Item>
                                     <NavDropdown.Item href="/goods/krujki">
                                         Услуги
                                     </NavDropdown.Item>
@@ -90,8 +82,8 @@ const Header = () => {
     
 
 
-                                <Nav.Link href="/contacts">Мероприятия</Nav.Link>
-                                <Nav.Link href="/contacts">Карта отзывов</Nav.Link>
+                                <Nav.Link href="/ads/3">Мероприятия</Nav.Link>
+                                <Nav.Link href="/contacts">Карта доверия</Nav.Link>
                                 <Nav.Link href="/contacts">Социальная сеть</Nav.Link>
                             </Nav>
                             {/* <Navbar.Text>

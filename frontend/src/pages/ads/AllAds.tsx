@@ -18,7 +18,7 @@ import {Map, Placemark, YMaps} from "@pbe/react-yandex-maps";
 
 
 const AllDiscounts = () => {
-    const { category } = useParams();
+    const { AdCategory } = useParams();
 
     const [spiner, setSpiner] = useState(false);
     const [goodsCustom, setGoodsCustom] = useState({});
@@ -27,7 +27,7 @@ const AllDiscounts = () => {
 
     const limit:number = 12;
     const [page, setPage] = useState(1);
-    const [categoryIt, setCategoryIt] = useState(category);
+    const [categoryIt, setCategoryIt] = useState(AdCategory);
     const [itemSort, setItemSort] = useState("createdAt");
     const [orderSort, setOrderSort] = useState("ASC");
 
@@ -190,65 +190,69 @@ const AllDiscounts = () => {
                             </a>
                             <p style={{position: 'absolute', top: '10%', left: '10%', color: "black"}}>Открыть карту полностью</p>
                         </div>
-                        {/*{spiner ? (*/}
-                        {/*    <>*/}
-                        {/*        {Object.keys(goodsCustom).length ? (*/}
-                        {/*            goodsCustom.map((goods) => (*/}
-                        {/*                <Col*/}
-                        {/*                    xs={12}*/}
-                        {/*                    sm={6}*/}
-                        {/*                    lg={3}*/}
-                        {/*                    className="mb-3"*/}
-                        {/*                    key={goods.id}*/}
-                        {/*                >*/}
-                        {/*                    <Card>*/}
-                        {/*                        <a*/}
-                        {/*                            href={*/}
-                        {/*                                "/goods/one/" + goods.id*/}
-                        {/*                            }*/}
-                        {/*                        >*/}
-                        {/*                            <Card.Img*/}
-                        {/*                                variant="top"*/}
-                        {/*                                src={goods.image}*/}
-                        {/*                            />*/}
-                        {/*                        </a>*/}
-                        {/*                        <Card.Body>*/}
-                        {/*                            <Card.Title>*/}
-                        {/*                                Цена: {goods.price} р*/}
-                        {/*                            </Card.Title>*/}
-                        {/*                            <Card.Text>*/}
-                        {/*                                {goods.name}*/}
-                        {/*                            </Card.Text>*/}
-                        {/*                            {user.user.role ==*/}
-                        {/*                                "ADMIN" && (*/}
-                        {/*                                <>*/}
-                        {/*                                    /!* <Button className="m-2" variant="danger" onClick={() => deleteItem(goods.id)}>Удалить</Button> *!/*/}
-                        {/*                                    <Button*/}
-                        {/*                                        variant="primary"*/}
-                        {/*                                        href={*/}
-                        {/*                                            "/admin/update-goods/" +*/}
-                        {/*                                            goods.id*/}
-                        {/*                                        }*/}
-                        {/*                                    >*/}
-                        {/*                                        Править*/}
-                        {/*                                    </Button>*/}
-                        {/*                                </>*/}
-                        {/*                            )}*/}
-                        {/*                        </Card.Body>*/}
-                        {/*                    </Card>*/}
-                        {/*                </Col>*/}
-                        {/*            ))*/}
-                        {/*        ) : (*/}
-                        {/*            <h3>В данной категории нет товаров!</h3>*/}
-                        {/*        )}*/}
-                        {/*    </>*/}
-                        {/*) : (*/}
-                        {/*    <Spinner*/}
-                        {/*        className="goods-spiner"*/}
-                        {/*        animation="border"*/}
-                        {/*    ></Spinner>*/}
-                        {/*)}*/}
-                        {/*{paginationBasic}*/}
+
+                        {spiner ? (
+                            <>
+                                {Object.keys(goodsCustom).length ? (
+                                    goodsCustom.map((goods) => (
+                                        <Col
+                                            xs={12}
+                                            sm={6}
+                                            lg={3}
+                                            className="mb-3"
+                                            key={goods.id}
+                                        >
+                                            <Card>
+                                                <a
+                                                    href={
+                                                        "/goods/one/" + goods.id
+                                                    }
+                                                >
+                                                    <Card.Img
+                                                        variant="top"
+                                                        src={goods.image}
+                                                    />
+                                                </a>
+                                                <Card.Body>
+                                                    <Card.Title>
+                                                        Цена: {goods.price} р <br/>
+                                                        Остаток: {goods.summa}
+                                                    </Card.Title>
+                                                    <Card.Text>
+                                                        {goods.name}
+                                                        
+                                                    </Card.Text>
+                                                    {user.user.role ==
+                                                        "ADMIN" && (
+                                                        <>
+                                                            {/* <Button className="m-2" variant="danger" onClick={() => deleteItem(goods.id)}>Удалить</Button> */}
+                                                            <Button
+                                                                variant="primary"
+                                                                href={
+                                                                    "/admin/update-goods/" +
+                                                                    goods.id
+                                                                }
+                                                            >
+                                                                Править
+                                                            </Button>
+                                                        </>
+                                                    )}
+                                                </Card.Body>
+                                            </Card>
+                                        </Col>
+                                    ))
+                                ) : (
+                                    <h3>В данной категории нет товаров!</h3>
+                                )}
+                            </>
+                        ) : (
+                            <Spinner
+                                className="goods-spiner"
+                                animation="border"
+                            ></Spinner>
+                        )}
+                        {paginationBasic}
+
                     </Row>
                 </Col>
             </Row>

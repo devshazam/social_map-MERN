@@ -29,8 +29,8 @@ class DiscountController {
 
 
     async createDiscount(req, res, next) {
-        const { address, name, description, district, category, discount, cost, latitude, longitude, userId } = req.body;
-
+        const { address, name, description, district, uniquePart, latitude, longitude, userId } = req.body;
+console.log(uniquePart)
         try {
             let fileLocation = null;
             if (req.files) {
@@ -40,7 +40,7 @@ class DiscountController {
                 );
             }
             const currentTime = new Date().getTime();
-            const midDiscount = await Discount.create({ address, name, description, district, category, discount, cost, image: fileLocation, latitude, longitude, userId, currentTime });
+            const midDiscount = await Discount.create({ address, name, description, district, uniquePart, image: fileLocation, latitude, longitude, userId, currentTime });
 
             return res.json(midDiscount);
         } catch (error) {

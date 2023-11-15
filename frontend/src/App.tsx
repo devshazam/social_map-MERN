@@ -11,11 +11,13 @@ import LayoutAdmin from "./LayoutAdmin"
 import Home from "./pages/main/Home"
 import Empty from "./pages/main/Empty"
 import Test from "./pages/main/Test"
-import CreateDiscount from "./pages/discounts/CreateDiscount";
 import {useDispatch, useSelector} from "react-redux";
 import { check } from "../src/api/userAPI";
-import AllDiscounts from "./pages/discounts/AllDiscounts";
-import AllDiscountsMap from "./pages/discounts/AllDiscountsMap";
+
+import AllAds from "./pages/ads/AllAds";
+import AllAdsMap from "./pages/ads/AllAdsMap";
+import CreateAd from "./pages/ads/CreateAd";
+import AdView from  "./pages/ads/AdView";
 
 
 
@@ -54,9 +56,11 @@ const App: React.FC = () => {
               <Route index element={<Home />} />
               <Route path="/test" element={<Test />} />
               <Route path="/*" element={<Empty />} />
-              <Route path="/discounts/create-discount" element={<CreateDiscount />} />
-              <Route path="/discounts/" element={<AllDiscounts />} />
-              <Route path="/discounts-map/" element={<AllDiscountsMap />} />
+              <Route path="/ads/create-ad/:adCategory" element={<CreateAd />} />
+              <Route path="/ads/:adCategory" element={<AllAds />} />
+              <Route path="/ads-map/:adCategory" element={<AllAdsMap />} />
+              <Route path="/ad-view/:adId" element={<AdView />} />
+
           </Route>
           {/* <Route path="/admin/" element={<LayoutAdmin />}>
               <Route index element={<AllOrdersAdmin />} />

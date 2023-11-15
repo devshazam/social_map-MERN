@@ -21,14 +21,17 @@ const userSchema = new Schema({
 const discountSchema = new Schema({
     name: {  type: String, required: true },
     description: {  type: String, required: true },
-    cost: { type: String, required: true },
+
+    // cost: { type: String, required: true },
+    // discount: { type: Number, required: true },
+    // category: { type: String, required: true },
+    
+    uniquePart: { type: String, required: true },
     district: { type: String, required: true },
-    discount: { type: Number, required: true },
     address: { type: String, required: true },
     latitude: { type: String, required: true },
     longitude: { type: String, required: true },
     image: { type: String, required: true },
-    category: { type: String, required: true },
     currentTime: { type: Number, required: true },
     userId: { type: Schema.Types.ObjectId, ref: "User" }
 

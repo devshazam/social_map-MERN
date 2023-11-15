@@ -61,6 +61,9 @@ console.log(state)
                                     <NavDropdown.Item onClick={logOut}>
                                         Выход
                                     </NavDropdown.Item>
+                                    <NavDropdown.Item href="/ads/create-ad/1">
+                                        Создать скидку
+                                    </NavDropdown.Item>
                                     {state.user.role == "ADMIN" && (
                                         <>
                                             <NavDropdown.Divider />
