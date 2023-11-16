@@ -31,16 +31,22 @@ class DiscountController {
     async createDiscount(req, res, next) {
         const { address, name, description, district, uniquePart, latitude, longitude, userId, adCategory } = req.body;
 console.log(uniquePart)
+            
+
         try {
             let fileLocation = null;
-            if (req.files) {
+            if (req.files) { 
                 fileLocation = await fileUploadCustom(
                     req.files.img,
                     "davse/discounts/"
                 );
             }
+           let m1Object = {};
+            JSON.parse(uniquePart).map((item) => {
+                m1Object = {...m1Object, [item[0]]: item[1]}
+            })
             const currentTime = new Date().getTime();
-            const midDiscount = await Discount.create({ address, name, description, district, uniquePart, adCategory, image: fileLocation, latitude, longitude, userId, currentTime });
+            const midDiscount = await Discount.create({ ...m1Object, address, name, description, district, adCategory, image: fileLocation, latitude, longitude, userId, currentTime });
 
             return res.json(midDiscount);
         } catch (error) {

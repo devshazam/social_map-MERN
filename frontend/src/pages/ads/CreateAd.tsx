@@ -9,7 +9,10 @@ import { createDiscount } from "../../api/discountAPI";
 import ImageResizingComp from "../../components/create/ImageResizingComp";
 import CommonFieldsComp from "../../components/create/CommonFieldsComp";
 import MapChoiceComp from "../../components/create/MapChoiceComp";
-import Discounts from './unique/Discounts';
+import Discounts from './components/create/Discounts';
+import Events from './components/create/Events';
+import Avito from './components/create/Avito';
+
 
 const CreateDiscount = () => {
     const [flag, setFalg] = useState(1)
@@ -22,7 +25,7 @@ const CreateDiscount = () => {
     const stateUnique = useSelector((state:any) => state.app.unique);
     const stateUser = useSelector((state:any) => state.user.user);
 
-
+console.log(stateUnique, 11111)
     let sendToServer = () => {
         if(!stateImg || !stateMap || !Object.values(stateCommon).every(q => Boolean(q)) || !JSON.parse(stateUnique).every((i: any) => Boolean(i[1])) || !stateUser) {
             console.log(Boolean(JSON.parse(stateUnique).every((i: any) => Boolean(i[1]))))
@@ -32,11 +35,12 @@ const CreateDiscount = () => {
         }
 
         const formData = new FormData();
+        formData.append("adCategory", String(adCategory));
+        formData.append("uniquePart", stateUnique);
+
         formData.append("name", stateCommon.name);
         formData.append("description", stateCommon.description);
         formData.append("district", stateCommon.district);
-        formData.append("adCategory", String(adCategory));
-        formData.append("uniquePart", stateUnique);
         formData.append("img", stateImg);
         formData.append("latitude", stateMap.coordinates[0]);
         formData.append("longitude", stateMap.coordinates[1]);
@@ -65,8 +69,15 @@ const CreateDiscount = () => {
                 <CommonFieldsComp  flag={flag}/>
             </Row>
             <Row className="mb-5">
+                { adCategory && (<>
+                    {+adCategory == 1 && <Discounts  flag={flag}/> }
+              
+                    {+adCategory == 3 && <Events  flag={flag}/> }
+                    {+adCategory == 4 && <Avito  flag={flag}/> }
 
-               <Discounts  flag={flag}/>
+
+
+                </>)}
 
             </Row>
             <Row className="mb-5">

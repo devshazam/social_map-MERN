@@ -45,6 +45,7 @@ console.log(coordinats, 393939393)
                 <Col xs={12} md={{ span: 6, order: 2 }}>
 
                         <YMaps>
+                            {/* apikey - https://reactjsexample.com/yandex-maps-api-bindings-for-react/ */}
                         <section className="map container">
 
                             { +coordinats.length ?

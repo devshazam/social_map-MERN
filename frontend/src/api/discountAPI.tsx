@@ -7,7 +7,7 @@ export const fetchYandexAddress = async (param: any) => { // TODO определ
     return data
 }
 export const createDiscount = async (param: any) => { // TODO определить тип переменной
-    const {data} = await $authHost.post('/api/discounts/create-discount', param)
+    const {data} = await $authHost.post(`/api/discounts/create-discount`, param)
     console.log(data)
     return data
 }

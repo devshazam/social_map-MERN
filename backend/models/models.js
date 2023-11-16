@@ -19,14 +19,24 @@ const userSchema = new Schema({
 
 
 const discountSchema = new Schema({
-    name: {  type: String, required: true },
-    description: {  type: String, required: true },
-
-    // cost: { type: String, required: true },
-    // discount: { type: Number, required: true },
     adCategory: { type: String, required: true },
     
-    uniquePart: { type: String, required: true },
+    name: {  type: String, required: true },
+    description: {  type: String, required: true },
+    
+    // common
+    cost: { type: String },
+
+    // 1 - discounts
+    discount: { type: Number },
+    category: { type: String },
+    
+    // 3 - events
+    startDate: { type: String },
+    endDate: { type: String },
+
+    // uniquePart: { type: String, required: true },
+
     district: { type: String, required: true },
     address: { type: String, required: true },
     latitude: { type: String, required: true },
