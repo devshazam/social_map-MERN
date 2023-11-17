@@ -84,6 +84,25 @@ console.log(uniquePart)
     }
     // подбор скидок на странице
 
+    
+    async fetchAdsById(req, res, next) {
+        const { adId } = req.body;
+
+        try {
+            let midDiscount;
+    
+            midDiscount = await Discount.findById(adId)
+            .populate('userId', 'name phone')
+            .exec();
+
+
+            return res.json(midDiscount);
+        } catch (error) {
+            await appendFiles(`\n603: ${error.message}`);
+            return next(ApiError.internal(`603: ${error.message}`));
+        }
+    }
+
 
 }
 

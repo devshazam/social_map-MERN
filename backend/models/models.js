@@ -25,16 +25,18 @@ const discountSchema = new Schema({
     description: {  type: String, required: true },
     
     // common
-    cost: { type: String },
+    cost: { type: Number },
 
     // 1 - discounts
     discount: { type: Number },
-    category: { type: String },
+    discountCategory: { type: String },
     
     // 3 - events
     startDate: { type: String },
     endDate: { type: String },
 
+    //avito
+    avitoCategory: { type: String },
     // uniquePart: { type: String, required: true },
 
     district: { type: String, required: true },

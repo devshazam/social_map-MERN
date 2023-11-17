@@ -15,9 +15,9 @@ import {useDispatch, useSelector} from "react-redux";
 import { check } from "../src/api/userAPI";
 
 import AllAds from "./pages/ads/AllAds";
-import AllAdsMap from "./pages/ads/AllAdsMap";
+import AllAdsMap from "./pages/ads/AllMap";
 import CreateAd from "./pages/ads/CreateAd";
-import AdView from  "./pages/ads/AdView";
+import AdView from  "./pages/ads/OneAd";
 
 
 

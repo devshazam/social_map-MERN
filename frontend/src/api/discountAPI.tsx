@@ -28,3 +28,8 @@ export const fetchAdsList = async (param: any) => { // TODO определить
     return data
 }
 
+export const fetchAdById = async (param: any) => { // TODO определить тип переменной
+    const {data} = await $authHost.post('/api/discounts/fetch-ads-by-id', param)
+    console.log(data)
+    return data
+}

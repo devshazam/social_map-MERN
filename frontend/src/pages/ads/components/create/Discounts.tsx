@@ -11,12 +11,12 @@ import {useDispatch, useSelector} from "react-redux";
 
 
 const Discounts = (props:any) => {
-    const [uniqObject, setUniqObject] = useState({cost: '',  discount: '', category: ''});
+    const [uniqObject, setUniqObject] = useState({cost: '',  discount: '', discountCategory: ''});
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch({type: "UNIQUE", payload: JSON.stringify([ ['cost', uniqObject.cost], ['discount', uniqObject.discount], ['category', uniqObject.category] ])})
+        dispatch({type: "UNIQUE", payload: JSON.stringify([ ['cost', uniqObject.cost], ['discount', uniqObject.discount], ['category', uniqObject.discountCategory] ])})
     }, [uniqObject])
 
     // ==========================================================================================================
@@ -54,14 +54,14 @@ const Discounts = (props:any) => {
 
 
                     <FormControl fullWidth >
-                        <InputLabel id="demo-simple-select-label" error={Boolean(!uniqObject.category && props.flag == 0)}>Категория скидки:</InputLabel>
+                        <InputLabel id="demo-simple-select-label" error={Boolean(!uniqObject.discountCategory && props.flag == 0)}>Категория скидки:</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={uniqObject.category}
-                            error={Boolean(!uniqObject.category && props.flag == 0)}
+                            value={uniqObject.discountCategory}
+                            error={Boolean(!uniqObject.discountCategory && props.flag == 0)}
                             label="Age"
-                            onChange={(e: any) => setUniqObject({...uniqObject, category: e.target.value})}
+                            onChange={(e: any) => setUniqObject({...uniqObject, discountCategory: e.target.value})}
                         >
                             <MenuItem value={1}>Красота и здоровье</MenuItem>
                             <MenuItem value={2}>Все для животных</MenuItem>
@@ -70,10 +70,9 @@ const Discounts = (props:any) => {
                             <MenuItem value={5}>Автомобиль</MenuItem>
                             <MenuItem value={6}>Электроника</MenuItem>
                             <MenuItem value={7}>Дом и дача</MenuItem>
-                            <MenuItem value={8}>Сад и огород</MenuItem>
-                            <MenuItem value={9}>Хобби и отдых</MenuItem>
-                            <MenuItem value={10}>Продукты</MenuItem>
-                            <MenuItem value={11}>Фитнес и спорт</MenuItem>
+                            <MenuItem value={8}>Хобби и отдых</MenuItem>
+                            <MenuItem value={9}>Продукты</MenuItem>
+                            <MenuItem value={10}>Фитнес и спорт</MenuItem>
                         </Select>
                     </FormControl>
                 </Col>
