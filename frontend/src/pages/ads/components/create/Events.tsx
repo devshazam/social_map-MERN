@@ -20,7 +20,7 @@ const Events = (props:any) => {
 
     useEffect(() => {
         if(startDate && endDate){
-        dispatch({type: "UNIQUE", payload: JSON.stringify([ ['cost', cost], ['startDate', startDate['$d'].getTime()], ['endDate', endDate['$d'].getTime() ]])})
+        dispatch({type: "MAIN", payload: {cost, startDate: startDate['$d'].getTime(), endDate: endDate['$d'].getTime()}})
         }
     
     }, [cost, startDate, endDate])

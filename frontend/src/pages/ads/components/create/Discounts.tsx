@@ -16,7 +16,7 @@ const Discounts = (props:any) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch({type: "UNIQUE", payload: JSON.stringify([ ['cost', uniqObject.cost], ['discount', uniqObject.discount], ['category', uniqObject.discountCategory] ])})
+        dispatch({type: "MAIN", payload: {cost: uniqObject.cost, discount: uniqObject.discount, discountCategory: uniqObject.discountCategory}})
     }, [uniqObject])
 
     // ==========================================================================================================

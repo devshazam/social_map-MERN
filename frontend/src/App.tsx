@@ -15,7 +15,7 @@ import {useDispatch, useSelector} from "react-redux";
 import { check } from "../src/api/userAPI";
 
 import AllAds from "./pages/ads/AllAds";
-import AllAdsMap from "./pages/ads/AllMap";
+import AllMap from "./pages/ads/AllMap";
 import CreateAd from "./pages/ads/CreateAd";
 import AdView from  "./pages/ads/OneAd";
 
@@ -58,7 +58,7 @@ const App: React.FC = () => {
               <Route path="/*" element={<Empty />} />
               <Route path="/ads/create-ad/:adCategory" element={<CreateAd />} />
               <Route path="/ads/:adCategory" element={<AllAds />} />
-              <Route path="/ads-map/:adCategory" element={<AllAdsMap />} />
+              <Route path="/ads-map/:adCategory" element={<AllMap />} />
               <Route path="/ad-view/:adId" element={<AdView />} />
 
           </Route>

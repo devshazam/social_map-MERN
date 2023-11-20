@@ -1,18 +1,22 @@
 interface actionState {
     type: string;
-    payload: number
+    payload: any
 }
 interface def {
     img: any,
     map: any,
     common: any,
+    main: any,
     unique: any,
+    filter: any,
 }
 const defaultState:def = {
     img: null,
     map: null,
     common: {}, 
+    main: {},
     unique: '',
+    filter: {}
 }
 
 export const appReducer = (state = defaultState, action: actionState) =>{
@@ -23,8 +27,12 @@ export const appReducer = (state = defaultState, action: actionState) =>{
             return {...state, map: action.payload}
         case "COMMON":
             return {...state, common: action.payload}
+        case "MAIN":
+            return {...state, main: action.payload}
         case "UNIQUE":
             return {...state, unique: action.payload}
+        case "FILTER":
+            return {...state, filter: {...state.filter, ...action.payload}}
         default:
             return state
 

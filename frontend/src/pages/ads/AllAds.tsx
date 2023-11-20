@@ -13,29 +13,30 @@ import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Spinner from "react-bootstrap/Spinner";
 import {Map, Placemark, YMaps} from "@pbe/react-yandex-maps";
-
+import DiscountsForms from './components/filters/DiscountsForms'
+import DistrictForm from './components/filters/components/DistrictForm'
+import EventsForms from './components/filters/EventsForms'
 import { fetchAdsList } from "../../api/discountAPI";
+import { useSelector} from "react-redux";
 
 const AllDiscounts = () => {
-    const { AdCategory } = useParams();
+    const { adCategory } = useParams();
 
     const [spiner, setSpiner] = useState(false);
     const [adsList, setAdsList] = useState([]);
     const [count, setCount] = useState(0);
   
-
-    const limit:number = 12;
     const [page, setPage] = useState(1);
-    const [categoryIt, setCategoryIt] = useState(AdCategory);
-    const [itemSort, setItemSort] = useState("createdAt");
-    const [orderSort, setOrderSort] = useState("ASC");
 
+    const filterObject = useSelector((state:any) => state.app.filter);
+
+    console.log(filterObject)
     useEffect(() => {
-            fetchAdsList({limit, page, categoryIt, itemSort, orderSort})
+            fetchAdsList({...filterObject, page, adCategory})
             .then((data:any) => {
                 console.log(data);
-                setAdsList(data.rows);
-                setCount(data.count);
+                setAdsList(data);
+                setCount(data.length);
             })
             .catch((error:any) => {
                 if (error.response.data) {
@@ -50,14 +51,14 @@ const AllDiscounts = () => {
             .finally(() => {
                 setSpiner(true);
             });
-    }, [page, categoryIt, itemSort, orderSort]); // <- add the count variable here
+    }, [page, filterObject]); // <- add the count variable here
 
     function choicePage(number:number) {
         setPage(number);
     }
 
 
-    let midlItem1 = Math.ceil(count / limit);
+    let midlItem1 = Math.ceil(count / 8);
     let items = [];
     for (let number = 1; number <= midlItem1; number++) {
         items.push(
@@ -80,77 +81,10 @@ const AllDiscounts = () => {
         <>
             <Row className="mb-5">
                 <Col xs={12} sm={3} lg={3} className="mb-3">
-                    <Form.Group
-                        as={Col}
-                        md="12"
-                        controlId="formGridState"
-                        className="mb-3"
-                    >
-                        <FloatingLabel
-                            controlId="floatingPassword"
-                            label="Категория товаров:"
-                        >
-                            <Form.Select
-                                aria-label="Default select example"
-                                onChange={(e) => setCategoryIt(e.target.value)}
-                                value={categoryIt}
-                            >
-                                <option value="krujki">Кружки</option>
-                                <option value="futbolki">Футболки</option>
-                                <option value="bagety">Багеты</option>
-                                <option value="planketki">Плакетки</option>
-                                <option value="shtender">Штендеры</option>
-                                <option value="magnit">Магнитики</option>
-                                <option value="brelok">Брелоки</option>
-                                <option value="plenka-avery">
-                                    Пленка AVERY
-                                </option>
-                                <option value="3d-nit">
-                                    Нить для 3D печати
-                                </option>
-                            </Form.Select>
-                        </FloatingLabel>
-                    </Form.Group>
-                    <Form.Group
-                        as={Col}
-                        md="12"
-                        controlId="formGridState"
-                        className="mb-3"
-                    >
-                        <FloatingLabel
-                            controlId="floatingPassword"
-                            label="Сортировать по:"
-                        >
-                            <Form.Select
-                                aria-label="Default select example"
-                                onChange={(e) => setItemSort(e.target.value)}
-                                value={itemSort}
-                            >
-                                <option value="price">Стоимости</option>
-                                <option value="createdAt">Новизне</option>
-                            </Form.Select>
-                        </FloatingLabel>
-                    </Form.Group>
-                    <Form.Group
-                        as={Col}
-                        md="12"
-                        controlId="formGridState"
-                        className="mb-3"
-                    >
-                        <FloatingLabel
-                            controlId="floatingPassword"
-                            label="Порядок сортировки:"
-                        >
-                            <Form.Select
-                                aria-label="Default select example"
-                                onChange={(e) => setOrderSort(e.target.value)}
-                                value={orderSort}
-                            >
-                                <option value="ASC">Возрастание</option>
-                                <option value="DESC">Убывание</option>
-                            </Form.Select>
-                        </FloatingLabel>
-                    </Form.Group>
+                    { adCategory === '1' && <DiscountsForms /> }
+                    { adCategory === '2' && <DistrictForm /> }
+                    { adCategory === '3' && <EventsForms /> }
+                    {/* { adCategory === '4' && <AvitoForms /> } */}
                 </Col>
                 <Col xs={12} sm={9} lg={9} className="mb-3">
                     <Row className="mb-5">

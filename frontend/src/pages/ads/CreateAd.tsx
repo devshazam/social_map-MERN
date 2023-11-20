@@ -22,6 +22,7 @@ const CreateDiscount = () => {
     const stateImg = useSelector((state:any) => state.app.img);
     const stateMap = useSelector((state:any) => state.app.map);
     const stateCommon = useSelector((state:any) => state.app.common);
+    const stateMain = useSelector((state:any) => state.app.main);
     const stateUnique = useSelector((state:any) => state.app.unique);
     const stateUser = useSelector((state:any) => state.user.user);
 
@@ -36,7 +37,15 @@ console.log(stateUnique, 11111)
 
         const formData = new FormData();
         formData.append("adCategory", String(adCategory));
-        formData.append("uniquePart", stateUnique);
+        // formData.append("uniquePart", stateUnique);
+
+        if(stateMain.cost) formData.append("cost", stateMain.cost);
+        if(stateMain.discountCategory) formData.append("discountCategory", stateMain.discountCategory);
+        if(stateMain.discount) formData.append("discount", stateMain.discount);
+        if(stateMain.startDate) formData.append("startDate", stateMain.startDate);
+        if(stateMain.endDate) formData.append("endDate", stateMain.endDate);
+
+        if(stateUnique) formData.append("uniquePart", stateUnique);
 
         formData.append("name", stateCommon.name);
         formData.append("description", stateCommon.description);
@@ -70,10 +79,10 @@ console.log(stateUnique, 11111)
             </Row>
             <Row className="mb-5">
                 { adCategory && (<>
-                    {+adCategory == 1 && <Discounts  flag={flag}/> }
+                    { adCategory === '1' && <Discounts  flag={flag}/> }
               
-                    {+adCategory == 3 && <Events  flag={flag}/> }
-                    {+adCategory == 4 && <Avito  flag={flag}/> }
+                    { adCategory === '3' && <Events  flag={flag}/> }
+                    { adCategory === '4' && <Avito  flag={flag}/> }
 
 
 

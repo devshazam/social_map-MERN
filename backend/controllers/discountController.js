@@ -87,7 +87,6 @@ console.log(uniquePart)
     
     async fetchAdsById(req, res, next) {
         const { adId } = req.body;
-
         try {
             let midDiscount;
     
@@ -95,6 +94,33 @@ console.log(uniquePart)
             .populate('userId', 'name phone')
             .exec();
 
+
+            return res.json(midDiscount);
+        } catch (error) {
+            await appendFiles(`\n603: ${error.message}`);
+            return next(ApiError.internal(`603: ${error.message}`));
+        }
+    }
+
+    async fetchAdsList(req, res, next) {
+        let { adCategory, discountCategory, itemSort, orderSort, page, limit, district, offset }  = req.body;
+        page = page || 1;
+        limit = limit || 8;
+        itemSort = itemSort || "createdAt";
+        orderSort = orderSort || 0;
+        offset = page * limit - limit;
+        const sortArray = [1, -1];
+
+        try {
+            let midDiscount;
+
+            midDiscount = await Discount.find()
+        .where("adCategory").equals(adCategory) // WHERE sport: Tennis 
+        .where("district").equals(district) // WHERE sport: Tennis 
+        .skip(offset).limit(limit) // skip тоже самое что offset
+        .sort({ [itemSort]: sortArray[+orderSort] })
+        .select("name image address cost discount")
+        .exec();
 
             return res.json(midDiscount);
         } catch (error) {
