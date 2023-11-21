@@ -37,9 +37,9 @@ const discountSchema = new Schema({
 
     //avito
     avitoCategory: { type: String },
-    // uniquePart: { type: String, required: true },
+    uniquePart: { type: String },
 
-    district: { type: String, required: true },
+    district: { type: String },
     address: { type: String, required: true },
     latitude: { type: String, required: true },
     longitude: { type: String, required: true },

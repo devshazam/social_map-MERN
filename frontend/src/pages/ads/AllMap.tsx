@@ -14,28 +14,23 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-// import InboxIcon from '@mui/icons-material/MoveToInbox';
-// import MailIcon from '@mui/icons-material/Mail';
+
+
+import DiscountsMapComp from './components/map/DiscountsMapComp'
 import { fetchDiscountByMap }from '../../api/discountAPI'
 
 const AllDiscountsMap = () => {
-    const { AdCategory } = useParams();
+    const { adCategory } = useParams();
 
     const mapRef = useRef<any>();
     const [map, setMap] = useState<any>(null);
     const [drawerFilter, setDrawerFilter] = useState<any>(false);
 
-    const [category, setCategory] = useState(2);
     const [discountList, setDiscountList] = useState<any>(null);
+    const [allObject, setAllObject] = useState<any>({});
     
-    const currentTime = new Date().getTime();
-console.log(currentTime)
+    console.log(discountList)
+
     const refreshData = () => {
        if(mapRef.current && mapRef.current._bounds) {
          setMap(mapRef.current._bounds);
@@ -49,11 +44,19 @@ console.log(currentTime)
       
     useEffect(() => {
         if(!map) {return;}
-        fetchDiscountByMap({ category, xLatitude: map[0][0], xLongitude: map[0][1], yLatitude: map[1][0], yLongitude: map[1][1] }).then((data) => {
+        fetchDiscountByMap({ ...allObject, adCategory, xLatitude: map[0][0], xLongitude: map[0][1], yLatitude: map[1][0], yLongitude: map[1][1] }).then((data) => {
             setDiscountList(data)
-
-
         })
+        .catch((error:any) => {
+            if (error.response.data) {
+                alert(
+                    `${error.response.data.message}${error.response.status}`
+                );
+            } else {
+                console.log("dev", error);
+                alert("Ошибка 138 - Обратитесь к администратору!");
+            }
+        });
         
     
     }, [map])
@@ -61,14 +64,16 @@ console.log(currentTime)
     return (
         <>
             <Row className="mb-5">
-                <Button onClick={() => toggleDrawer(true)}>{"anchor"}</Button>
+                <Button onClick={() => toggleDrawer(true)}>ОТКРЫТЬ ФИЛЬТРЫ</Button>
                             <YMaps
                                 query={{ apikey: '7176836c-97ba-4255-ae13-340eea0ffce0', load: 'util.bounds' }}>
                                 <section className="map container" >
                                         <Map
                                             defaultState={{
-                                                center: [48.707067, 44.516975],
-                                                zoom: 10
+                                                // center: [48.707067, 44.516975],
+                                                center: [48.514045, 44.527467],
+
+                                                zoom: 16
                                             }}
                                             // state={{bounds: [[55.70097908883712, 37.60749234936649], [55.71551741036628, 37.63736142895632]]}}
                                             width="100%"
@@ -85,36 +90,24 @@ console.log(currentTime)
                                             // onLoad={(ymaps:any) => {setQaz(ymaps)}}
                                             instanceRef={mapRef}
                                             onLoad={refreshData}
-                                            >
+                                             >
+                            
                                                 { discountList &&
                                                     
-                                                    discountList.map((item: any, index:any) => {
-                                                        let colorPoint;
-                                                        if(Math.ceil((currentTime - item.currentTime) / 8.64e7) <= 2){
-                                                            colorPoint = 'red'
-                                                        }else{
-                                                            colorPoint = 'grey'
-                                                        }
-
+                                                    discountList.map((item: any) => {
+                     
                                                         return(
-                                                    <Placemark
-                                                            geometry={[item.latitude, item.longitude]}
-                                                            options={{
-                                                                preset: 'islands#oliveStretchyIcon', // список темплейтов на сайте яндекса
-                                                                iconColor: colorPoint, // цвет иконки
-                                                            }}
-                                                            properties={{
-                                                                iconContent: `${item.discount}%`, // пару символов помещается
-                                                                hintContent: '<em>кликни меня</em>',
-                                                                balloonContent: `<div class="my-balloon">
-                                                                    <h4>${item.name}</h4>
-                                                                    <p>
-                                                                        Скидка ${item.discount}% на кофе
-                                                                    </p>
-                                                                    <a href="/ad-view/${item._id}">Посмотреть</a>
-                                                                    </div>`,
-                                                            }}
-                                                        />);
+                                                            <>
+                                                                { adCategory === '1' && <DiscountsMapComp key={item._id} discountItem={item}/> }
+                                                                {/* { adCategory === '2' && <DistrictForm /> }
+                                                                { adCategory === '3' && <EventsForms /> } */}
+                                                                {/* { adCategory === '4' && <AvitoForms /> } */}
+                                                                {/* <Placemark key={item._id}
+                                                                    geometry={[item.latitude, item.longitude]}
+                                                                   
+                                                                /> */}
+                                                            </>
+                                                        );
                                                     })
                                                 }
                                         </Map>
@@ -130,14 +123,35 @@ console.log(currentTime)
             open={drawerFilter}
             onClose={() => toggleDrawer(false)}
           >
+            <p>Ghbdssssssssssssssssssssssssssssssssssstn</p>
                     <FormControl fullWidth >
                         <InputLabel id="demo-simple-select-label" >Категория скидки:</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={category}
+                            value={allObject.district}
                             label="Age"
-                            onChange={(e:any) => setCategory(e.target.value)}
+                            onChange={(e: any) => setAllObject({...allObject, district: e.target.value})}
+                        >
+                            <MenuItem value={1}>Ворошиловский</MenuItem>
+                            <MenuItem value={2}>Дзержинский</MenuItem>
+                            <MenuItem value={3}>Кировский</MenuItem>
+                            <MenuItem value={4}>Красноармейский</MenuItem>
+                            <MenuItem value={5}>Краснооктябрьский</MenuItem>
+                            <MenuItem value={6}>Советский</MenuItem>
+                            <MenuItem value={7}>Тракторозаводский</MenuItem>
+                            <MenuItem value={8}>Центральный</MenuItem>
+                        </Select>
+                    </FormControl>
+                    {adCategory === '1' &&
+                        <FormControl fullWidth >
+                        <InputLabel id="demo-simple-select-label" >Категория скидки:</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={allObject.discountCategory}
+                            label="Age"
+                            onChange={(e: any) => setAllObject({...allObject, discountCategory: e.target.value})}
                         >
                             <MenuItem value={1}>Красота и здоровье</MenuItem>
                             <MenuItem value={2}>Все для животных</MenuItem>
@@ -150,7 +164,29 @@ console.log(currentTime)
                             <MenuItem value={9}>Хобби и отдых</MenuItem>
                             <MenuItem value={10}>Продукты</MenuItem>
                         </Select>
+                    </FormControl>}
+                    
+                    {adCategory === '4' && 
+                    <FormControl fullWidth >
+                        <InputLabel id="demo-simple-select-label" >Категория авито:</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={allObject.avitoCategory}
+                            label="Age"
+                            onChange={(e: any) => setAllObject({...allObject, avitoCategory: e.target.value})}
+                        >
+                            <MenuItem value={1}>Посуточная аренда</MenuItem>
+                            <MenuItem value={2}>Длительная аренда</MenuItem>
+                            <MenuItem value={3}>Продажа жилья</MenuItem>
+                            <MenuItem value={4}>Продажа автомобилей</MenuItem>
+                            <MenuItem value={5}>Личные вещи</MenuItem>
+                            <MenuItem value={6}>Электроника</MenuItem>
+                            <MenuItem value={7}>Работа</MenuItem>
+                            <MenuItem value={8}>Услуги</MenuItem>
+                        </Select>
                     </FormControl>
+                    }
           </Drawer>
      
             </Row>

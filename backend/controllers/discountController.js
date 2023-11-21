@@ -29,9 +29,7 @@ class DiscountController {
 
 
     async createDiscount(req, res, next) {
-        const { address, name, description, district, uniquePart, latitude, longitude, userId, adCategory } = req.body;
-console.log(uniquePart)
-            
+        const { address, name, description, district, uniquePart, latitude, longitude, userId, adCategory, discountCategory, cost, discount, startDate, endDate} = req.body;
 
         try {
             let fileLocation = null;
@@ -41,12 +39,9 @@ console.log(uniquePart)
                     "davse/discounts/"
                 );
             }
-           let m1Object = {};
-            JSON.parse(uniquePart).map((item) => {
-                m1Object = {...m1Object, [item[0]]: item[1]}
-            })
+        
             const currentTime = new Date().getTime();
-            const midDiscount = await Discount.create({ ...m1Object, address, name, description, district, adCategory, image: fileLocation, latitude, longitude, userId, currentTime });
+            const midDiscount = await Discount.create({ uniquePart, address, name, description, district, adCategory, image: fileLocation, latitude, longitude, userId, currentTime, discountCategory, cost, discount, startDate, endDate });
 
             return res.json(midDiscount);
         } catch (error) {
@@ -57,24 +52,22 @@ console.log(uniquePart)
     
 
     async fetchDiscountByMap(req, res, next) {
-        const { category, xLatitude, xLongitude, yLatitude, yLongitude } = req.body;
+        const { adCategory, xLatitude, xLongitude, yLatitude, yLongitude, district, discountCategory, avitoCategory } = req.body;
+// console.log(avitoCategory)
+        let midObject = {};
+        if(district) midObject = { ...midObject, district };
+        if(discountCategory) midObject = { ...midObject, discountCategory };
+        if(avitoCategory) midObject = { ...midObject, avitoCategory };
 
         try {
             let midDiscount;
-            if(category == 0 ){
-            midDiscount = await Discount.find()
-            .where("latitude").gt(xLatitude).lt(yLatitude) // Additional where query
-            .where("longitude").gt(xLongitude).lt(yLongitude) // Additional where query
-            .select("latitude longitude")
-            .exec();
-            }else{
-            midDiscount = await Discount.find()
-            .where("category").equals(category) // WHERE sport: Tennis 
+
+            midDiscount = await Discount.find({adCategory, ...midObject})
             .where("latitude").gt(xLatitude).lt(yLatitude) // Additional where query
             .where("longitude").gt(xLongitude).lt(yLongitude) // Additional where query
             .select("latitude longitude discount currentTime name")
             .exec();
-            }
+
 
             return res.json(midDiscount);
         } catch (error) {

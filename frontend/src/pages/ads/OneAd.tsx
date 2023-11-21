@@ -71,15 +71,26 @@ if(adsItem) console.log(Object.keys(adsItem))
                                     <>
                                 {exceptions.indexOf(item) === -1 &&
                                     <>
-                                        {item == 'name' && <ListGroup.Item>{namesObject[item]} {adsItem[item]}</ListGroup.Item>}
-                                        {item == 'description' && <ListGroup.Item>{namesObject[item]} {adsItem[item]}</ListGroup.Item>}
-                                        {item == 'cost' && <ListGroup.Item>{namesObject[item]} {adsItem[item]}</ListGroup.Item>}
-                                        {item == 'discount' && <ListGroup.Item>{namesObject[item]} {adsItem[item]}%</ListGroup.Item>}
-                                        {item == 'discountCategory' && <ListGroup.Item>{namesObject[item]} {disCatArray[adsItem[item] - 1]}</ListGroup.Item>}
+                                        {item === 'name' && <ListGroup.Item>{namesObject[item]} {adsItem[item]}</ListGroup.Item>}
+                                        {item === 'description' && <ListGroup.Item>{namesObject[item]} {adsItem[item]}</ListGroup.Item>}
+                                        {item === 'cost' && <ListGroup.Item>{namesObject[item]} {adsItem[item]}</ListGroup.Item>}
+                                        {item === 'discount' && <ListGroup.Item>{namesObject[item]} {adsItem[item]}%</ListGroup.Item>}
+                                        {item === 'discountCategory' && <ListGroup.Item>{namesObject[item]} {disCatArray[adsItem[item] - 1]}</ListGroup.Item>}
                                         {/* {item == 'avitoCategory' && <ListGroup.Item>{namesObject[item]} {districtNames[adsItem[item] - 1]}</ListGroup.Item>} */}
-                                        {item == 'district' && <ListGroup.Item>{namesObject[item]} {districtNames[adsItem[item] - 1]}</ListGroup.Item>}
+                                        {item === 'district' && <ListGroup.Item>{namesObject[item]} {districtNames[adsItem[item] - 1]}</ListGroup.Item>}
+                                        {item === 'uniquePart' && 
+                                            <>
+                                                {
+                                                    Object.values(JSON.parse(adsItem[item])).map((item3:any, index3:any ) =>{
+                                                        return(
+                                                            <ListGroup.Item>{item3[0]} {item3[1]}</ListGroup.Item>
+                                                        );
+                                                })
+                                                }
+                                            </>
+                                        }
                                         
-                                        {item == 'userId' && <>
+                                        {item === 'userId' && <>
                                                             
                                                                 <ListGroup.Item><b>Имя продавца (компания):</b> {adsItem[item].name}</ListGroup.Item>
                                                                 {stateUser ?

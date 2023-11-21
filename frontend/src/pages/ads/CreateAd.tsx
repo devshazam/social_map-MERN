@@ -28,8 +28,7 @@ const CreateDiscount = () => {
 
 console.log(stateUnique, 11111)
     let sendToServer = () => {
-        if(!stateImg || !stateMap || !Object.values(stateCommon).every(q => Boolean(q)) || !JSON.parse(stateUnique).every((i: any) => Boolean(i[1])) || !stateUser) {
-            console.log(Boolean(JSON.parse(stateUnique).every((i: any) => Boolean(i[1]))))
+        if(!stateImg || !stateMap || !Object.values(stateCommon).every(q => Boolean(q)) || !stateUser) {
             setFalg(0)
             window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
             return;
@@ -59,6 +58,16 @@ console.log(stateUnique, 11111)
         createDiscount(formData).then((data) => {
             console.log(data)
         } )
+        .catch((error:any) => {
+            if (error.response.data) {
+                alert(
+                    `${error.response.data.message}${error.response.status}`
+                );
+            } else {
+                console.log("dev", error);
+                alert("Ошибка 138 - Обратитесь к администратору!");
+            }
+        });
     }
 
     //

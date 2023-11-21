@@ -30,7 +30,7 @@ const AllDiscounts = () => {
 
     const filterObject = useSelector((state:any) => state.app.filter);
 
-    console.log(filterObject)
+    console.log(adsList)
     useEffect(() => {
             fetchAdsList({...filterObject, page, adCategory})
             .then((data:any) => {
@@ -51,7 +51,7 @@ const AllDiscounts = () => {
             .finally(() => {
                 setSpiner(true);
             });
-    }, [page, filterObject]); // <- add the count variable here
+    }, [page, JSON.stringify(filterObject)]); // <- add the count variable here
 
     function choicePage(number:number) {
         setPage(number);
@@ -89,7 +89,7 @@ const AllDiscounts = () => {
                 <Col xs={12} sm={9} lg={9} className="mb-3">
                     <Row className="mb-5">
                         <div style={{width: '100%', height: '200px', borderRadius: '12px', position: 'relative'}}>
-                            <a href='/discounts-map'>
+                            <a href={'/ads-map/' + adCategory}>
                                 <YMaps >
                                     <section className="map container" >
                                             <Map
@@ -105,10 +105,11 @@ const AllDiscounts = () => {
                             </a>
                             <p style={{position: 'absolute', top: '10%', left: '10%', color: "black"}}>Открыть карту полностью</p>
                         </div>
-
+                    </Row>
+                    <Row className="mb-5">
                         {spiner ? (
                             <>
-                                {adsList.length ? (
+                                {count ? (
                                     adsList.map((ad:any) => (
                                         <Col
                                             xs={12}
@@ -120,7 +121,7 @@ const AllDiscounts = () => {
                                             <Card>
                                                 <a
                                                     href={
-                                                        "/goods/one/" + ad.id
+                                                        "/ad-view/" + ad._id
                                                     }
                                                 >
                                                     <Card.Img
@@ -130,7 +131,7 @@ const AllDiscounts = () => {
                                                 </a>
                                                 <Card.Body>
                                                     <Card.Title>
-                                                        Цена: {ad.price} р <br/>
+                                                        Цена: {ad.cost} р <br/>
                                                         Остаток: {ad.summa}
                                                     </Card.Title>
                                                     <Card.Text>
