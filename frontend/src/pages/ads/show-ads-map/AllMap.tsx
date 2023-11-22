@@ -16,8 +16,8 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 
 
-import DiscountsMapComp from './components/map/DiscountsMapComp'
-import { fetchDiscountByMap }from '../../api/discountAPI'
+import DiscountsMapComp from './components/DiscountsMapComp'
+import { fetchDiscountByMap }from '../../../api/discountAPI'
 
 const AllDiscountsMap = () => {
     const { adCategory } = useParams();

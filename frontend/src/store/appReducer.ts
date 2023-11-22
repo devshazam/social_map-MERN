@@ -12,10 +12,10 @@ interface def {
 }
 const defaultState:def = {
     img: null,
-    map: null,
+    map: {},
     common: {}, 
     main: {},
-    unique: '',
+    unique: {},
     filter: {}
 }
 

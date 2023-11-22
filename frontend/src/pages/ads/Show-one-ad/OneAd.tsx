@@ -12,7 +12,7 @@ import Spinner from "react-bootstrap/Spinner";
 import ListGroup from 'react-bootstrap/ListGroup';
 
 import {useDispatch, useSelector} from "react-redux";
-import { fetchAdById } from "../../api/discountAPI";
+import { fetchAdById } from "../../../api/discountAPI";
 
 const AdView = () => {
     const { adId } = useParams();
