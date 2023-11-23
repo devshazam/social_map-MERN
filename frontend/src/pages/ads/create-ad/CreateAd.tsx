@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { Row } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Button from "@mui/material/Button";
 import { createDiscount } from "../../../api/discountAPI";
 
@@ -17,10 +17,10 @@ import Avito from "./components/unique-components/Avito";
 const CreateDiscount = () => {
     const [flag, setFalg] = useState(1);
 
-    const { adCategory } = useParams<any>();
+    const { adCategory } = useParams<string>();
 
     const stateUser = useSelector((state: any) => state.user.user);
-    const stateIsAuth = useSelector((state: any) => state.user.isAuth);
+    // const stateIsAuth = useSelector((state: any) => state.user.isAuth);
 
     const stateImg = useSelector((state: any) => state.app.img);
     const stateMap = useSelector((state: any) => state.app.map);
@@ -29,27 +29,25 @@ const CreateDiscount = () => {
     const stateUnique = useSelector((state: any) => state.app.unique);
 
     let sendToServer = () => {
-        // if(adCategory !== role !== "COMPANY")
-        const mainObject = {
-            userId: stateUser.id,
-            adCategory,
-            img: stateImg,
+        let mainObject = {
             ...stateMap,
             ...stateCommon,
             ...stateMain,
-            ...stateUnique,
         };
-
-        if (
-            !stateImg ||
-            !stateMap ||
-            !Object.values(stateCommon).every((q) => Boolean(q)) ||
-            !stateUser
-        ) {
+        if (!stateImg || !stateUser || !adCategory ||
+            !Object.values(mainObject).every((i:any) => Boolean(i))) {
             setFalg(0);
             window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
             return;
         }
+
+        mainObject = {
+            userId: stateUser.id,
+            adCategory,
+            img: stateImg,
+            ...mainObject,
+            ...stateUnique,
+        };
 
         const formData = new FormData();
         Object.entries(mainObject).map((item: any) => {

@@ -14,10 +14,10 @@ import Test from "./pages/main/Test";
 import { useDispatch, useSelector } from "react-redux";
 import { check } from "../src/api/userAPI";
 
-import AllAds from "./pages/ads/AllAds";
-import AllMap from "./pages/ads/AllMap";
+import AllAds from "./pages/ads/show-ads-list/AllAds";
+import AllMap from "./pages/ads/show-ads-map/AllMap";
 import CreateAd from "./pages/ads/create-ad/CreateAd";
-import AdView from "./pages/ads/OneAd";
+import AdView from "./pages/ads/Show-one-ad/OneAd";
 
 const App: React.FC = () => {
     const [loading, setLoading] = useState(true);

@@ -24,15 +24,11 @@ const MapChoiceComp = (props: any) => {
                     payload: {
                         address: addressString,
                         coordinates:
-                            data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
-                                .split(" ")
-                                .reverse(),
+                            data,
                     },
                 });
                 setCoordinats(
-                    data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
-                        .split(" ")
-                        .reverse()
+                    data
                 );
             })
             .catch((error: any) => {

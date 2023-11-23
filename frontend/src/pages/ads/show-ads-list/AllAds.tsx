@@ -17,6 +17,7 @@ import { Map, Placemark, YMaps } from "@pbe/react-yandex-maps";
 import DiscountsForms from "./components/DiscountsForms";
 import DistrictForm from "./components/components/DistrictForm";
 import EventsForms from "./components/EventsForms";
+import AvitoForms from "./components/AvitoForms";
 
 import { fetchAdsList } from "../../../api/discountAPI";
 import { useSelector } from "react-redux";
@@ -85,7 +86,7 @@ const AllDiscounts = () => {
                     {adCategory === "1" && <DiscountsForms />}
                     {adCategory === "2" && <DistrictForm />}
                     {adCategory === "3" && <EventsForms />}
-                    {/* { adCategory === '4' && <AvitoForms /> } */}
+                    {adCategory === '4' && <AvitoForms /> }
                 </Col>
                 <Col xs={12} sm={9} lg={9} className="mb-3">
                     <Row className="mb-5">

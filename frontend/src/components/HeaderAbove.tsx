@@ -57,29 +57,37 @@ console.log(state)
                                     id="nav-dropdown-dark-example"
                                     title={state.user.email}
                                 >
-
                                     <NavDropdown.Item onClick={logOut}>
                                         Выход
                                     </NavDropdown.Item>
-                                    <NavDropdown.Item href="/ads/create-ad/1">
-                                        Создать скидку
+                                    <NavDropdown.Item href="/user/ads/create-ad/2">
+                                        Создать Благотворительность
                                     </NavDropdown.Item>
-                                    {state.user.role == "ADMIN" && (
+                                    <NavDropdown.Item href="/user/ads/create-ad/4">
+                                        Создать Объявление
+                                    </NavDropdown.Item>
+                                    {state.user.role == "COMPANY" && (
                                         <>
                                             <NavDropdown.Divider />
                                             <NavDropdown.Item
-                                                href="/discounts/create"
+                                                href="/company/ads/create-ad/1"
                                                 className="redLink"
                                             >
-                                                Создать скидку
+                                                Создать Cкидку
                                             </NavDropdown.Item>
-                                            <NavDropdown.Divider />
+                                            <NavDropdown.Item
+                                                href="/company/ads/create-ad/3"
+                                                className="redLink"
+                                            >
+                                                Создать Мероприятие
+                                            </NavDropdown.Item>
+                                            {/* <NavDropdown.Divider />
                                             <NavDropdown.Item
                                                 href="/discounts/create"
                                                 className="fioLink"
                                             >
                                                 Создать скидку
-                                            </NavDropdown.Item>
+                                            </NavDropdown.Item> */}
 
                                         </>
                                     )}

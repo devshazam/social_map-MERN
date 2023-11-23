@@ -27,9 +27,6 @@ const CommonFieldsComp = (props:any) => {
 
     return (
         <>
-
-
-
                 <Col xs={12} md={6}>
                             <TextField  id="outlined-basic" label="Ваше название:" variant="outlined" fullWidth
                                         sx={{mb: 1}}

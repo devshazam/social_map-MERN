@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import {Map, Placemark, YMaps} from "@pbe/react-yandex-maps";
+import {Map, Placemark, YMaps, Clusterer} from "@pbe/react-yandex-maps";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -91,7 +91,19 @@ const AllDiscountsMap = () => {
                                             instanceRef={mapRef}
                                             onLoad={refreshData}
                                              >
-                            
+                                                <Clusterer
+      options={{
+        preset: "islands#invertedVioletClusterIcons",
+        groupByCoordinates: false,
+      }}
+    >
+                            <Placemark 
+                        geometry={[48.514075, 44.527497]}
+                        options={{
+                            preset: 'islands#oliveStretchyIcon', // список темплейтов на сайте яндекса
+                            // iconOffset: [50, -50], // цвет иконки
+                        }}
+                    />
                                                 { discountList &&
                                                     
                                                     discountList.map((item: any) => {
@@ -110,6 +122,7 @@ const AllDiscountsMap = () => {
                                                         );
                                                     })
                                                 }
+                                                </Clusterer>
                                         </Map>
                                 </section>
                             </YMaps>

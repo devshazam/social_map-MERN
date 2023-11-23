@@ -33,3 +33,8 @@ export const fetchAdsList = async (param: any) => { // TODO определить
     console.log(data)
     return data
 }
+export const checkIp = async () => { // TODO определить тип переменной
+    const {data} = await $authHost.post('/api/discounts/check-ip')
+    console.log(data)
+    return data
+}

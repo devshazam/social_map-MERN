@@ -10,13 +10,14 @@ import {useSelector} from "react-redux";
 
 const LayoutCompany = () => {
 
+    const stateIsAuth = useSelector((state:any) => state.user.isAuth);
     const stateUser = useSelector((state:any) => state.user.user);
     return (
         <>
             <HeaderAbove />
             <Header />
             <Container className="main-cont">
-                { stateUser.role === "COMPANY" ? <Outlet /> : <Navigate to="/" />}
+                { (stateIsAuth && stateUser.role === "COMPANY") ? <Outlet /> : <Navigate to="/" />}
             </Container>
             <Footer />
             {/* <LoginPage />

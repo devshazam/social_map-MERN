@@ -3,9 +3,10 @@ import { Outlet } from "react-router-dom";
 import Header from "./components/Header";
 import Container from "react-bootstrap/Container";
 import Footer from "./components/Footer";
+import HeaderAbove from "./components/HeaderAbove";
 import LoginPage from "./components/modal/LoginPage";
 import RegPage from "./components/modal/RegPage";
-import HeaderAbove from "./components/HeaderAbove";
+import BanSite from "./components/modal/BanSite";
 
 
 export default function Layout() {
@@ -19,6 +20,7 @@ export default function Layout() {
             <Footer />
             <LoginPage />
             <RegPage />
+            {/* <BanSite /> */}
         </>
     );
 }

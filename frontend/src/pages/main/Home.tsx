@@ -17,7 +17,7 @@ export default function Home() {
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="/file/main-banner/banner-2.jpg"
+                            src="/files/main-banner/banner-1.jpg"
                             alt="First slide"
                         />
                         {/* <Carousel.Caption>
@@ -29,7 +29,7 @@ export default function Home() {
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="/file/main-banner/banner-1.jpg"
+                            src="/files/main-banner/banner-1.jpg"
                             alt="Second slide"
                         />
                         {/* <Carousel.Caption>
@@ -43,7 +43,7 @@ export default function Home() {
                     <Col xs={12} sm={6} lg={3} className="mb-3">
                         <a href="/produce/banner">
                             <Image
-                                src="/file/home/banner.jpg"
+                                src="/files/reklama.jpg"
                                 thumbnail
                                 className="img-mob"
                             />
@@ -53,7 +53,7 @@ export default function Home() {
                     <Col xs={12} sm={6} lg={3} className="mb-3">
                         <a href="/produce/samokleyka">
                             <Image
-                                src="/file/home/samokleyky.png"
+                                src="/files/reklama.jpg"
                                 thumbnail
                                 className="img-mob"
                             />
@@ -62,7 +62,7 @@ export default function Home() {
                     <Col xs={12} sm={6} lg={3} className="mb-3">
                         <a href="/3d-details">
                             <Image
-                                src="/file/home/3d.jpg"
+                                src="/files/reklama.jpg"
                                 thumbnail
                                 className="img-mob"
                             />
@@ -71,7 +71,7 @@ export default function Home() {
                     <Col xs={12} sm={6} lg={3} className="mb-3">
                         <a href="/produce/vizitki">
                             <Image
-                                src="/file/home/vizitki.jpg"
+                                src="/files/reklama.jpg"
                                 thumbnail
                                 className="img-mob"
                             />
@@ -79,7 +79,7 @@ export default function Home() {
                     </Col>
                 </Row>
 
-                <h2>Все скидки Красноармейского района!</h2>
+
 
 
                 {/* карта яндекс 888*/}
