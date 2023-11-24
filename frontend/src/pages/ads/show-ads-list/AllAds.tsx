@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import Col from "react-bootstrap/Col";
@@ -25,6 +25,7 @@ import { useSelector } from "react-redux";
 const AllDiscounts = () => {
     const { adCategory } = useParams();
 
+    const ref = useRef(null);
     const [spiner, setSpiner] = useState(false);
     const [adsList, setAdsList] = useState([]);
     const [count, setCount] = useState(0);
@@ -32,6 +33,10 @@ const AllDiscounts = () => {
     const [page, setPage] = useState(1);
 
     const filterObject = useSelector((state: any) => state.app.filter);
+
+    useEffect(() => {
+        console.log('width', ref.current);
+      }, [ref.current]);
 
     console.log(adsList);
     useEffect(() => {
@@ -127,8 +132,10 @@ const AllDiscounts = () => {
                     <Row className="mb-5">
                         {spiner ? (
                             <>
-                                {count ? (
-                                    adsList.map((ad: any) => (
+                                {count ? 
+                                    adsList.map((ad: any) => {
+
+                                        return(
                                         <Col
                                             xs={12}
                                             sm={6}
@@ -138,7 +145,7 @@ const AllDiscounts = () => {
                                         >
                                             <Card>
                                                 <a href={"/ad-view/" + ad._id}>
-                                                    <Card.Img
+                                                    <Card.Img style={{width: '50%'}} ref={ref}
                                                         variant="top"
                                                         src={ad.image}
                                                     />
@@ -153,9 +160,9 @@ const AllDiscounts = () => {
                                                     </Card.Text>
                                                 </Card.Body>
                                             </Card>
-                                        </Col>
-                                    ))
-                                ) : (
+                                        </Col>);
+                                    })
+                                 : (
                                     <h3>В данной категории нет товаров!</h3>
                                 )}
                             </>

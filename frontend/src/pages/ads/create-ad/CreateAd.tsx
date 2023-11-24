@@ -100,8 +100,8 @@ const CreateDiscount = () => {
             </Row>
             <Row className="mb-5">
                 <h5>
-                    Шаг №3: Загрузите картинку квадратной формы в формате: jpg,
-                    jpeg, png{" "}
+                    Шаг №3: Загрузите картинку в формате: jpg,
+                    jpeg, png
                 </h5>
                 <hr />
                 <ImageResizingComp flag={flag} />

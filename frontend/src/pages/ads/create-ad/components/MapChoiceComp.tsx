@@ -23,8 +23,8 @@ const MapChoiceComp = (props: any) => {
                     type: "MAP",
                     payload: {
                         address: addressString,
-                        coordinates:
-                            data,
+                        latitude: data[0],
+                        longitude: data[1],
                     },
                 });
                 setCoordinats(

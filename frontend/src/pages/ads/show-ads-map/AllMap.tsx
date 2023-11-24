@@ -29,7 +29,7 @@ const AllDiscountsMap = () => {
     const [discountList, setDiscountList] = useState<any>(null);
     const [allObject, setAllObject] = useState<any>({});
     
-    console.log(discountList)
+    console.log(mapRef)
 
     const refreshData = () => {
        if(mapRef.current && mapRef.current._bounds) {
@@ -91,17 +91,24 @@ const AllDiscountsMap = () => {
                                             instanceRef={mapRef}
                                             onLoad={refreshData}
                                              >
-                                                <Clusterer
+                                                {/* <Clusterer
       options={{
         preset: "islands#invertedVioletClusterIcons",
         groupByCoordinates: false,
       }}
-    >
+    > */}
                             <Placemark 
                         geometry={[48.514075, 44.527497]}
                         options={{
                             preset: 'islands#oliveStretchyIcon', // список темплейтов на сайте яндекса
-                            // iconOffset: [50, -50], // цвет иконки
+                            iconOffset: [5, -5], // цвет иконки
+                        }}
+                    />
+                            <Placemark 
+                        geometry={[48.514075, 44.527497]}
+                        options={{
+                            preset: 'islands#oliveStretchyIcon', // список темплейтов на сайте яндекса
+                            // iconOffset: [5, -5], // цвет иконки
                         }}
                     />
                                                 { discountList &&
@@ -122,7 +129,7 @@ const AllDiscountsMap = () => {
                                                         );
                                                     })
                                                 }
-                                                </Clusterer>
+                                                {/* </Clusterer> */}
                                         </Map>
                                 </section>
                             </YMaps>

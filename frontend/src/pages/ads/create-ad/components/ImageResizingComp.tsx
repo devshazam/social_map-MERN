@@ -8,9 +8,10 @@ import {useDispatch} from "react-redux";
 const ImageResizingComp = (props:any) => {
     const [imageUrl, setImageUrl] = useState<string>('');
     const [countOne, setCountOne] = useState<number>(0);
+    const [width, setWidth] = useState<number>(0);
     const dispatch = useDispatch();
 
-    // console.log(imageUrl)
+    console.log(width)
     // console.log(discountObject)
 
     useEffect(() => {
@@ -19,9 +20,14 @@ const ImageResizingComp = (props:any) => {
                 if(Number(img.clientHeight) < 44 ){
                     setCountOne(countOne+ 1)
                 }else{
-                    console.log(img.clientHeight, img.clientWidth, countOne)
+                    console.log(img.clientHeight, img.clientWidth)
+                    setWidth((+img.clientWidth / +img.clientHeight) * 100);
+                    
+
                 }
     }, [countOne, imageUrl])
+
+
     // https://www.npmjs.com/package/react-image-file-resizer
     function resizeFile(file:any) {
         return new Promise((resolve) => {
@@ -96,9 +102,14 @@ const ImageResizingComp = (props:any) => {
             </Col>
             <Col xs={12} md={6}>
                 <h6>Здесь появится ваша картинка после оптимизации:</h6>
-
-
-                    <img id="img" alt="Место для картинки" src={imageUrl} style={{maxWidth: '300px', maxHeight: '300px', margin: '30px', width: '300px', height: '300px'}}/>
+                    {
+                        width ?
+                        <div className='' style={{border: '1px solid black', margin: 'auto', width: '80%', backgroundColor: '#c5c5c5'}}>
+                            <img  alt="Место для картинки" src={imageUrl} style={{width: `${width}%`, marginLeft: `${(100-width)/2}%`, marginRight: `${(100-width)/2}%`, boxSizing: 'border-box'}}/>
+                        </div>
+                        :
+                        <img id="img" alt="Место для картинки" src={imageUrl} style={{ width: '300px'}}/>
+                    }
                 {Boolean(!imageUrl && props.flag == 0) &&
                     <p style={{color: 'red', fontSize: '15px', border: '1px solid red'}}>Картинка не загружена!</p>
                 }
