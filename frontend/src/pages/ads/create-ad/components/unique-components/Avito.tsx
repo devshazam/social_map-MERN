@@ -39,7 +39,7 @@ const Discounts = (props:any) => {
 
 
     useEffect(() => {
-        dispatch({type: "MAIN", payload: {cost: mainObject.cost, avitoCategory: mainObject.discountCategory}})
+        dispatch({type: "MAIN", payload: {cost: mainObject.cost, avitoCategory: mainObject.avitoCategory}})
 
 
         dispatch({type: "UNIQUE", payload: JSON.stringify(uniqObject)})
