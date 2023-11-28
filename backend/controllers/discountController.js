@@ -2,7 +2,7 @@ const path = require("path");
 const fs = require("fs");
 const { appendFiles } = require("../error-log/LogHandling");
 const {
-    Discount, User
+    Discount, User, Error,
 } = require("../models/models");
 const ApiError = require("../error/ApiError");
 const { fileUploadCustom, fileDelete } = require("../S3/s3Upload");
@@ -176,7 +176,17 @@ return
         }
     }
 
+    
+    async recordErrorToLog(req, res, next) {
 
+        try{
+            const errorRes = Error.create({ ...req.body })
+            return res.json(errorRes);
+        }catch (error) {
+            await appendFiles(`\n603: ${error.message}`);
+            return next(ApiError.internal(`603: ${error.message}`));
+        }
+    }
 }
 
 module.exports = new DiscountController();

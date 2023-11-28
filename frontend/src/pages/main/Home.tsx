@@ -7,6 +7,7 @@ import Figure from "react-bootstrap/Figure";
 import Image from "react-bootstrap/Image";
 
 export default function Home() {
+  
     return (
         <>
             <Container>
@@ -43,7 +44,7 @@ export default function Home() {
                     <Col xs={12} sm={6} lg={3} className="mb-3">
                         <a href="/produce/banner">
                             <Image
-                                src="/files/reklama.jpg"
+                                src="/files/img/vykup-auto.jpg"
                                 thumbnail
                                 className="img-mob"
                             />

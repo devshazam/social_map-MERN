@@ -33,6 +33,7 @@ const CreateDiscount = () => {
             ...stateMap,
             ...stateCommon,
             ...stateMain,
+            ...{}
         };
         if (!stateImg || !stateUser || !adCategory ||
             !Object.values(mainObject).every((i:any) => Boolean(i))) {

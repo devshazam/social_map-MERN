@@ -49,11 +49,17 @@ const discountSchema = new Schema({
 
 }, { timestamps: true });
 
+const errorSchema = new Schema({
+    name: {  type: String, required: true }, // имя или название компании
+    message: { type: String },
+    info: { type: String },
 
+}, { timestamps: true });
 
 const User = mongoose.model("User", userSchema);
 const Discount = mongoose.model("Discount", discountSchema);
+const Error = mongoose.model("Error", errorSchema);
 
 
 
-module.exports = { User, Discount };
+module.exports = { User, Discount, Error };

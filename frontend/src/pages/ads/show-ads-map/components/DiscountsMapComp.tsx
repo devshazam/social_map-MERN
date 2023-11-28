@@ -7,7 +7,21 @@ import {Placemark} from "@pbe/react-yandex-maps";
 
 const AllDiscountsMap = (props: any) => {
 
-console.log(props.discountItem.latitude, props.discountItem.longitude, 555)
+    // const arrayRadius: any = [[0, 0], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1]];
+    const arrayRadius: any = [[0, 0], [1, -1], [-1, -1], [-1, 1], [1, 1]];
+
+    let midOne = props.arrayCoordinates.reduce((total:any, item:any, index:any) => {if(index >= props.index) return total;
+            if(item[0] === props.discountItem.latitude && item[1] === props.discountItem.longitude) {return total + 1 } else{return total}}, 0)
+let w: any;
+            if(midOne <= 4){
+
+                w = [arrayRadius[midOne][0] * 27, arrayRadius[midOne][1] * 27]
+            }else{
+                w = [arrayRadius[midOne%8][0] * Math.abs(midOne/8) * 27, arrayRadius[midOne%8][0] * Math.abs(midOne/8) * 27];
+
+            }
+
+
         const currentTime = new Date().getTime();
         let colorPoint;
         if(Math.ceil((currentTime - props.discountItem.currentTime) / 8.64e7) <= 7){
@@ -28,6 +42,7 @@ console.log(props.discountItem.latitude, props.discountItem.longitude, 555)
                         options={{
                             preset: 'islands#oliveStretchyIcon', // список темплейтов на сайте яндекса
                             iconColor: colorPoint, // цвет иконки
+                            iconOffset: w, // !!!!!!!!!!!!!!
                         }}
                         properties={{
                             iconContent: `${props.discountItem.discount}%`, // пару символов помещается

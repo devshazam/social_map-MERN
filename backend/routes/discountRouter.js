@@ -9,6 +9,7 @@ router.post('/fetch-discount-by-map', discountController.fetchDiscountByMap)
 router.post('/fetch-ads-by-id', discountController.fetchAdsById)
 router.post('/fetch-ads-list', discountController.fetchAdsList)
 router.post('/check-ip', discountController.checkIp)
+router.post('/record-error-to-log', discountController.recordErrorToLog)
 
 
 

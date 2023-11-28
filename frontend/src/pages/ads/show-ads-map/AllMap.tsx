@@ -28,8 +28,8 @@ const AllDiscountsMap = () => {
 
     const [discountList, setDiscountList] = useState<any>(null);
     const [allObject, setAllObject] = useState<any>({});
-    
-    console.log(mapRef)
+    const [arrayCoordinates, setArrayCoordinates] = useState<any>([]);
+
 
     const refreshData = () => {
        if(mapRef.current && mapRef.current._bounds) {
@@ -45,6 +45,9 @@ const AllDiscountsMap = () => {
     useEffect(() => {
         if(!map) {return;}
         fetchDiscountByMap({ ...allObject, adCategory, xLatitude: map[0][0], xLongitude: map[0][1], yLatitude: map[1][0], yLongitude: map[1][1] }).then((data) => {
+            let mid2:any = []
+            data.map((item:any) => {mid2 = [...mid2, [item.latitude, item.longitude]]})
+            setArrayCoordinates(mid2)
             setDiscountList(data)
         })
         .catch((error:any) => {
@@ -97,34 +100,21 @@ const AllDiscountsMap = () => {
         groupByCoordinates: false,
       }}
     > */}
-                            <Placemark 
-                        geometry={[48.514075, 44.527497]}
-                        options={{
-                            preset: 'islands#oliveStretchyIcon', // список темплейтов на сайте яндекса
-                            iconOffset: [5, -5], // цвет иконки
-                        }}
-                    />
-                            <Placemark 
-                        geometry={[48.514075, 44.527497]}
-                        options={{
-                            preset: 'islands#oliveStretchyIcon', // список темплейтов на сайте яндекса
-                            // iconOffset: [5, -5], // цвет иконки
-                        }}
-                    />
+ 
                                                 { discountList &&
                                                     
-                                                    discountList.map((item: any) => {
-                     
+                                                    discountList.map((item: any, index:any) => {
+                                                       
+
+
+                                                        console.log(arrayCoordinates)
                                                         return(
                                                             <>
-                                                                { adCategory === '1' && <DiscountsMapComp key={item._id} discountItem={item}/> }
+                                                                { adCategory === '1' && <DiscountsMapComp key={item._id} discountItem={item} arrayCoordinates={arrayCoordinates} index={index}/> }
                                                                 {/* { adCategory === '2' && <DistrictForm /> }
                                                                 { adCategory === '3' && <EventsForms /> } */}
                                                                 {/* { adCategory === '4' && <AvitoForms /> } */}
-                                                                {/* <Placemark key={item._id}
-                                                                    geometry={[item.latitude, item.longitude]}
-                                                                   
-                                                                /> */}
+                                                       
                                                             </>
                                                         );
                                                     })

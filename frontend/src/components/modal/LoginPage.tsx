@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import {Helmet} from "react-helmet";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -54,6 +55,11 @@ const LoginPage = () => {
 
     return (
         <>
+        <Helmet>
+                <meta charSet="utf-8" />
+                <title>My Title</title>
+                <link rel="canonical" href="http://mysite.com/example" />
+            </Helmet>
           {/* <Modal   show={helpers.modalLogin} onHide={hideModal}> */}
           <Modal show={state.modalLogin} onHide={hideModal} >
                 <Modal.Header closeButton>
@@ -96,3 +102,4 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
