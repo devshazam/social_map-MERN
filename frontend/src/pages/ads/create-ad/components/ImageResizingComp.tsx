@@ -5,28 +5,32 @@ import Button from '@mui/material/Button';
 import Resizer from "react-image-file-resizer";
 import {useDispatch} from "react-redux";
 
+import {dimensionsToStyleObject} from '../../../../utils/helpFunctions'
+
 const ImageResizingComp = (props:any) => {
     const [imageUrl, setImageUrl] = useState<string>('');
     const [countOne, setCountOne] = useState<number>(0);
-    const [width, setWidth] = useState<number>(0);
+    const [dimensions, setDimensions] = useState<number[] | null>(null);
+    const [imageInsert, setImageInsert] = useState<any>(null);
+
     const dispatch = useDispatch();
 
-    console.log(width)
-    // console.log(discountObject)
-
     useEffect(() => {
-            if(!imageUrl) return
+            if(!imageUrl) return;
                 let img: any = document.querySelector("#img");
                 if(Number(img.clientHeight) < 44 ){
                     setCountOne(countOne+ 1)
                 }else{
-                    console.log(img.clientHeight, img.clientWidth)
-                    setWidth((+img.clientWidth / +img.clientHeight) * 100);
-                    
-
+                    setDimensions([+img.clientWidth, +img.clientHeight]);
                 }
     }, [countOne, imageUrl])
 
+    useEffect(() => {
+        if(imageInsert && dimensions)
+        dispatch({type: "IMG", payload: {img: imageInsert, dimensions: JSON.stringify(dimensions)}})
+}, [countOne, imageUrl])
+
+    // 
 
     // https://www.npmjs.com/package/react-image-file-resizer
     function resizeFile(file:any) {
@@ -39,7 +43,7 @@ const ImageResizingComp = (props:any) => {
                 80,
                 0,
                 (uri: any) => {
-                    setImageUrl(uri);
+                    // setImageUrl(uri);
                     resolve(uri)
                 },
                 "file"
@@ -49,12 +53,11 @@ const ImageResizingComp = (props:any) => {
     async function asd(event:any):Promise<void> {
         if (event.target.files && event.target.files[0]) {
             console.log(event.target.files[0], 111)
+
             try {
-                const file = event.target.files[0];
-                const image:any = await resizeFile(file);
-                console.log(image, 222)
-                dispatch({type: "IMG", payload: image})
+                const image:any = await resizeFile(event.target.files[0]);
                 setImageUrl(URL.createObjectURL(image));
+                setImageInsert(image)
             } catch (err) {
                 console.log(err);
             }
@@ -103,12 +106,12 @@ const ImageResizingComp = (props:any) => {
             <Col xs={12} md={6}>
                 <h6>Здесь появится ваша картинка после оптимизации:</h6>
                     {
-                        width ?
+                        dimensions ?
                         <div className='' style={{border: '1px solid black', margin: 'auto', width: '80%', backgroundColor: '#c5c5c5'}}>
-                            <img  alt="Место для картинки" src={imageUrl} style={{width: `${width}%`, marginLeft: `${(100-width)/2}%`, marginRight: `${(100-width)/2}%`, boxSizing: 'border-box'}}/>
+                            <img  alt="Место для картинки" src={imageUrl} style={{...dimensionsToStyleObject(dimensions), boxSizing: 'border-box'}}/>
                         </div>
                         :
-                        <img id="img" alt="Место для картинки" src={imageUrl} style={{ width: '300px'}}/>
+                        <img id="img" alt="Место для картинки" src={imageUrl} />
                     }
                 {Boolean(!imageUrl && props.flag == 0) &&
                     <p style={{color: 'red', fontSize: '15px', border: '1px solid red'}}>Картинка не загружена!</p>

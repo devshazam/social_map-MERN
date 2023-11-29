@@ -21,6 +21,7 @@ import AvitoForms from "./components/AvitoForms";
 
 import { fetchAdsList } from "../../../api/discountAPI";
 import { useSelector } from "react-redux";
+import {dimensionsToStyleObject} from '../../../utils/helpFunctions'
 
 const AllDiscounts = () => {
     const { adCategory } = useParams();
@@ -145,7 +146,8 @@ const AllDiscounts = () => {
                                         >
                                             <Card>
                                                 <a href={"/ad-view/" + ad._id}>
-                                                    <Card.Img style={{width: '50%'}} ref={ref}
+                                                    <Card.Img  ref={ref}
+                                                        style={{...dimensionsToStyleObject(JSON.parse(ad.dimensions))}}
                                                         variant="top"
                                                         src={ad.image}
                                                     />

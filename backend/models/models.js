@@ -44,6 +44,7 @@ const discountSchema = new Schema({
     latitude: { type: String, required: true },
     longitude: { type: String, required: true },
     image: { type: String, required: true },
+    dimensions: { type: String, required: true },
     currentTime: { type: Number, required: true },
     userId: { type: Schema.Types.ObjectId, ref: "User" }
 

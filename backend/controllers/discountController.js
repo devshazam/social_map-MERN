@@ -22,24 +22,15 @@ class DiscountController {
             "X-Secret": process.env.SECRET_KEY_FIND_ADDRESS_BY_ID
         };
 
-
+      try {
         addressVar = await axios.post(`https://cleaner.dadata.ru/api/v1/clean/address`, JSON.stringify([address]), {headers})
 
         let qaz = [addressVar.data[0].geo_lat, addressVar.data[0].geo_lon];
-console.log(qaz)
-return res.json(qaz);
+        console.log(qaz)
+        return res.json(qaz);
 
-
-
-
-
-
-
-      
-        try {
-            addressVar = await axios.get(`https://geocode-maps.yandex.ru/1.x/?apikey=${process.env.API_KEY_YANDEX_GEO}&geocode=${address.split(' ').join('+')}&format=json`)
-
-            return res.json(addressVar.data);
+            // addressVar = await axios.get(`https://geocode-maps.yandex.ru/1.x/?apikey=${process.env.API_KEY_YANDEX_GEO}&geocode=${address.split(' ').join('+')}&format=json`)
+            // return res.json(addressVar.data);
         } catch (error) {
             await appendFiles(`\n601: ${error.message}`);
             return next(ApiError.internal(`601: ${error.message}`));
@@ -49,20 +40,18 @@ return res.json(qaz);
 
 
     async createDiscount(req, res, next) {
-        const { address, name, description, district, uniquePart, latitude, longitude, userId, adCategory, discountCategory, cost, discount, startDate, endDate} = req.body;
-
+        const { adCategory } = req.body;
+        let arrayPath = ['discounts/', 'avito/', 'charity/', 'events/'];
         try {
             let fileLocation = null;
             if (req.files) { 
                 fileLocation = await fileUploadCustom(
                     req.files.img,
-                    "davse/discounts/"
+                    "davse/"+arrayPath[adCategory-1]
                 );
             }
-        
             const currentTime = new Date().getTime();
-            const midDiscount = await Discount.create({ uniquePart, address, name, description, district, adCategory, image: fileLocation, latitude, longitude, userId, currentTime, discountCategory, cost, discount, startDate, endDate });
-
+            const midDiscount = await Discount.create({ ...req.body, currentTime, image: fileLocation });
             return res.json(midDiscount);
         } catch (error) {
             await appendFiles(`\n603: ${error.message}`);
@@ -143,38 +132,38 @@ return res.json(qaz);
     }
 
 
-    async checkIp(req, res, next) {
+//     async checkIp(req, res, next) {
 
 
 
-        let clientIp = requestIp.getClientIp(req)
-console.log(clientIp)
-return
+//         let clientIp = requestIp.getClientIp(req)
+// console.log(clientIp)
+// return
 
-        const headers = {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization": "Token " + process.env.API_KEY_FIND_ADDRESS_BY_ID
-        };
+//         const headers = {
+//             "Content-Type": "application/json",
+//             "Accept": "application/json",
+//             "Authorization": "Token " + process.env.API_KEY_FIND_ADDRESS_BY_ID
+//         };
 
-        try {
-            const midAddress = await fetch("https://suggestions.dadata.ru/suggestions/api/4_1/rs/iplocate/address?ip=", {
-                method: "GET",
-                mode: "cors",
-                headers,
-            });
-console.log(midAddress)
-            const addressObject = await midAddress.json();
-console.log(addressObject)
-return
-            return res.json(payItem);
+//         try {
+//             const midAddress = await fetch("https://suggestions.dadata.ru/suggestions/api/4_1/rs/iplocate/address?ip=", {
+//                 method: "GET",
+//                 mode: "cors",
+//                 headers,
+//             });
+// console.log(midAddress)
+//             const addressObject = await midAddress.json();
+// console.log(addressObject)
+// return
+//             return res.json(payItem);
 
 
-        } catch (error) {
-            await appendFiles(`\n603: ${error.message}`);
-            return next(ApiError.internal(`603: ${error.message}`));
-        }
-    }
+//         } catch (error) {
+//             await appendFiles(`\n603: ${error.message}`);
+//             return next(ApiError.internal(`603: ${error.message}`));
+//         }
+//     }
 
     
     async recordErrorToLog(req, res, next) {

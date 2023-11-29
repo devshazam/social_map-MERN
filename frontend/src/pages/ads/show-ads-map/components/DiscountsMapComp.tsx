@@ -7,42 +7,24 @@ import {Placemark} from "@pbe/react-yandex-maps";
 
 const AllDiscountsMap = (props: any) => {
 
-    // const arrayRadius: any = [[0, 0], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1]];
+    // ф-ция которая распределяет метки с одной координатой по спирали
     const arrayRadius: any = [[0, 0], [1, -1], [-1, -1], [-1, 1], [1, 1]];
-
     let midOne = props.arrayCoordinates.reduce((total:any, item:any, index:any) => {if(index >= props.index) return total;
             if(item[0] === props.discountItem.latitude && item[1] === props.discountItem.longitude) {return total + 1 } else{return total}}, 0)
-let w: any;
-            if(midOne <= 4){
+    let iconOffsetVar = (midOne <= 4) ? [arrayRadius[midOne][0] * 27, arrayRadius[midOne][1] * 27] : [arrayRadius[midOne%8][0] * Math.abs(midOne/8) * 27, arrayRadius[midOne%8][0] * Math.abs(midOne/8) * 27];
 
-                w = [arrayRadius[midOne][0] * 27, arrayRadius[midOne][1] * 27]
-            }else{
-                w = [arrayRadius[midOne%8][0] * Math.abs(midOne/8) * 27, arrayRadius[midOne%8][0] * Math.abs(midOne/8) * 27];
+    // функция должно окрашивать метки в цвета в зависимости от длительности размещения, если старше 7 дней, то желтый или красный
+    let colorPoint = (Math.ceil((new Date().getTime() - props.discountItem.currentTime) / 8.64e7) <= 7) ? 'red' : 'yellow';
 
-            }
-
-
-        const currentTime = new Date().getTime();
-        let colorPoint;
-        if(Math.ceil((currentTime - props.discountItem.currentTime) / 8.64e7) <= 7){
-            colorPoint = 'red'
-        }else{
-            colorPoint = 'yellow'
-        }
 
     return (
         <>
-            
-                                                    
-                                                
-
-      
                 <Placemark key={props.discountItem._id}
                         geometry={[props.discountItem.latitude, props.discountItem.longitude]}
                         options={{
                             preset: 'islands#oliveStretchyIcon', // список темплейтов на сайте яндекса
                             iconColor: colorPoint, // цвет иконки
-                            iconOffset: w, // !!!!!!!!!!!!!!
+                            iconOffset: iconOffsetVar, // !!!!!!!!!!!!!!
                         }}
                         properties={{
                             iconContent: `${props.discountItem.discount}%`, // пару символов помещается

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
 import Col from "react-bootstrap/Col";
-import { Row } from "react-bootstrap";
 import { TextField } from "@mui/material";
 import { fetchYandexAddress } from "../../../../api/discountAPI";
 import Button from "@mui/material/Button";
@@ -12,24 +11,16 @@ const MapChoiceComp = (props: any) => {
     const [coordinats, setCoordinats] = useState([]);
 
     const dispatch = useDispatch();
-    console.log(coordinats, 393939393);
 
-    useEffect(() => {}, [coordinats]);
     let callFetchYandexAddress = (): void => {
         if (!addressString) return;
         fetchYandexAddress({ address: addressString })
             .then((data: any) => {
                 dispatch({
                     type: "MAP",
-                    payload: {
-                        address: addressString,
-                        latitude: data[0],
-                        longitude: data[1],
-                    },
+                    payload: {address: addressString, latitude: data[0], longitude: data[1]},
                 });
-                setCoordinats(
-                    data
-                );
+                setCoordinats(data);
             })
             .catch((error: any) => {
                 if (error.response.data) {
@@ -47,11 +38,11 @@ const MapChoiceComp = (props: any) => {
 
     return (
         <>
-            <Col xs={12} md={{ span: 6, order: 2 }}>
+            <Col xs={12} md={{ span: 6, order: 2 }} style={{marginBottom: '15px'}}>
                 <YMaps>
                     {/* apikey - https://reactjsexample.com/yandex-maps-api-bindings-for-react/ */}
                     <section className="map container">
-                        {+coordinats.length ? (
+                        {coordinats.length ? (
                             <Map
                                 state={{
                                     center: coordinats, // координаты центра карты 48.512741, 44.535905
@@ -75,11 +66,9 @@ const MapChoiceComp = (props: any) => {
                                         iconContent: "Вы здесь!", // пару символов помещается
                                         hintContent: "<em>кликни меня</em>",
                                         balloonContent: `<div class="my-balloon">
-                                                  <h4>КофеМаг</h4>
                                                   <p>
-                                                    Скидка 50% на кофе
+                                                    Так будет выглядеть ваше объявление!
                                                   </p>
-                                                  <a href="#">Смотреть магазин</a>
                                                 </div>`,
                                     }}
                                 />

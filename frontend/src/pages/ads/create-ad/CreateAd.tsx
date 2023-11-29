@@ -15,43 +15,47 @@ import Events from "./components/unique-components/Events";
 import Avito from "./components/unique-components/Avito";
 
 const CreateDiscount = () => {
-    const [flag, setFalg] = useState(1);
+    const [flag, setFlag] = useState(1);
 
     const { adCategory } = useParams<string>();
 
     const stateUser = useSelector((state: any) => state.user.user);
     // const stateIsAuth = useSelector((state: any) => state.user.isAuth);
 
-    const stateImg = useSelector((state: any) => state.app.img);
-    const stateMap = useSelector((state: any) => state.app.map);
-    const stateCommon = useSelector((state: any) => state.app.common);
-    const stateMain = useSelector((state: any) => state.app.main);
-    const stateUnique = useSelector((state: any) => state.app.unique);
+
+    const createState = useSelector((state: any) => state.create);
+    // const stateImg = useSelector((state: any) => state.create.img);
+    // const stateMap = useSelector((state: any) => state.create.map);
+    // const stateCommon = useSelector((state: any) => state.create.common);
+    // const stateMain = useSelector((state: any) => state.create.main);
+    // const stateUnique = useSelector((state: any) => state.create.unique);
+    
+console.log(createState)
 
     let sendToServer = () => {
-        let mainObject = {
-            ...stateMap,
-            ...stateCommon,
-            ...stateMain,
-            ...{}
-        };
-        if (!stateImg || !stateUser || !adCategory ||
-            !Object.values(mainObject).every((i:any) => Boolean(i))) {
-            setFalg(0);
+        // let mainObject = {
+        //     ...stateMap,
+        //     ...stateCommon,
+        //     ...stateMain
+        // };
+        if (Object.values(createState).every((i:any) => Boolean(i))) {
+            setFlag(0);
             window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
             return;
         }
 
-        mainObject = {
-            userId: stateUser.id,
-            adCategory,
-            img: stateImg,
-            ...mainObject,
-            ...stateUnique,
-        };
+        // mainObject = {
+        //     userId: stateUser.id,
+        //     adCategory,
+        //     img: stateImg.image,
+        //     dimensions: stateImg.dimensions,
+        //     ...mainObject,
+        //     ...stateUnique,
+        // };
+
 
         const formData = new FormData();
-        Object.entries(mainObject).map((item: any) => {
+        Object.entries({...createState, userId: stateUser.id}).map((item: any) => {
             formData.append(item[0], item[1]);
         });
 
@@ -93,7 +97,6 @@ const CreateDiscount = () => {
                 {adCategory && (
                     <>
                         {adCategory === "1" && <Discounts flag={flag} />}
-
                         {adCategory === "3" && <Events flag={flag} />}
                         {adCategory === "4" && <Avito flag={flag} />}
                     </>
@@ -118,10 +121,9 @@ const CreateDiscount = () => {
                 <ol>
                     <li>
                         Срок проведения акции ограничен исключительно фактом
-                        публикации акции на сайте, т.е. предоставленная вами
-                        акция действительна в течении всего срока публикации на
-                        сайте, для прекращения действия акции вам нужно снять
-                        объявление об акции с публикации на сайте в личном
+                        публикации акции на сайте, т.е. предоставленное вами
+                        объявление действительна в течении всего срока публикации на
+                        сайте, для прекращения действия акции вам нужно удалить объявление в личном
                         кабинете!
                     </li>
                     <li>
