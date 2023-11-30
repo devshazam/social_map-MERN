@@ -12,13 +12,19 @@ import {useDispatch, useSelector} from "react-redux";
 import globalParamsObject from '../../../../../parameters/mainAppParameterObject'
 
 const Discounts = (props:any) => {
-    const [uniqObject, setUniqObject] = useState({cost: '',  discount: '', discountCategory: ''});
+    const [uniqObject, setUniqObject] = useState<any>({});
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch({type: "MAIN", payload: {cost: uniqObject.cost, discount: uniqObject.discount, discountCategory: uniqObject.discountCategory}})
-    }, [uniqObject])
+        if(uniqObject.cost && uniqObject.discount && uniqObject.discountCategory){
+
+            dispatch({type: "MAIN", payload: {cost: uniqObject.cost, discount: uniqObject.discount, discountCategory: uniqObject.discountCategory}})
+        }
+    }, [JSON.stringify(uniqObject)])
+
+
+
 
     // ==========================================================================================================
     return (

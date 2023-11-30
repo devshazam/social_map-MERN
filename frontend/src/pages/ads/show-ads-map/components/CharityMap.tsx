@@ -9,7 +9,7 @@ import {fspiralFromSameCoordinatesToYaMap} from '../../../../utils/helpFunctions
 const AllDiscountsMap = (props: any) => {
 
     // функция должно окрашивать метки в цвета в зависимости от длительности размещения, если старше 7 дней, то желтый или красный
-    let colorPoint = (Math.ceil((new Date().getTime() - props.mainDataObject.item.currentTime) / 8.64e7) <= 7) ? 'red' : 'yellow';
+    let colorPoint = (props.mainDataObject.item.user.role === "USER") ? 'yellow' : 'red';
 
 
     return (
@@ -22,7 +22,7 @@ const AllDiscountsMap = (props: any) => {
                             iconOffset: fspiralFromSameCoordinatesToYaMap(props.mainDataObject.arrayCoordinates, props.mainDataObject.index, props.mainDataObject.item), // !!!!!!!!!!!!!!
                         }}
                         properties={{
-                            iconContent: `${props.mainDataObject.item.discount}%`, // пару символов помещается
+                            // iconContent: `${props.mainDataObject.item.cost}`, // пару символов помещается
                             hintContent: '<em>кликни меня</em>',
                             balloonContent: `<div class="my-balloon">
                                 <h4>${props.mainDataObject.item.name}</h4>

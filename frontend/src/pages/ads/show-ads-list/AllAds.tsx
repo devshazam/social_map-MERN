@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
 import Col from "react-bootstrap/Col";
 import Pagination from "react-bootstrap/Pagination";
@@ -23,6 +23,8 @@ import { fetchAdsList } from "../../../api/discountAPI";
 import { useSelector } from "react-redux";
 import {dimensionsToStyleObject} from '../../../utils/helpFunctions'
 
+
+
 const AllDiscounts = () => {
     const { adCategory } = useParams();
 
@@ -35,12 +37,18 @@ const AllDiscounts = () => {
 
     const filterObject = useSelector((state: any) => state.app.filter);
 
+
+
+
     useEffect(() => {
         console.log('width', ref.current);
       }, [ref.current]);
 
     console.log(adsList);
     useEffect(() => {
+        if (!Object.values(filterObject).every((i:any) => Boolean(i))) {
+            return;
+        }
         fetchAdsList({ ...filterObject, page, adCategory })
             .then((data: any) => {
                 console.log(data);
@@ -104,7 +112,7 @@ const AllDiscounts = () => {
                                 position: "relative",
                             }}
                         >
-                            <a href={"/ads-map/" + adCategory}>
+                            <a href={adCategory === '4' ? "/ads-map/" + adCategory + "/?avitoCategory=" + filterObject.avitoCategory : "/ads-map/" + adCategory}>
                                 <YMaps>
                                     <section className="map container">
                                         <Map
@@ -147,9 +155,9 @@ const AllDiscounts = () => {
                                             <Card>
                                                 <a href={"/ad-view/" + ad._id}>
                                                     <Card.Img  ref={ref}
-                                                        style={{...dimensionsToStyleObject(JSON.parse(ad.dimensions))}}
+                                                        style={ad.dimensions && {...dimensionsToStyleObject(JSON.parse(ad.dimensions))}}
                                                         variant="top"
-                                                        src={ad.image}
+                                                        src={ad.image} 
                                                     />
                                                 </a>
                                                 <Card.Body>

@@ -7,6 +7,9 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 
 import { useDispatch } from "react-redux";
 
+import globalParamsObject from '../../../../../parameters/mainAppParameterObject'
+
+
 const AllDiscounts = () => {
     const dispatch = useDispatch();
 
@@ -37,16 +40,13 @@ const AllDiscounts = () => {
                                 onChange={(e) => setDistrict(e.target.value)}
                                 value={district}
                             >
-                                <option value="1">Ворошиловский</option>
-                                <option value="2">Дзержинский</option>
-                                <option value="3">Кировский</option>
-                                <option value="4">Красноармейский</option>
-                                <option value="5">Краснооктябрьский</option>
-                                <option value="6">Советский</option>
-                                <option value="7">Тракторозаводский</option>
-                                <option value="8">Центральный</option>
-
-
+                            { 
+                                globalParamsObject.main.districtsNames.map((item:any, index:any) => {
+                                    return(
+                                        <option key={index} value={index + 1}>{item}</option>
+                                    )
+                                })
+                            }
                             </Form.Select>
                         </FloatingLabel>
                     </Form.Group>

@@ -19,27 +19,31 @@ const Discounts = (props:any) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch({type: "MAIN", payload: {cost: mainObject.cost, avitoCategory: mainObject.avitoCategory}})
-        dispatch({type: "UNIQUE", payload: {uniquePart: JSON.stringify(uniqObject)}})
-    }, [uniqObject, ])
+        if(mainObject.cost && mainObject.avitoCategory){
+            dispatch({type: "MAIN", payload: {cost: mainObject.cost, avitoCategory: mainObject.avitoCategory}})
+        }
+    }, [JSON.stringify(mainObject)])
+    
+    useEffect(() => {
+        if(Object.values(uniqObject).length > 0){
+            dispatch({type: "UNIQUE", payload: {uniquePart: JSON.stringify(uniqObject)}})
+        }
+    }, [JSON.stringify(uniqObject)])
 
     // ==========================================================================================================
 
     return (
         <>
          <Col xs={12} md={6}>
-                     <TextField  id="outlined-basic" label="Цена (плата):" variant="outlined" fullWidth
+                     <TextField label="Цена (плата):" variant="outlined" fullWidth
                                 sx={{mb: 1, pr:1, width: { sm: 'none', md: '50%'}}}
                                 error={Boolean(!mainObject.cost && props.flag == 0)}
                                 onChange={(e) => setMainObject({...mainObject, cost: e.target.value})}/>
                     <FormControl fullWidth sx={{mb: 1, pl:1, width: { sm: 'none', md: '50%'}}}>
-                        <InputLabel id="demo-simple-select-label" error={Boolean(!mainObject.avitoCategory && props.flag == 0)}>Категория:</InputLabel>
+                        <InputLabel error={Boolean(!mainObject.avitoCategory && props.flag == 0)}>Категория:</InputLabel>
                         <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
                             value={mainObject.avitoCategory}
                             error={Boolean(!mainObject.avitoCategory && props.flag == 0)}
-                            label="Age"
                             onChange={(e: any) => setMainObject({...mainObject, avitoCategory: e.target.value})}
                         >
                             { 

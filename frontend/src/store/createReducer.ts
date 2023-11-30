@@ -13,7 +13,7 @@ const defaultState:def = {
     img: {img: null, dimensions: null},
     map: {address: null, latitude: null, longitude: null},
     common: {name: null, description: null, district: null}, 
-    main: {},
+    main: {cost: '0'},
     unique: {uniquePart: {0: ['Дополнительные параметры', 'НЕТ']}},
 }
 

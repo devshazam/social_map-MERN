@@ -11,6 +11,7 @@ import LayoutCompany from "./LayoutCompany";
 import Home from "./pages/main/Home";
 import Empty from "./pages/main/Empty";
 import Test from "./pages/main/Test";
+import Contacts from "./pages/main/Contacts";
 import { useDispatch, useSelector } from "react-redux";
 import { check } from "../src/api/userAPI";
 
@@ -65,6 +66,9 @@ const App: React.FC = () => {
                             element={<AllMap />}
                         />
                         <Route path="/ad-view/:adId" element={<AdView />} />
+
+
+                        <Route path="/contacts" element={<Contacts />} />
                     </Route>
                     <Route path="/user/" element={<LayoutUser />}>
                         <Route

@@ -30,15 +30,16 @@ const CreateDiscount = () => {
     // const stateMain = useSelector((state: any) => state.create.main);
     // const stateUnique = useSelector((state: any) => state.create.unique);
     
-console.log(createState)
+console.log({...createState.img, ...createState.map, ...createState.common, ...createState.main, ...createState.unique}, 999)
 
     let sendToServer = () => {
+        let midObject1 = {...createState.img, ...createState.map, ...createState.common, ...createState.main, ...createState.unique}
         // let mainObject = {
         //     ...stateMap,
         //     ...stateCommon,
         //     ...stateMain
         // };
-        if (Object.values(createState).every((i:any) => Boolean(i))) {
+        if (!Object.values(midObject1).every((i:any) => Boolean(i))) {
             setFlag(0);
             window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
             return;
@@ -53,9 +54,8 @@ console.log(createState)
         //     ...stateUnique,
         // };
 
-
         const formData = new FormData();
-        Object.entries({...createState, userId: stateUser.id}).map((item: any) => {
+        Object.entries({...midObject1, userId: stateUser.id}).map((item: any) => {
             formData.append(item[0], item[1]);
         });
 

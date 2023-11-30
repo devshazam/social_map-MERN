@@ -1,6 +1,6 @@
 
 import React, { useState,  useRef, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams , useSearchParams} from "react-router-dom";
 
 import Row from "react-bootstrap/Row";
 import {Map, YMaps} from "@pbe/react-yandex-maps";
@@ -11,14 +11,22 @@ import Select from '@mui/material/Select';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 
+import DiscountsMapComp from './components/DiscountsMapComp';
+import CharityMap from './components/CharityMap';
+import EventMap from './components/EventMap';
+import AvitoMap from './components/AvitoMap';
 
-import DiscountsMapComp from './components/DiscountsMapComp'
-import { fetchDiscountByMap }from '../../../api/discountAPI'
+import { fetchDiscountByMap }from '../../../api/discountAPI';
+
+import globalParamsObject from '../../../parameters/mainAppParameterObject';
 
 const AllDiscountsMap = () => {
     const { adCategory } = useParams();
 
     const mapRef = useRef<any>();
+    
+    let [searchParams, setSearchParams] = useSearchParams()
+    const avitoCategory =  searchParams.get("avitoCategory") || '5';
 
     const [map, setMap] = useState<any>(null);
     const [zoom, setZoom] = useState<any>(16);
@@ -26,7 +34,7 @@ const AllDiscountsMap = () => {
     const [drawerFilter, setDrawerFilter] = useState<any>(false);
 
     const [discountList, setDiscountList] = useState<any>(null);
-    const [allObject, setAllObject] = useState<any>({});
+    const [allObject, setAllObject] = useState<any>({avitoCategory});
     const [arrayCoordinates, setArrayCoordinates] = useState<any>([]);
 
 
@@ -93,10 +101,10 @@ const AllDiscountsMap = () => {
                                             discountList.map((item: any, index:any) => {
                                                 return(
                                                     <>
-                                                        { adCategory === '1' && <DiscountsMapComp key={item._id} discountItem={item} arrayCoordinates={arrayCoordinates} index={index}/> }
-                                                        {/* { adCategory === '2' && <DistrictForm /> }
-                                                        { adCategory === '3' && <EventsForms /> } */}
-                                                        {/* { adCategory === '4' && <AvitoForms /> } */}
+                                                        { adCategory === '1' && <DiscountsMapComp key={item._id} mainDataObject={{item, arrayCoordinates, index}} /> }
+                                                        { adCategory === '2' && <CharityMap key={item._id} mainDataObject={{item, arrayCoordinates, index}} /> }
+                                                        { adCategory === '3' && <EventMap key={item._id} mainDataObject={{item, arrayCoordinates, index}} /> }
+                                                        { adCategory === '4' && <AvitoMap key={item._id} mainDataObject={{item, arrayCoordinates, index}} /> }
                                                     </>
                                                 );
                                             })
@@ -111,66 +119,39 @@ const AllDiscountsMap = () => {
             onClose={() => toggleDrawer(false)}
           >
             <br /><p>Фильтры: </p>
-                    <FormControl fullWidth >
-                        <InputLabel id="demo-simple-select-label" >Категория скидки:</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={allObject.district}
-                            label="Age"
-                            onChange={(e: any) => setAllObject({...allObject, district: e.target.value})}
-                        >
-                            <MenuItem value={1}>Ворошиловский</MenuItem>
-                            <MenuItem value={2}>Дзержинский</MenuItem>
-                            <MenuItem value={3}>Кировский</MenuItem>
-                            <MenuItem value={4}>Красноармейский</MenuItem>
-                            <MenuItem value={5}>Краснооктябрьский</MenuItem>
-                            <MenuItem value={6}>Советский</MenuItem>
-                            <MenuItem value={7}>Тракторозаводский</MenuItem>
-                            <MenuItem value={8}>Центральный</MenuItem>
-                        </Select>
-                    </FormControl>
+
                     {adCategory === '1' &&
                         <FormControl fullWidth >
-                        <InputLabel id="demo-simple-select-label" >Категория скидки:</InputLabel>
+                        <InputLabel  >Категория скидки:</InputLabel>
                         <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
                             value={allObject.discountCategory}
-                            label="Age"
                             onChange={(e: any) => setAllObject({...allObject, discountCategory: e.target.value})}
                         >
-                            <MenuItem value={1}>Красота и здоровье</MenuItem>
-                            <MenuItem value={2}>Все для животных</MenuItem>
-                            <MenuItem value={3}>Одежда и обувь</MenuItem>
-                            <MenuItem value={4}>Товары для детей</MenuItem>
-                            <MenuItem value={5}>Автомобиль</MenuItem>
-                            <MenuItem value={6}>Электроника</MenuItem>
-                            <MenuItem value={7}>Дом и дача</MenuItem>
-                            <MenuItem value={8}>Услуги</MenuItem>
-                            <MenuItem value={9}>Хобби и отдых</MenuItem>
-                            <MenuItem value={10}>Продукты</MenuItem>
+                            { 
+                                globalParamsObject.discounts.discountsCategory.map((item:any, index:any) => {
+                                    return(
+                                        <MenuItem key={index} value={index + 1}>{item}</MenuItem>
+                                    )
+                                })
+                            }
+
                         </Select>
                     </FormControl>}
                     
                     {adCategory === '4' && 
                     <FormControl fullWidth >
-                        <InputLabel id="demo-simple-select-label" >Категория авито:</InputLabel>
+                        <InputLabel  >Категория авито:</InputLabel>
                         <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
                             value={allObject.avitoCategory}
-                            label="Age"
                             onChange={(e: any) => setAllObject({...allObject, avitoCategory: e.target.value})}
                         >
-                            <MenuItem value={1}>Посуточная аренда</MenuItem>
-                            <MenuItem value={2}>Длительная аренда</MenuItem>
-                            <MenuItem value={3}>Продажа жилья</MenuItem>
-                            <MenuItem value={4}>Продажа автомобилей</MenuItem>
-                            <MenuItem value={5}>Личные вещи</MenuItem>
-                            <MenuItem value={6}>Электроника</MenuItem>
-                            <MenuItem value={7}>Работа</MenuItem>
-                            <MenuItem value={8}>Услуги</MenuItem>
+                            { 
+                                globalParamsObject.avito.avitoCategory.map((item:any, index:any) => {
+                                    return(
+                                        <MenuItem key={index} value={index + 1}>{item}</MenuItem>
+                                    )
+                                })
+                            }
                         </Select>
                     </FormControl>
                     }

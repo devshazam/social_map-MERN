@@ -75,6 +75,7 @@ class DiscountController {
             .where("latitude").gt(xLatitude).lt(yLatitude) // Additional where query
             .where("longitude").gt(xLongitude).lt(yLongitude) // Additional where query
             .select("latitude longitude discount currentTime name")
+            .populate('userId', 'name phone role')
             .exec();
 
 

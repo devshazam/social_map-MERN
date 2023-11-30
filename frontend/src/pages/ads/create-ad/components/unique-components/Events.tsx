@@ -13,33 +13,31 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 
 const Events = (props:any) => {
-    const [cost, setCost] = useState<string>('');
-    const [startDate, setStartDate] = React.useState<any>(null);
-    const [endDate, setEndDate] = React.useState<any>(null);
-    const dispatch = useDispatch();
+    const [mainObject, setMainObject] = useState<any>({});
+    // const [cost, setCost] = useState<string>('');
+    // const [startDate, setStartDate] = React.useState<any>(null);
+    // const [endDate, setEndDate] = React.useState<any>(null);
 
-    useEffect(() => {
-        if(startDate && endDate){
-        dispatch({type: "MAIN", payload: {cost, startDate: startDate['$d'].getTime(), endDate: endDate['$d'].getTime()}})
-        }
+    const dispatch = useDispatch();
     
-    }, [cost, startDate, endDate])
+    useEffect(() => {
+        if(mainObject.cost && mainObject.startDate && mainObject.endDate){
+            dispatch({type: "MAIN", payload: {cost: mainObject.cost, startDate: mainObject.startDate, endDate: mainObject.endDate['$d'].getTime()}})
+        }
+    }, [JSON.stringify(mainObject)])
 
     // ==========================================================================================================
     return (
         <>
                 <Col xs={12} md={6}>
-                    <TextField  id="outlined-basic" label="Цена со скидкой:" variant="outlined" fullWidth
-                                
-                                error={Boolean(!cost && props.flag == 0)}
-                                onChange={(e) => setCost(e.target.value)}/>
-
+                    <TextField  label="Цена со скидкой:" variant="outlined" fullWidth sx={{ mb: 1}} 
+                                error={Boolean(!mainObject.cost && props.flag == 0)}
+                                onChange={(e) => setMainObject({...mainObject, cost: e.target.value})}/>
                 </Col>
                 <Col xs={12} md={6}>
                     <LocalizationProvider dateAdapter={AdapterDayjs} >
-<DatePicker value={startDate} onChange={(newValue) => setStartDate(newValue)} sx={{ m: 1, width: { sm: 'none', md: '45%'}}} />
-<DatePicker value={endDate} onChange={(newValue) => setEndDate(newValue)} sx={{ m: 1, width: { sm: 'none', md: '45%'}}}/>
-                     
+                        <DatePicker label="Дата начала:" onChange={(newValue:any) => setMainObject({...mainObject, startDate: newValue['$d'].getTime()})} sx={{ mb:1, width: { sm: '100%', md: '50%'}}} />
+                        <DatePicker label="Дата конца:" onChange={(newValue) => setMainObject({...mainObject, endDate: newValue})} sx={{ mb:1, width: { sm: '100%', md: '50%'}}}/>
                     </LocalizationProvider>
                 </Col>
 

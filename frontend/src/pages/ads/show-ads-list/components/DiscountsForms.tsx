@@ -8,6 +8,8 @@ import DistrictForm from "./components/DistrictForm";
 
 import { useDispatch } from "react-redux";
 
+import globalParamsObject from '../../../../parameters/mainAppParameterObject'
+
 const AllDiscounts = () => {
     const dispatch = useDispatch();
 
@@ -41,16 +43,14 @@ const AllDiscounts = () => {
                         onChange={(e) => setDiscountCategory(e.target.value)}
                         value={discountCategory}
                     >
-                        <option value="1">Красота и здоровье</option>
-                        <option value="2">Все для животных</option>
-                        <option value="3">Одежда и обувь</option>
-                        <option value="4">Товары для детей</option>
-                        <option value="5">Автомобиль</option>
-                        <option value="6">Электроника</option>
-                        <option value="7">Хобби и отдых</option>
-                        <option value="8">Дом и дача</option>
-                        <option value="9">Продукты</option>
-                        <option value="10">Фитнес и спорт</option>
+                        { 
+                            globalParamsObject.discounts.discountsCategory.map((item:any, index:any) => {
+                                return(
+                                    <option key={index} value={index + 1}>{item}</option>
+                                )
+                            })
+                        }
+
                     </Form.Select>
                 </FloatingLabel>
             </Form.Group>

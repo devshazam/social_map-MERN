@@ -50,31 +50,31 @@ const Header = () => {
                                         <Accordion.Item eventKey="1" className="item-accordion">
                                             <Accordion.Header>Недвижимость</Accordion.Header>
                                             <Accordion.Body>
-                                                <NavDropdown.Item href="/prices/1">
+                                                <NavDropdown.Item href="/ads/4/?avitoCategory=1">
                                                     Посуточная аренда
                                                 </NavDropdown.Item>
-                                                <NavDropdown.Item href="/prices/1">
+                                                <NavDropdown.Item href="/ads/4/?avitoCategory=2">
                                                     Длительная аренда
                                                 </NavDropdown.Item>
-                                                <NavDropdown.Item href="/prices/1">
+                                                <NavDropdown.Item href="/ads/4/?avitoCategory=3">
                                                     Продажа
                                                 </NavDropdown.Item>
                                             </Accordion.Body>
                                         </Accordion.Item>
                                     </Accordion>
-                                    <NavDropdown.Item href="/goods/futbolki">
+                                    <NavDropdown.Item href="/ads/4/?avitoCategory=4">
                                         Автотранспорт
                                     </NavDropdown.Item>
-                                    <NavDropdown.Item href="/goods/futbolki">
+                                    <NavDropdown.Item href="/ads/4/?avitoCategory=5">
                                         Личные вещи
                                     </NavDropdown.Item>
-                                    <NavDropdown.Item href="/goods/futbolki">
+                                    <NavDropdown.Item href="/ads/4/?avitoCategory=6">
                                         Электроника
                                     </NavDropdown.Item>
-                                    <NavDropdown.Item href="/goods/futbolki">
+                                    <NavDropdown.Item href="/ads/4/?avitoCategory=7">
                                         Работа
                                     </NavDropdown.Item>
-                                    <NavDropdown.Item href="/goods/krujki">
+                                    <NavDropdown.Item href="/ads/4/?avitoCategory=8">
                                         Услуги
                                     </NavDropdown.Item>
                                 </NavDropdown>
@@ -84,7 +84,7 @@ const Header = () => {
 
                                 <Nav.Link href="/ads/3">Мероприятия</Nav.Link>
                                 <Nav.Link href="/contacts">Карта доверия</Nav.Link>
-                                <Nav.Link href="/contacts">Социальная сеть</Nav.Link>
+                                <Nav.Link href="/contacts">Контакты</Nav.Link>
                             </Nav>
                             {/* <Navbar.Text>
                                 <span className="label">
