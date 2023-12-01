@@ -12,23 +12,22 @@ import {useDispatch} from "react-redux";
 import globalParamsObject from '../../../../parameters/mainAppParameterObject'
 
 const CommonFieldsComp = (props:any) => {
-    const [discountObject, setDiscountObject] = useState({name: '', description: '', district: ''});
+    const [discountObject, setDiscountObject] = useState<any>({name: '', district: '', description: ''});
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch({type: "COMMON", payload: discountObject})
-    }, [discountObject])
+    }, [JSON.stringify(discountObject)])
 
     // ==========================================================================================================
 
     return (
         <>
                 <Col xs={12} md={6}>
-                            <TextField  id="outlined-basic" label="Ваше название:" variant="outlined" fullWidth
-                                        sx={{mb: 1}}
-                                        error={Boolean(!discountObject.name && props.flag == 0)}
-                                       onChange={(e) => setDiscountObject({...discountObject, name: e.target.value})}/>
-
+                    <TextField  id="outlined-basic" label="Ваше название:" variant="outlined" fullWidth
+                                sx={{mb: 1}}
+                                error={Boolean(!discountObject.name && props.flag == 0)}
+                                onChange={(e) => setDiscountObject({...discountObject, name: e.target.value})}/>
                     <FormControl fullWidth sx={{mb: 1}}>
                     <InputLabel  error={Boolean(!discountObject.district && props.flag == 0)}>Ваш район:</InputLabel>
                     <Select
@@ -46,19 +45,13 @@ const CommonFieldsComp = (props:any) => {
                 </FormControl>
                 </Col>
                 <Col xs={12} md={6}>
-
                     <TextField  label="Ваше описание:" fullWidth
                                 multiline
                                 rows={4}
                                 sx={{mb: 1}}
                                 error={Boolean(!Boolean(discountObject.description) && props.flag == 0)}
                                 onChange={(e) => setDiscountObject({...discountObject, description: e.target.value})}/>
-
-
                 </Col>
-
-
-
         </>
     );
 };

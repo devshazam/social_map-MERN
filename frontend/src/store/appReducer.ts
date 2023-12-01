@@ -6,7 +6,7 @@ interface def {
     filter: any,
 }
 const defaultState:def = {
-    filter: {}
+    filter: {district: ''}
 }
 
 export const appReducer = (state = defaultState, action: actionState) =>{

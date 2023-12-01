@@ -7,8 +7,8 @@ import Button from "@mui/material/Button";
 import { useDispatch } from "react-redux";
 
 const MapChoiceComp = (props: any) => {
-    const [addressString, setAddressString] = useState("Волгоград, ");
-    const [coordinats, setCoordinats] = useState([]);
+    const [addressString, setAddressString] = useState<string>("Волгоград, ");
+    const [coordinats, setCoordinats] = useState<any>([]);
 
     const dispatch = useDispatch();
 
@@ -16,14 +16,18 @@ const MapChoiceComp = (props: any) => {
         if (!addressString) return;
         fetchYandexAddress({ address: addressString })
             .then((data: any) => {
+                if(!data.result){
+                    alert('Адрес не найден!');
+                    return;}
                 dispatch({
                     type: "MAP",
-                    payload: {address: addressString, latitude: data[0], longitude: data[1]},
+                    payload: {address: data.result, latitude: data.latitude, longitude: data.longitude},
                 });
-                setCoordinats(data);
+                setAddressString(data.result)
+                setCoordinats([data.latitude, data.longitude]);
             })
             .catch((error: any) => {
-                if (error.response.data) {
+                if (error.response && error.response.data) {
                     alert(
                         `${error.response.data.message}${error.response.status}`
                     );
@@ -39,7 +43,7 @@ const MapChoiceComp = (props: any) => {
     return (
         <>
             <Col xs={12} md={{ span: 6, order: 2 }} style={{marginBottom: '15px'}}>
-                <YMaps>
+                <YMaps query={{ apikey: '7176836c-97ba-4255-ae13-340eea0ffce0' }} >
                     {/* apikey - https://reactjsexample.com/yandex-maps-api-bindings-for-react/ */}
                     <section className="map container">
                         {coordinats.length ? (
@@ -93,7 +97,7 @@ const MapChoiceComp = (props: any) => {
                     variant="outlined"
                     fullWidth
                     sx={{ mb: 1 }}
-                    error={Boolean(+coordinats.length == 0 && props.flag == 0)}
+                    error={Boolean(coordinats.length == 0 && props.flag == 0)}
                     value={addressString}
                     onChange={(e) => setAddressString(e.target.value)}
                     label="Введите адрес (начните со слова Волгоград)"

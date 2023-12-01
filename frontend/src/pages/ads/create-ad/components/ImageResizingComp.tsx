@@ -19,18 +19,15 @@ const ImageResizingComp = (props:any) => {
             if(!imageUrl) return;
                 let img: any = document.querySelector("#img");
                 if(Number(img.clientHeight) < 44 ){
-                    setCountOne(countOne+ 1)
+                    setCountOne(countOne + 1)
                 }else{
                     setDimensions([+img.clientWidth, +img.clientHeight]);
                 }
     }, [countOne, imageUrl])
 
     useEffect(() => {
-        if(imageInsert && dimensions)
         dispatch({type: "IMG", payload: {img: imageInsert, dimensions: JSON.stringify(dimensions)}})
-}, [countOne, imageUrl])
-
-    // 
+}, [imageInsert, dimensions])
 
     // https://www.npmjs.com/package/react-image-file-resizer
     function resizeFile(file:any) {
@@ -65,43 +62,29 @@ const ImageResizingComp = (props:any) => {
         }
     }
 
-    // function dataURIToBlob(dataURI: any){ // При  необходимости можно найти URL артинки с помощью этой ф-ции:
-    //     const splitDataURI = dataURI.split(",");
-    //     const byteString =
-    //         splitDataURI[0].indexOf("base64") >= 0
-    //             ? atob(splitDataURI[1])
-    //             : decodeURI(splitDataURI[1]);
-    //     const mimeString = splitDataURI[0].split(":")[1].split(";")[0];
-    //     const ia = new Uint8Array(byteString.length);
-    //     for (let i = 0; i < byteString.length; i++){ ia[i] = byteString.charCodeAt(i)}
-    //     return new Blob([ia], { type: mimeString });
-    // };
-
-    // useEffect(() => {
-    //     if(!imageOne) return
-    //     setImageUrl(URL.createObjectURL(dataURIToBlob(imageOne)));
-    // }, [imageOne])
-
-
-
     // ==========================================================================================================
     return (
         <>
-
-
                 <Col xs={12} md={6}>
-                    <Button
-                        variant="contained"
-                        component="label"
-                    >
-                       Загрузить файл
-                        <input accept="image/jpeg, image/png"
-                            type="file"
-                            hidden
-                               onChange={asd}
-                        />
-                    </Button>
-                    <p style={{fontSize: 12}}>* При нажатии на кнопку "Загрузить файл" картинка автоматически преобразуется в формат jpeg и размер 500х500 пикселей</p>
+                    {
+                        !dimensions ?
+                        <>
+                            <Button
+                            variant="contained"
+                            component="label"
+                            >
+                                Загрузить файл
+                                <input accept="image/jpeg, image/png"
+                                    type="file"
+                                    hidden
+                                    onChange={asd}
+                                />
+                            </Button>
+                            <p style={{fontSize: 12}}>* При нажатии на кнопку "Загрузить файл" картинка автоматически преобразуется в формат jpeg и размер 500х500 пикселей</p>
+                        </>
+                    :
+                        <p style={{}}>Мы социальный проект - поэтому мы экономим место на хостинге, придерживаясь правила - "одна картинка для одного объявления!"</p>
+                    }
             </Col>
             <Col xs={12} md={6}>
                 <h6>Здесь появится ваша картинка после оптимизации:</h6>

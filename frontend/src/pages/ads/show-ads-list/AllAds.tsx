@@ -3,16 +3,10 @@ import { useParams, useSearchParams } from "react-router-dom";
 
 import Col from "react-bootstrap/Col";
 import Pagination from "react-bootstrap/Pagination";
-import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
-import Image from "react-bootstrap/Image";
-import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import Form from "react-bootstrap/Form";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Spinner from "react-bootstrap/Spinner";
-import { Map, Placemark, YMaps } from "@pbe/react-yandex-maps";
+import { Map, YMaps } from "@pbe/react-yandex-maps";
 
 import DiscountsForms from "./components/DiscountsForms";
 import DistrictForm from "./components/components/DistrictForm";
@@ -24,11 +18,10 @@ import { useSelector } from "react-redux";
 import {dimensionsToStyleObject} from '../../../utils/helpFunctions'
 
 
-
 const AllDiscounts = () => {
     const { adCategory } = useParams();
 
-    const ref = useRef(null);
+    // const ref = useRef(null);
     const [spiner, setSpiner] = useState(false);
     const [adsList, setAdsList] = useState([]);
     const [count, setCount] = useState(0);
@@ -36,15 +29,8 @@ const AllDiscounts = () => {
     const [page, setPage] = useState(1);
 
     const filterObject = useSelector((state: any) => state.app.filter);
+console.log(filterObject)
 
-
-
-
-    useEffect(() => {
-        console.log('width', ref.current);
-      }, [ref.current]);
-
-    console.log(adsList);
     useEffect(() => {
         if (!Object.values(filterObject).every((i:any) => Boolean(i))) {
             return;
@@ -113,7 +99,7 @@ const AllDiscounts = () => {
                             }}
                         >
                             <a href={adCategory === '4' ? "/ads-map/" + adCategory + "/?avitoCategory=" + filterObject.avitoCategory : "/ads-map/" + adCategory}>
-                                <YMaps>
+                                <YMaps query={{ apikey: '7176836c-97ba-4255-ae13-340eea0ffce0' }}>
                                     <section className="map container">
                                         <Map
                                             state={{
@@ -125,24 +111,19 @@ const AllDiscounts = () => {
                                         ></Map>
                                     </section>
                                 </YMaps>
+                            
+                                <div style={{display: 'flex', position: 'absolute', left: '0', top: '0', width: '100%', height: '100%', zIndex: '999'}}>
+                                    <p style={{fontSize: '50px', margin: 'auto', width: '80%', color: 'rgb(217 98 98 / 75%)', fontWeight: '100', textAlign: 'center' }}>ОТКРЫТЬ КАРТУ</p>
+                                </div>
+                            {/* </div> */}
                             </a>
-                            <p
-                                style={{
-                                    position: "absolute",
-                                    top: "10%",
-                                    left: "10%",
-                                    color: "black",
-                                }}
-                            >
-                                Открыть карту полностью
-                            </p>
                         </div>
                     </Row>
                     <Row className="mb-5">
                         {spiner ? (
                             <>
                                 {count ? 
-                                    adsList.map((ad: any) => {
+                                    adsList.map((ad: any, index:number) => {
 
                                         return(
                                         <Col
@@ -150,11 +131,12 @@ const AllDiscounts = () => {
                                             sm={6}
                                             lg={3}
                                             className="mb-3"
-                                            key={ad.id}
+                                            key={index}
                                         >
                                             <Card>
-                                                <a href={"/ad-view/" + ad._id}>
-                                                    <Card.Img  ref={ref}
+                                                <a href={"/ad-view/" + ad._id} style={{backgroundColor: '#cbcbcb'}}>
+                                                    {/* ref={ref} */}
+                                                    <Card.Img  
                                                         style={ad.dimensions && {...dimensionsToStyleObject(JSON.parse(ad.dimensions))}}
                                                         variant="top"
                                                         src={ad.image} 

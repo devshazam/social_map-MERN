@@ -11,10 +11,10 @@ interface def {
 }
 const defaultState:def = {
     img: {img: null, dimensions: null},
-    map: {address: null, latitude: null, longitude: null},
-    common: {name: null, description: null, district: null}, 
+    map: {address: '', latitude: '', longitude: ''},
+    common: {name: '', description: '', district: ''}, 
     main: {cost: '0'},
-    unique: {uniquePart: {0: ['Дополнительные параметры', 'НЕТ']}},
+    unique: {uniquePart: {0: ['Дополнительные параметры:', 'НЕТ']}},
 }
 
 export const createReducer = (state = defaultState, action: actionState) =>{

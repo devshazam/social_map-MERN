@@ -15,21 +15,13 @@ import Events from "./components/unique-components/Events";
 import Avito from "./components/unique-components/Avito";
 
 const CreateDiscount = () => {
-    const [flag, setFlag] = useState(1);
-
     const { adCategory } = useParams<string>();
 
+    const [flag, setFlag] = useState<number>(1);
+
     const stateUser = useSelector((state: any) => state.user.user);
-    // const stateIsAuth = useSelector((state: any) => state.user.isAuth);
-
-
     const createState = useSelector((state: any) => state.create);
-    // const stateImg = useSelector((state: any) => state.create.img);
-    // const stateMap = useSelector((state: any) => state.create.map);
-    // const stateCommon = useSelector((state: any) => state.create.common);
-    // const stateMain = useSelector((state: any) => state.create.main);
-    // const stateUnique = useSelector((state: any) => state.create.unique);
-    
+
 console.log({...createState.img, ...createState.map, ...createState.common, ...createState.main, ...createState.unique}, 999)
 
     let sendToServer = () => {
@@ -55,7 +47,7 @@ console.log({...createState.img, ...createState.map, ...createState.common, ...c
         // };
 
         const formData = new FormData();
-        Object.entries({...midObject1, userId: stateUser.id}).map((item: any) => {
+        Object.entries({...midObject1, userId: stateUser.id, adCategory}).map((item: any) => {
             formData.append(item[0], item[1]);
         });
 

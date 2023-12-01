@@ -11,3 +11,6 @@
     - zoom
     - typeScript dct nbgs
     - авторизация
+
+Ошибки^
+    - Заменить (error.response.data) на (error.response && error.response.data)

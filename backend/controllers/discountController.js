@@ -13,28 +13,24 @@ class DiscountController {
 
 
     async fetchYandexAddress(req, res, next) {
-  let {address} = req.body;
-
-        let addressVar;
+        const {address} = req.body;
         const headers = {
             "Content-Type": "application/json",
             "Authorization": "Token " + process.env.API_KEY_FIND_ADDRESS_BY_ID,
             "X-Secret": process.env.SECRET_KEY_FIND_ADDRESS_BY_ID
-        };
+            };
 
-      try {
-        addressVar = await axios.post(`https://cleaner.dadata.ru/api/v1/clean/address`, JSON.stringify([address]), {headers})
+        try {
+            const funcAgent1 = await axios.post(`https://cleaner.dadata.ru/api/v1/clean/address`, JSON.stringify([address]), {headers})
+            const funcAgent2 = {result: funcAgent1.data[0].result, latitude: funcAgent1.data[0].geo_lat, longitude: funcAgent1.data[0].geo_lon};
+            return res.json(funcAgent2);
 
-        let qaz = [addressVar.data[0].geo_lat, addressVar.data[0].geo_lon];
-        console.log(qaz)
-        return res.json(qaz);
-
-            // addressVar = await axios.get(`https://geocode-maps.yandex.ru/1.x/?apikey=${process.env.API_KEY_YANDEX_GEO}&geocode=${address.split(' ').join('+')}&format=json`)
-            // return res.json(addressVar.data);
-        } catch (error) {
-            await appendFiles(`\n601: ${error.message}`);
-            return next(ApiError.internal(`601: ${error.message}`));
-        }
+                // addressVar = await axios.get(`https://geocode-maps.yandex.ru/1.x/?apikey=${process.env.API_KEY_YANDEX_GEO}&geocode=${address.split(' ').join('+')}&format=json`)
+                // return res.json(addressVar.data);
+            } catch (error) {
+                await appendFiles(`\n601: ${error.message}`);
+                return next(ApiError.internal(`601: ${error.message}`));
+            }
     }
 
 
@@ -114,6 +110,16 @@ class DiscountController {
         offset = page * limit - limit;
         const sortArray = [1, -1];
 
+
+
+        // Переделать на введение поисковых полей в объекте !!
+                // find({
+                //     occupation: /host/,
+                //     'name.last': 'Ghost',
+                //     age: { $gt: 17, $lt: 66 },
+                //     likes: { $in: ['vaporizing', 'talking'] }
+                // }).
+
         try {
             let midDiscount;
 
@@ -122,7 +128,7 @@ class DiscountController {
         .where("district").equals(district) // WHERE sport: Tennis 
         .skip(offset).limit(limit) // skip тоже самое что offset
         .sort({ [itemSort]: sortArray[+orderSort] })
-        .select("name image address cost discount")
+        .select("name image address cost discount dimensions")
         .exec();
 
             return res.json(midDiscount);
