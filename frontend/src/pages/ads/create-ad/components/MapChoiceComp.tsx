@@ -43,7 +43,7 @@ const MapChoiceComp = (props: any) => {
     return (
         <>
             <Col xs={12} md={{ span: 6, order: 2 }} style={{marginBottom: '15px'}}>
-                <YMaps query={{ apikey: '7176836c-97ba-4255-ae13-340eea0ffce0' }} >
+                <YMaps query={{ apikey: process.env.REACT_APP_YANDEX_KEY }} >
                     {/* apikey - https://reactjsexample.com/yandex-maps-api-bindings-for-react/ */}
                     <section className="map container">
                         {coordinats.length ? (

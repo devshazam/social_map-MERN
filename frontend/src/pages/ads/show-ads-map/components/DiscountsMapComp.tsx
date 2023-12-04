@@ -6,15 +6,15 @@ import {Placemark} from "@pbe/react-yandex-maps";
 import {fspiralFromSameCoordinatesToYaMap} from '../../../../utils/helpFunctions'
 
 
-const AllDiscountsMap = (props: any) => {
+const DiscountsMapComp = (props: any) => {
 
     // функция должно окрашивать метки в цвета в зависимости от длительности размещения, если старше 7 дней, то желтый или красный
-    let colorPoint = (Math.ceil((new Date().getTime() - props.mainDataObject.item.currentTime) / 8.64e7) <= 7) ? 'red' : 'yellow';
+    let colorPoint = (Math.ceil((new Date().getTime() - props.mainDataObject.item.currentTime) / 8.64e7) <= 7) ? 'red' : 'green';
 
 
     return (
         <>
-                <Placemark key={props.mainDataObject.item._id}
+                <Placemark key={props.keys}
                         geometry={[props.mainDataObject.item.latitude, props.mainDataObject.item.longitude]}
                         options={{
                             preset: 'islands#oliveStretchyIcon', // список темплейтов на сайте яндекса
@@ -38,4 +38,4 @@ const AllDiscountsMap = (props: any) => {
     );
 };
 
-export default AllDiscountsMap;
+export default DiscountsMapComp;

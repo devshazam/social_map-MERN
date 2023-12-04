@@ -4,19 +4,12 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 
-import { useDispatch } from "react-redux";
 
 import globalParamsObject from '../../../../../parameters/mainAppParameterObject'
 
 
-const AllDiscounts = () => {
-    const dispatch = useDispatch();
+const DistrictForm = (props:any) => {
 
-    const [district, setDistrict] = useState('0');
-
-    useEffect(() => {
-        dispatch({type: "FILTER", payload: {district}})
-    }, [ district ])
 
     // ==============================================================================================
     return (
@@ -33,9 +26,9 @@ const AllDiscounts = () => {
                         >
                             <Form.Select
                                 aria-label="Default select example"
-                                onChange={(e) => setDistrict(e.target.value)}
-                                value={district}
-                            >
+                                onChange={(e:any) => props.changefilterObject({district: e.target.value})}
+                                // value={props.filterObject.filterObject.district} 
+                                >
                                 <option key={'0'} value={'0'}>Все районы</option>
                             { 
                                 globalParamsObject.main.districtsNames.map((item:any, index:any) => {
@@ -51,4 +44,4 @@ const AllDiscounts = () => {
     );
 };
 
-export default AllDiscounts;
+export default DistrictForm;

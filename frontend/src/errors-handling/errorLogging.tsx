@@ -8,7 +8,7 @@ const logError = (error: Error, info: ErrorInfo) => {
     recordErrorToLog({ name: error.name, message: error.message, info: info.componentStack })
     .then((data: any) => {})
     .catch((error:any) => {
-        if (error.response.data) {
+        if (error.response && error.response.data) {
             alert(
                 `${error.response.data.message}${error.response.status}`
             );

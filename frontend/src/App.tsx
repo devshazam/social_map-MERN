@@ -34,7 +34,7 @@ const App: React.FC = () => {
                 }
             })
             .catch((error) => {
-                // if(error.response.data){
+                // if(error.response && error.response.data){
                 //     alert(`${error.response.data.message} - (${error.response.status})`);
                 // }else{
                 //     console.log('dev', error);

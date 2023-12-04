@@ -57,23 +57,17 @@ class DiscountController {
     
 
     async fetchDiscountByMap(req, res, next) {
-        const { adCategory, xLatitude, xLongitude, yLatitude, yLongitude, district, discountCategory, avitoCategory } = req.body;
-// console.log(avitoCategory)
-        let midObject = {};
-        if(district) midObject = { ...midObject, district };
-        if(discountCategory) midObject = { ...midObject, discountCategory };
-        if(avitoCategory) midObject = { ...midObject, avitoCategory };
+        const { adCategory, xLatitude, xLongitude, yLatitude, yLongitude, ...rest } = req.body;
 
+
+        const agent2 = Object.fromEntries(Object.entries(rest).filter(([_, v]) => v != 0));
         try {
-            let midDiscount;
-
-            midDiscount = await Discount.find({adCategory, ...midObject})
+            const midDiscount = await Discount.find({adCategory, ...agent2})
             .where("latitude").gt(xLatitude).lt(yLatitude) // Additional where query
             .where("longitude").gt(xLongitude).lt(yLongitude) // Additional where query
             .select("latitude longitude discount currentTime name")
             .populate('userId', 'name phone role')
             .exec();
-
 
             return res.json(midDiscount);
         } catch (error) {
@@ -102,36 +96,23 @@ class DiscountController {
     }
 
     async fetchAdsList(req, res, next) {
-        let { adCategory, discountCategory, itemSort, orderSort, page, limit, district, offset }  = req.body;
+        let { itemSort, orderSort, page, limit, offset, ...rest }  = req.body;
         page = page || 1;
         limit = limit || 8;
         itemSort = itemSort || "createdAt";
-        orderSort = orderSort || 0;
+        orderSort = orderSort || 1;
         offset = page * limit - limit;
         const sortArray = [1, -1];
 
-
-
-        // Переделать на введение поисковых полей в объекте !!
-                // find({
-                //     occupation: /host/,
-                //     'name.last': 'Ghost',
-                //     age: { $gt: 17, $lt: 66 },
-                //     likes: { $in: ['vaporizing', 'talking'] }
-                // }).
+        const agent2 = Object.fromEntries(Object.entries(rest).filter(([_, v]) => v != 0));
 
         try {
-            let midDiscount;
-
-            midDiscount = await Discount.find()
-        .where("adCategory").equals(adCategory) // WHERE sport: Tennis 
-        .where("district").equals(district) // WHERE sport: Tennis 
-        .skip(offset).limit(limit) // skip тоже самое что offset
-        .sort({ [itemSort]: sortArray[+orderSort] })
-        .select("name image address cost discount dimensions")
-        .exec();
-
-            return res.json(midDiscount);
+            const funcAgent1 = await Discount.find({...agent2}) // WHERE sport: Tennis 
+            .skip(offset).limit(limit) // skip тоже самое что offset
+            .sort({ [itemSort]: sortArray[+orderSort] })
+            .select("name image address cost discount dimensions")
+            .exec();
+            return res.json(funcAgent1);
         } catch (error) {
             await appendFiles(`\n603: ${error.message}`);
             return next(ApiError.internal(`603: ${error.message}`));
@@ -139,38 +120,32 @@ class DiscountController {
     }
 
 
-//     async checkIp(req, res, next) {
+    async checkIp(req, res, next) {
+        let clientIp = requestIp.getClientIp(req)
+console.log(clientIp)
+return
+        const headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": "Token " + process.env.API_KEY_FIND_ADDRESS_BY_ID
+        };
 
-
-
-//         let clientIp = requestIp.getClientIp(req)
-// console.log(clientIp)
-// return
-
-//         const headers = {
-//             "Content-Type": "application/json",
-//             "Accept": "application/json",
-//             "Authorization": "Token " + process.env.API_KEY_FIND_ADDRESS_BY_ID
-//         };
-
-//         try {
-//             const midAddress = await fetch("https://suggestions.dadata.ru/suggestions/api/4_1/rs/iplocate/address?ip=", {
-//                 method: "GET",
-//                 mode: "cors",
-//                 headers,
-//             });
-// console.log(midAddress)
-//             const addressObject = await midAddress.json();
-// console.log(addressObject)
-// return
-//             return res.json(payItem);
-
-
-//         } catch (error) {
-//             await appendFiles(`\n603: ${error.message}`);
-//             return next(ApiError.internal(`603: ${error.message}`));
-//         }
-//     }
+        try {
+            const midAddress = await fetch("https://suggestions.dadata.ru/suggestions/api/4_1/rs/iplocate/address?ip=", {
+                method: "GET",
+                mode: "cors",
+                headers,
+            });
+console.log(midAddress)
+            const addressObject = await midAddress.json();
+console.log(addressObject)
+return
+            return res.json(payItem);
+        } catch (error) {
+            await appendFiles(`\n603: ${error.message}`);
+            return next(ApiError.internal(`603: ${error.message}`));
+        }
+    }
 
     
     async recordErrorToLog(req, res, next) {

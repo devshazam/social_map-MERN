@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import {  useSearchParams } from "react-router-dom";
 
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -8,21 +8,14 @@ import DistrictForm from "./components/DistrictForm";
 
 import globalParamsObject from '../../../../parameters/mainAppParameterObject'
 
-import { useDispatch } from "react-redux";
 
-const AllDiscounts = () => {
-    const dispatch = useDispatch();
 
-    let [searchParams, setSearchParams] = useSearchParams()
-    const avitoCategory =  searchParams.get("avitoCategory") || '5';
+const AvitoForms = (props:any) => {
+
+
+    // let [searchParams, setSearchParams] = useSearchParams()
+    // const avitoCategory =  searchParams.get("avitoCategory") || '5';
     
-    const [mainObject, setMainObject] = useState<any>({avitoCategory, itemSort: "cost", orderSort: '0'});
-    useEffect(() => {
-        dispatch({
-            type: "FILTER",
-            payload: {...mainObject},
-        });
-    }, [JSON.stringify(mainObject)]);
 
 //_____________________________________________________________________________________________
     return (
@@ -34,12 +27,14 @@ const AllDiscounts = () => {
                 >
                     <Form.Select
                         aria-label="Default select example"
-                        onChange={(e:any) => setMainObject({...mainObject, avitoCategory: e.target.value})}
-                        value={mainObject.avitoCategory} >
+                        onChange={(e:any) => props.changefilterObject({avitoCategory: e.target.value})}
+                        
+                        >
+                            <option key={0} value={0}>Все категории</option>
                         { 
                                 globalParamsObject.avito.avitoCategory.map((item:any, index:any) => {
                                     return(
-                                        <option key={index} value={index + 1}>{item}</option>
+                                        <option key={index + 1} value={index + 1}>{item}</option>
                                     )
                                 })
                             }
@@ -53,12 +48,11 @@ const AllDiscounts = () => {
                     label="Сортировать по:" >
                     <Form.Select
                         aria-label="Default select example"
-                        onChange={(e:any) => setMainObject({...mainObject, itemSort: e.target.value})}
-                        value={mainObject.itemSort} 
+                        onChange={(e:any) => props.changefilterObject({itemSort: e.target.value})}
+ 
                     >
-                        <option value="createdAt">Новизне</option>
+                        <option value="createdAt">Дате публикации</option>
                         <option value="cost">Стоимости</option>
-                        <option value="discount">Размер Скидки</option>
                     </Form.Select>
                 </FloatingLabel>
             </Form.Group>
@@ -74,10 +68,11 @@ const AllDiscounts = () => {
                 >
                     <Form.Select
                         aria-label="Default select example"
-                        onChange={(e:any) => setMainObject({...mainObject, orderSort: e.target.value})}
-                        value={mainObject.orderSort}  >
-                        <option value="0">Возрастание</option>
+                        onChange={(e:any) => props.changefilterObject({orderSort: e.target.value})}
+
+                        >
                         <option value="1">Убывание</option>
+                        <option value="0">Возрастание</option>
                     </Form.Select>
                 </FloatingLabel>
             </Form.Group>
@@ -86,4 +81,4 @@ const AllDiscounts = () => {
     );
 };
 
-export default AllDiscounts;
+export default AvitoForms;

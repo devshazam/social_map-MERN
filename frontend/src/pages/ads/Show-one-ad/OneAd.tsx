@@ -26,7 +26,7 @@ const AdView: FC = () => {
                 setAdsItem(data);
             })
             .catch((error) => {
-                if (error.response.data) {
+                if (error.response && error.response.data) {
                     alert(
                         `${error.response.data.message}${error.response.status}`
                     );
@@ -43,7 +43,7 @@ const AdView: FC = () => {
                 <Col xs={12} md={6} className="wrap-image">
                     {adsItem ? (
                         <div style={{border: '1px solid black', margin: 'auto', backgroundColor: '#c5c5c5'}}>
-                        <Image src={adsItem.image} id="goods-image" thumbnail style={{...dimensionsToStyleObject(JSON.parse(adsItem.dimensions))}}/>
+                        <Image src={adsItem.image} id="goods-image" thumbnail style={adsItem.dimensions && {...dimensionsToStyleObject(JSON.parse(adsItem.dimensions))}}/>
                         </div>
                     ) : (
                         <Spinner animation="border" />

@@ -42,7 +42,7 @@ const LoginPage = () => {
                 window.location.reload();
             })
             .catch((error: any) => {
-                if (error.response.data) {
+                if (error.response && error.response.data) {
                     alert(
                         `${error.response.data.message}${error.response.status}`
                     );

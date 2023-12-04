@@ -20,23 +20,20 @@ import { fetchDiscountByMap }from '../../../api/discountAPI';
 
 import globalParamsObject from '../../../parameters/mainAppParameterObject';
 
-const AllDiscountsMap = () => {
+const AllMap = () => {
     const { adCategory } = useParams();
 
     const mapRef = useRef<any>();
     
-    let [searchParams, setSearchParams] = useSearchParams()
-    const avitoCategory =  searchParams.get("avitoCategory") || '5';
-
     const [map, setMap] = useState<any>(null);
     const [zoom, setZoom] = useState<any>(16);
 
     const [drawerFilter, setDrawerFilter] = useState<any>(false);
 
     const [discountList, setDiscountList] = useState<any>(null);
-    const [allObject, setAllObject] = useState<any>({avitoCategory});
     const [arrayCoordinates, setArrayCoordinates] = useState<any>([]);
-
+    
+    const [mainObject, setMainObject] = useState<any>({});
 
     const refreshData = () => {
        if(mapRef.current && mapRef.current._bounds) {
@@ -45,19 +42,19 @@ const AllDiscountsMap = () => {
       };
 
     useEffect(() => {
-        if(!map) return;
+        if(!adCategory || !map) return;
         if( zoom < 12) {
             setTimeout(function() {setZoom(13) }, 1000); 
             return;}
 
-        fetchDiscountByMap({ ...allObject, adCategory, xLatitude: map[0][0], xLongitude: map[0][1], yLatitude: map[1][0], yLongitude: map[1][1] }).then((data) => {
+        fetchDiscountByMap({ ...mainObject, adCategory, xLatitude: map[0][0], xLongitude: map[0][1], yLatitude: map[1][0], yLongitude: map[1][1] }).then((data) => {
             let mid2:any = []
             data.map((item:any) => {mid2 = [...mid2, [item.latitude, item.longitude]]})
             setArrayCoordinates(mid2)
             setDiscountList(data)
         })
         .catch((error:any) => {
-            if (error.response) {
+            if (error.response && error.response.data) {
                 alert(
                     `${error.response.data.message}${error.response.status}`
                 );
@@ -66,7 +63,7 @@ const AllDiscountsMap = () => {
                 // alert("Ошибка 138 - Обратитесь к администратору!");
             }
         });
-    }, [map])
+    }, [map, JSON.stringify(mainObject)])
 
     const toggleDrawer = (open: any):void => {
       setDrawerFilter(open);
@@ -79,7 +76,7 @@ const AllDiscountsMap = () => {
                 <div style={{position: 'relative'}}>
                     {zoom < 12 && <div style={{display: 'flex', position: 'absolute', left: '0', top: '0', width: '100%', height: '100%', zIndex: '999'}}><p style={{fontSize: '50px', margin: 'auto', width: '80%', color: 'rgb(217 98 98 / 75%);', fontWeight: '100', textAlign: 'center' }}>Для появления объявлений увеличьте (приблизьте) карту!</p></div>}
                     <YMaps
-                        query={{ apikey: '7176836c-97ba-4255-ae13-340eea0ffce0' }}>
+                        query={{ apikey: process.env.REACT_APP_YANDEX_KEY }}>
                         <section className="map container" >
                                 <Map
                                     defaultState={{
@@ -101,10 +98,10 @@ const AllDiscountsMap = () => {
                                             discountList.map((item: any, index:any) => {
                                                 return(
                                                     <>
-                                                        { adCategory === '1' && <DiscountsMapComp key={item._id} mainDataObject={{item, arrayCoordinates, index}} /> }
-                                                        { adCategory === '2' && <CharityMap key={item._id} mainDataObject={{item, arrayCoordinates, index}} /> }
-                                                        { adCategory === '3' && <EventMap key={item._id} mainDataObject={{item, arrayCoordinates, index}} /> }
-                                                        { adCategory === '4' && <AvitoMap key={item._id} mainDataObject={{item, arrayCoordinates, index}} /> }
+                                                        { adCategory === '1' && <DiscountsMapComp keys={index} mainDataObject={{item, arrayCoordinates, index}} /> }
+                                                        { adCategory === '2' && <CharityMap key={index} mainDataObject={{item, arrayCoordinates, index}} /> }
+                                                        { adCategory === '3' && <EventMap key={index} mainDataObject={{item, arrayCoordinates, index}} /> }
+                                                        { adCategory === '4' && <AvitoMap key={index} mainDataObject={{item, arrayCoordinates, index}} /> }
                                                     </>
                                                 );
                                             })
@@ -118,19 +115,20 @@ const AllDiscountsMap = () => {
             open={drawerFilter}
             onClose={() => toggleDrawer(false)}
           >
-            <br /><p>Фильтры: </p>
+            <br /><p style={{margin: '15px'}}><b>Фильтры категорий поиска: </b></p>
 
                     {adCategory === '1' &&
                         <FormControl fullWidth >
                         <InputLabel  >Категория скидки:</InputLabel>
                         <Select
-                            value={allObject.discountCategory}
-                            onChange={(e: any) => setAllObject({...allObject, discountCategory: e.target.value})}
+                            onChange={(e: any) => setMainObject({...mainObject, discountCategory: e.target.value})}
+
                         >
+                            <MenuItem key={0} value={0}>Все категории</MenuItem>
                             { 
                                 globalParamsObject.discounts.discountsCategory.map((item:any, index:any) => {
                                     return(
-                                        <MenuItem key={index} value={index + 1}>{item}</MenuItem>
+                                        <MenuItem key={index + 1} value={index + 1}>{item}</MenuItem>
                                     )
                                 })
                             }
@@ -142,13 +140,13 @@ const AllDiscountsMap = () => {
                     <FormControl fullWidth >
                         <InputLabel  >Категория авито:</InputLabel>
                         <Select
-                            value={allObject.avitoCategory}
-                            onChange={(e: any) => setAllObject({...allObject, avitoCategory: e.target.value})}
+                            onChange={(e: any) => setMainObject({...mainObject, avitoCategory: e.target.value})}
                         >
+                            <MenuItem key={0} value={0}>Все категории</MenuItem>
                             { 
                                 globalParamsObject.avito.avitoCategory.map((item:any, index:any) => {
                                     return(
-                                        <MenuItem key={index} value={index + 1}>{item}</MenuItem>
+                                        <MenuItem key={index + 1} value={index + 1}>{item}</MenuItem>
                                     )
                                 })
                             }
@@ -162,4 +160,4 @@ const AllDiscountsMap = () => {
     );
 };
 
-export default AllDiscountsMap;
+export default AllMap;

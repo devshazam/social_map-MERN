@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 import Col from "react-bootstrap/Col";
 import Pagination from "react-bootstrap/Pagination";
@@ -14,25 +14,25 @@ import EventsForms from "./components/EventsForms";
 import AvitoForms from "./components/AvitoForms";
 
 import { fetchAdsList } from "../../../api/discountAPI";
-import { useSelector } from "react-redux";
 import {dimensionsToStyleObject} from '../../../utils/helpFunctions'
 
 
 const AllDiscounts = () => {
     const { adCategory } = useParams();
 
-    // const ref = useRef(null);
     const [spiner, setSpiner] = useState(false);
     const [adsList, setAdsList] = useState([]);
     const [count, setCount] = useState(0);
-
     const [page, setPage] = useState(1);
 
-    const filterObject = useSelector((state: any) => state.app.filter);
-console.log(filterObject)
+    const [filterObject, setFilterObject] = useState<any>({});
+
+    function changefilterObject(agent1:any){
+        setFilterObject({...filterObject, ...agent1})
+    }
 
     useEffect(() => {
-        if (!Object.values(filterObject).every((i:any) => Boolean(i))) {
+        if (!adCategory || !Object.values(filterObject).every((i:any) => Boolean(i))) {
             return;
         }
         fetchAdsList({ ...filterObject, page, adCategory })
@@ -42,7 +42,7 @@ console.log(filterObject)
                 setCount(data.length);
             })
             .catch((error: any) => {
-                if (error.response.data) {
+                if (error.response && error.response.data) {
                     alert(
                         `${error.response.data.message}${error.response.status}`
                     );
@@ -83,10 +83,10 @@ console.log(filterObject)
         <>
             <Row className="mb-5">
                 <Col xs={12} sm={3} lg={3} className="mb-3">
-                    {adCategory === "1" && <DiscountsForms />}
-                    {adCategory === "2" && <DistrictForm />}
-                    {adCategory === "3" && <EventsForms />}
-                    {adCategory === '4' && <AvitoForms /> }
+                    {adCategory === "1" && <DiscountsForms changefilterObject={changefilterObject} filterObject={filterObject}/>}
+                    {adCategory === "2" && <DistrictForm changefilterObject={changefilterObject} filterObject={filterObject}/>}
+                    {adCategory === "3" && <EventsForms changefilterObject={changefilterObject} filterObject={filterObject}/>}
+                    {adCategory === '4' && <AvitoForms changefilterObject={changefilterObject} filterObject={filterObject}/> }
                 </Col>
                 <Col xs={12} sm={9} lg={9} className="mb-3">
                     <Row className="mb-5">
@@ -99,7 +99,7 @@ console.log(filterObject)
                             }}
                         >
                             <a href={adCategory === '4' ? "/ads-map/" + adCategory + "/?avitoCategory=" + filterObject.avitoCategory : "/ads-map/" + adCategory}>
-                                <YMaps query={{ apikey: '7176836c-97ba-4255-ae13-340eea0ffce0' }}>
+                                <YMaps query={{ apikey: process.env.REACT_APP_YANDEX_KEY }}>
                                     <section className="map container">
                                         <Map
                                             state={{
@@ -135,8 +135,8 @@ console.log(filterObject)
                                         >
                                             <Card>
                                                 <a href={"/ad-view/" + ad._id} style={{backgroundColor: '#cbcbcb'}}>
-                                                    {/* ref={ref} */}
-                                                    <Card.Img  
+                                                    
+                                                    <Card.Img 
                                                         style={ad.dimensions && {...dimensionsToStyleObject(JSON.parse(ad.dimensions))}}
                                                         variant="top"
                                                         src={ad.image} 

@@ -6,27 +6,27 @@ import Image from "react-bootstrap/Image";
 
 const BanSite = () => {
 
+
     useEffect(() => {
         checkIp()
             .then((data) => {
             })
             .catch((error) => {
-                if (error.response.data) {
-                    alert(
-                        `${error.response.data.message}${error.response.status}`
-                    );
+                if (error.response && error.response.data) {
+                    console.log(`${error.response.data.message} ${error.response.status}`);
                 } else {
                     console.log("dev", error);
-                    alert("Ошибка 109 - Обратитесь к администратору!");
                 }
             });
     }, []);
 
+
     return (
         <>
-           
+        {banFlag && 
                 <div className="ban-modal">
-                    <h3>Сайт на обслуживании! +7 (909) 380-25-19</h3>
+                    <h3>Ваш IP не из Волгограда (Волгоградсктй обл.)</h3>
+                    <p>Данный сайт создаля для волгоградцев! Пожалуйста подтвердите, что вы из Волгограда или Волгоградской области!</p>
                     <Image
                         src="/file/b14fa0bc9d533524a1bfadb3c588a843.gif"
                         className="bascket_img"
@@ -35,7 +35,7 @@ const BanSite = () => {
                         title="Заказы"
                     />
                 </div>
-         
+        }
         </>
     );
 };

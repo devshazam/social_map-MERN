@@ -1,23 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import DistrictForm from "./components/DistrictForm";
 
-import { useDispatch } from "react-redux";
 
-const AllDiscounts = () => {
-    const dispatch = useDispatch();
+const EventsForms = (props:any) => {
 
-    const [itemSort, setItemSort] = useState("createdAt");
-    const [orderSort, setOrderSort] = useState("0");
-
-    useEffect(() => {
-        dispatch({ type: "FILTER", payload: { itemSort, orderSort } });
-    }, [itemSort, orderSort]);
-
+    //===========================================================================================
     return (
         <>
             <Form.Group
@@ -32,10 +21,10 @@ const AllDiscounts = () => {
                 >
                     <Form.Select
                         aria-label="Default select example"
-                        onChange={(e) => setItemSort(e.target.value)}
-                        value={itemSort}
+                        onChange={(e:any) => props.changefilterObject({itemSort: e.target.value})}
                     >
-                        <option value="startDate">Дата начала</option>
+                        <option value="createdAt">Дате публикации</option>
+                        <option value="startDate">Дате начала</option>
                         <option value="cost">Стоимости</option>
                     </Form.Select>
                 </FloatingLabel>
@@ -52,11 +41,10 @@ const AllDiscounts = () => {
                 >
                     <Form.Select
                         aria-label="Default select example"
-                        onChange={(e) => setOrderSort(e.target.value)}
-                        value={orderSort}
+                        onChange={(e:any) => props.changefilterObject({orderSort: e.target.value})}
                     >
-                        <option value="0">Возрастание</option>
                         <option value="1">Убывание</option>
+                        <option value="0">Возрастание</option>
                     </Form.Select>
                 </FloatingLabel>
             </Form.Group>
@@ -65,4 +53,4 @@ const AllDiscounts = () => {
     );
 };
 
-export default AllDiscounts;
+export default EventsForms;

@@ -6,7 +6,7 @@ import {Placemark} from "@pbe/react-yandex-maps";
 import {fspiralFromSameCoordinatesToYaMap} from '../../../../utils/helpFunctions'
 
 
-const AllDiscountsMap = (props: any) => {
+const CharityMap = (props: any) => {
 
     // функция должно окрашивать метки в цвета в зависимости от длительности размещения, если старше 7 дней, то желтый или красный
     let colorPoint = (props.mainDataObject.item.user.role === "USER") ? 'yellow' : 'red';
@@ -38,4 +38,4 @@ const AllDiscountsMap = (props: any) => {
     );
 };
 
-export default AllDiscountsMap;
+export default CharityMap;
