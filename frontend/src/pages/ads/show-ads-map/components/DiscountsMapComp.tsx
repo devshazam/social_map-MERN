@@ -9,12 +9,12 @@ import {fspiralFromSameCoordinatesToYaMap} from '../../../../utils/helpFunctions
 const DiscountsMapComp = (props: any) => {
 
     // функция должно окрашивать метки в цвета в зависимости от длительности размещения, если старше 7 дней, то желтый или красный
-    let colorPoint = (Math.ceil((new Date().getTime() - props.mainDataObject.item.currentTime) / 8.64e7) <= 7) ? 'red' : 'green';
+    let colorPoint = (Math.ceil((new Date().getTime() - props.mainDataObject.item.currentTime) / 8.64e7) <= 7) ? 'red' : 'blue';
 
 
     return (
         <>
-                <Placemark key={props.keys}
+                <Placemark
                         geometry={[props.mainDataObject.item.latitude, props.mainDataObject.item.longitude]}
                         options={{
                             preset: 'islands#oliveStretchyIcon', // список темплейтов на сайте яндекса

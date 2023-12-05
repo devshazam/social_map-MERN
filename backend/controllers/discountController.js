@@ -65,7 +65,7 @@ class DiscountController {
             const midDiscount = await Discount.find({adCategory, ...agent2})
             .where("latitude").gt(xLatitude).lt(yLatitude) // Additional where query
             .where("longitude").gt(xLongitude).lt(yLongitude) // Additional where query
-            .select("latitude longitude discount currentTime name")
+            .select("latitude longitude discount currentTime name cost startDate")
             .populate('userId', 'name phone role')
             .exec();
 

@@ -98,7 +98,7 @@ const AllDiscounts = () => {
                                 position: "relative",
                             }}
                         >
-                            <a href={adCategory === '4' ? "/ads-map/" + adCategory + "/?avitoCategory=" + filterObject.avitoCategory : "/ads-map/" + adCategory}>
+                            <a href={"/ads-map/" + adCategory}>
                                 <YMaps query={{ apikey: process.env.REACT_APP_YANDEX_KEY }}>
                                     <section className="map container">
                                         <Map
@@ -124,15 +124,8 @@ const AllDiscounts = () => {
                             <>
                                 {count ? 
                                     adsList.map((ad: any, index:number) => {
-
                                         return(
-                                        <Col
-                                            xs={12}
-                                            sm={6}
-                                            lg={3}
-                                            className="mb-3"
-                                            key={index}
-                                        >
+                                        <Col xs={12} sm={6} lg={3} className="mb-3" key={index} >
                                             <Card>
                                                 <a href={"/ad-view/" + ad._id} style={{backgroundColor: '#cbcbcb'}}>
                                                     

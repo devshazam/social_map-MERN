@@ -9,12 +9,12 @@ import {fspiralFromSameCoordinatesToYaMap} from '../../../../utils/helpFunctions
 const EventMap = (props: any) => {
 
     // функция должно окрашивать метки в цвета в зависимости от длительности размещения, если старше 7 дней, то желтый или красный
-    let colorPoint = (Math.ceil((new Date().getTime() - props.mainDataObject.item.startDate) / 8.64e7) <= 0) ? 'red' : 'yellow';
+    let colorPoint = (Math.ceil((new Date().getTime() - props.mainDataObject.item.startDate) / 8.64e7) <= 0) ? 'red' : 'blue';
 
 
     return (
         <>
-                <Placemark key={props.mainDataObject.item._id}
+                <Placemark
                         geometry={[props.mainDataObject.item.latitude, props.mainDataObject.item.longitude]}
                         options={{
                             preset: 'islands#oliveStretchyIcon', // список темплейтов на сайте яндекса
@@ -22,7 +22,7 @@ const EventMap = (props: any) => {
                             iconOffset: fspiralFromSameCoordinatesToYaMap(props.mainDataObject.arrayCoordinates, props.mainDataObject.index, props.mainDataObject.item), // !!!!!!!!!!!!!!
                         }}
                         properties={{
-                            iconContent: `${props.mainDataObject.item.cost}`, // пару символов помещается
+                            iconContent: `${props.mainDataObject.item.cost}р`, // пару символов помещается
                             hintContent: '<em>кликни меня</em>',
                             balloonContent: `<div class="my-balloon">
                                 <h4>${props.mainDataObject.item.name}</h4>

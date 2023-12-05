@@ -42,7 +42,7 @@ const Header = () => {
                                 
                                 <Nav.Link href="/ads/1">Скидки города</Nav.Link>
                                 <Nav.Link href="/ads/2">Благотворительность</Nav.Link>
-                                <Nav.Link href="/ads/4">Доска объявлений Б/У</Nav.Link>
+                                <Nav.Link href="/ads/4">Объявления (новое и б/у)</Nav.Link>
                                 {/* <NavDropdown
                                     title="Доска объявлений БУ"
                                     id="offcanvasNavbarDropdown-expand-lg"
@@ -84,7 +84,7 @@ const Header = () => {
 
 
                                 <Nav.Link href="/ads/3">Мероприятия</Nav.Link>
-                                <Nav.Link href="/contacts">Карта доверия</Nav.Link>
+                                {/* <Nav.Link href="/contacts">Карта доверия</Nav.Link> */}
                                 <Nav.Link href="/contacts">Контакты</Nav.Link>
                             </Nav>
                             {/* <Navbar.Text>

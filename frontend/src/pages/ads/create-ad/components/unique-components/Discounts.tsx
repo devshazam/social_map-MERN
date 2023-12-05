@@ -1,4 +1,3 @@
-import React, { useState, useEffect, useRef }from 'react';
 
 import Col from "react-bootstrap/Col";
 import { TextField} from "@mui/material";
@@ -7,23 +6,10 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import {useDispatch, useSelector} from "react-redux";
 
 import globalParamsObject from '../../../../../parameters/mainAppParameterObject'
 
 const Discounts = (props:any) => {
-    const [uniqObject, setUniqObject] = useState<any>({});
-
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        if(uniqObject.cost && uniqObject.discount && uniqObject.discountCategory){
-
-            dispatch({type: "MAIN", payload: {cost: uniqObject.cost, discount: uniqObject.discount, discountCategory: uniqObject.discountCategory}})
-        }
-    }, [JSON.stringify(uniqObject)])
-
-
 
 
     // ==========================================================================================================
@@ -31,20 +17,23 @@ const Discounts = (props:any) => {
         <>
                 <Col xs={12} md={6}>
                     <TextField label="Цена со скидкой:" variant="outlined" fullWidth
-                                sx={{mb: 1, width: { sm: 'none', md: '50%'}}}
-                                error={Boolean(!uniqObject.cost && props.flag == 0)}
-                                onChange={(e) => setUniqObject({...uniqObject, cost: e.target.value})}/>
+                                sx={{mb: 1, pr: { sm: 0, md: 1}, width: { sm: 'none', md: '50%'}}}
+                                error={Boolean(!props.createObject.cost && props.flag == 0)}
+                                onChange={(e:any) => props.changeCreateObject({cost: e.target.value})}
+                    />
                     <FormControl fullWidth sx={{mb: 1, width: { sm: 'none', md: '50%'}}}>
-                        <InputLabel  error={Boolean(!uniqObject.discount && props.flag == 0)}>Размер скидки:</InputLabel>
+                        <InputLabel  error={Boolean(!props.createObject.discount && props.flag == 0)}>Размер скидки:</InputLabel>
                         <Select
-                            value={uniqObject.discount}
-                            error={Boolean(!uniqObject.discount && props.flag == 0)}
-                            onChange={(e: any) => setUniqObject({...uniqObject, discount: e.target.value})}
+                            // value={props.createObject.discount}
+                            // defaultValue={'5'}
+                            value={props.createObject.discount ? props.createObject.discount : '5'}
+                            error={Boolean(!props.createObject.discount && props.flag == 0)}
+                            onChange={(e:any) => props.changeCreateObject({discount: e.target.value})}
                         >
                             { 
                                 globalParamsObject.discounts.discountSize.map((item:any, index:any) => {
                                     return(
-                                        <MenuItem key={index} value={item}>{item}%</MenuItem>
+                                        <MenuItem key={index + 1} value={item}>{item}%</MenuItem>
                                     )
                                 })
                             }
@@ -55,29 +44,24 @@ const Discounts = (props:any) => {
 
 
                     <FormControl fullWidth >
-                        <InputLabel id="demo-simple-select-label" error={Boolean(!uniqObject.discountCategory && props.flag == 0)}>Категория скидки:</InputLabel>
+                        <InputLabel id="demo-simple-select-label" error={Boolean(!props.createObject.discountCategory && props.flag == 0)}>Категория скидки:</InputLabel>
                         <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={uniqObject.discountCategory}
-                            error={Boolean(!uniqObject.discountCategory && props.flag == 0)}
-                            label="Age"
-                            onChange={(e: any) => setUniqObject({...uniqObject, discountCategory: e.target.value})}
+                            // value={props.createObject.discountCategory}
+                            // defaultValue={'1'}
+                            value={props.createObject.discountCategory ? props.createObject.discountCategory : '1'}
+                            error={Boolean(!props.createObject.discountCategory && props.flag == 0)}
+                            onChange={(e:any) => props.changeCreateObject({discountCategory: e.target.value})}
                         >
                             { 
                                 globalParamsObject.discounts.discountsCategory.map((item:any, index:any) => {
                                     return(
-                                        <MenuItem key={index} value={index + 1}>{item}</MenuItem>
+                                        <MenuItem key={index + 1} value={index + 1}>{item}</MenuItem>
                                     )
                                 })
                             }
-
                         </Select>
                     </FormControl>
                 </Col>
-
-
-
         </>
     );
 };

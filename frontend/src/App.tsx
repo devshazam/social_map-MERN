@@ -61,30 +61,18 @@ const App: React.FC = () => {
                         <Route path="/test" element={<Test />} />
                         <Route path="/*" element={<Empty />} />
                         <Route path="/ads/:adCategory" element={<AllAds />} />
-                        <Route
-                            path="/ads-map/:adCategory"
-                            element={<AllMap />}
-                        />
+                        <Route path="/ads-map/:adCategory" element={<AllMap />} />
                         <Route path="/ad-view/:adId" element={<AdView />} />
-
 
                         <Route path="/contacts" element={<Contacts />} />
                     </Route>
+
                     <Route path="/user/" element={<LayoutUser />}>
-                        <Route
-                            path="/user/ads/create-ad/:adCategory"
-                            element={<CreateAd />}
-                        />
-                        {/* <Route index element={<AllOrdersAdmin />} />
-              <Route path="/admin/base-of-orders" element={<BaseOfOrders />} /> */}
+                        <Route path="/user/ads/create-ad/:adCategory" element={<CreateAd />} />
                     </Route>
+
                     <Route path="/company/" element={<LayoutCompany />}>
-                        <Route
-                            path="/company/ads/create-ad/:adCategory"
-                            element={<CreateAd />}
-                        />
-                        {/* <Route index element={<AllOrdersAdmin />} />
-              <Route path="/admin/base-of-orders" element={<BaseOfOrders />} /> */}
+                        <Route path="/company/ads/create-ad/:adCategory"  element={<CreateAd />} />
                     </Route>
                 </Routes>
             </BrowserRouter>

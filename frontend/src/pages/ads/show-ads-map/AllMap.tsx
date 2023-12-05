@@ -72,7 +72,8 @@ const AllMap = () => {
     return (
         <>
             <Row className="mb-5">
-                <Button onClick={() => toggleDrawer(true)}>ОТКРЫТЬ ФИЛЬТРЫ</Button>
+                { (adCategory === '1' || adCategory === '1') && <Button onClick={() => toggleDrawer(true)}>ОТКРЫТЬ ФИЛЬТРЫ</Button> }
+
                 <div style={{position: 'relative'}}>
                     {zoom < 12 && <div style={{display: 'flex', position: 'absolute', left: '0', top: '0', width: '100%', height: '100%', zIndex: '999'}}><p style={{fontSize: '50px', margin: 'auto', width: '80%', color: 'rgb(217 98 98 / 75%);', fontWeight: '100', textAlign: 'center' }}>Для появления объявлений увеличьте (приблизьте) карту!</p></div>}
                     <YMaps
@@ -97,12 +98,12 @@ const AllMap = () => {
                                         { discountList &&
                                             discountList.map((item: any, index:any) => {
                                                 return(
-                                                    <>
-                                                        { adCategory === '1' && <DiscountsMapComp keys={index} mainDataObject={{item, arrayCoordinates, index}} /> }
-                                                        { adCategory === '2' && <CharityMap key={index} mainDataObject={{item, arrayCoordinates, index}} /> }
-                                                        { adCategory === '3' && <EventMap key={index} mainDataObject={{item, arrayCoordinates, index}} /> }
-                                                        { adCategory === '4' && <AvitoMap key={index} mainDataObject={{item, arrayCoordinates, index}} /> }
-                                                    </>
+                                                    <span key={index}>
+                                                        { adCategory === '1' && <DiscountsMapComp  mainDataObject={{item, arrayCoordinates, index}} /> }
+                                                        { adCategory === '2' && <CharityMap mainDataObject={{item, arrayCoordinates, index}} /> }
+                                                        { adCategory === '3' && <EventMap mainDataObject={{item, arrayCoordinates, index}} /> }
+                                                        { adCategory === '4' && <AvitoMap mainDataObject={{item, arrayCoordinates, index}} /> }
+                                                    </span>
                                                 );
                                             })
                                         }
@@ -110,7 +111,15 @@ const AllMap = () => {
                         </section>
                     </YMaps>
                 </div>
-          <Drawer
+                <br></br>
+                { adCategory === '1' && <p>* Обозначение цветов маркеров: <span style={{color:'white', backgroundColor: 'red'}}>Красный:</span> срок объявления до 7 дней; <span style={{color:'white', backgroundColor: 'blue'}}>Синий:</span> срок объявления более 7 дней!</p>}
+                { adCategory === '2' && <p>* Обозначение цветов маркеров: <span style={{color:'white', backgroundColor: 'red'}}>Красный:</span> объявление подано компанией; <span style={{color:'white', backgroundColor: 'blue'}}>Синий:</span> объявление подано персоной!</p>}
+                { adCategory === '3' && <p>* Обозначение цветов маркеров: <span style={{color:'white', backgroundColor: 'red'}}>Красный:</span> срок объявления до 2 дней; <span style={{color:'white', backgroundColor: 'blue'}}>Синий:</span> срок объявления более 2 дней!</p>}
+                { adCategory === '4' && <p>* Обозначение цветов маркеров: <span style={{color:'white', backgroundColor: 'red'}}>Красный:</span> Мероприятие уже идет; <span style={{color:'white', backgroundColor: 'blue'}}>Синий:</span> мероприятие начнется через время!</p>}
+            </Row>
+            
+            
+            <Drawer
             anchor={'left'}
             open={drawerFilter}
             onClose={() => toggleDrawer(false)}
@@ -154,8 +163,6 @@ const AllMap = () => {
                     </FormControl>
                     }
           </Drawer>
-     
-            </Row>
         </>
     );
 };

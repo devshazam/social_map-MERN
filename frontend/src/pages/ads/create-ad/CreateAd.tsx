@@ -9,51 +9,52 @@ import { createDiscount } from "../../../api/discountAPI";
 import ImageResizingComp from "./components/ImageResizingComp";
 import CommonFieldsComp from "./components/CommonFieldsComp";
 import MapChoiceComp from "./components/MapChoiceComp";
+import Alert from '@mui/material/Alert';
 
 import Discounts from "./components/unique-components/Discounts";
 import Events from "./components/unique-components/Events";
 import Avito from "./components/unique-components/Avito";
 
+// import AlertDialog from "../../../components/AlertDialog"
+
 const CreateDiscount = () => {
     const { adCategory } = useParams<string>();
-
     const [flag, setFlag] = useState<number>(1);
+    const [createObject, setCreateObject] = useState<any>({address: 'Волгоград, ', district: '4'});
 
     const stateUser = useSelector((state: any) => state.user.user);
-    const createState = useSelector((state: any) => state.create);
-
-console.log({...createState.img, ...createState.map, ...createState.common, ...createState.main, ...createState.unique}, 999)
-
+    
+    function changeCreateObject(agent1:any){
+        setCreateObject({...createObject, ...agent1})
+    }
+    console.log(createObject, 111)
+    
+    
     let sendToServer = () => {
-        let midObject1 = {...createState.img, ...createState.map, ...createState.common, ...createState.main, ...createState.unique}
-        // let mainObject = {
-        //     ...stateMap,
-        //     ...stateCommon,
-        //     ...stateMain
-        // };
-        if (!Object.values(midObject1).every((i:any) => Boolean(i))) {
+        // let midObject1 = {...createState.img, ...createState.map, ...createState.common, ...createState.main, ...createState.unique}
+        // ({name: '', district: '', description: ''});
+        // if(mainObject.cost && mainObject.startDate && mainObject.endDate){
+            // if(uniqObject.cost && uniqObject.discount 
+
+
+                    // avitoCategory -- discountCategory
+
+        if (!Object.values(createObject).every((i:any) => Boolean(i))) {
             setFlag(0);
             window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
             return;
         }
 
-        // mainObject = {
-        //     userId: stateUser.id,
-        //     adCategory,
-        //     img: stateImg.image,
-        //     dimensions: stateImg.dimensions,
-        //     ...mainObject,
-        //     ...stateUnique,
-        // };
-
         const formData = new FormData();
-        Object.entries({...midObject1, userId: stateUser.id, adCategory}).map((item: any) => {
+        Object.entries({...createObject, userId: stateUser.id, adCategory}).map((item: any) => {
             formData.append(item[0], item[1]);
         });
 
         createDiscount(formData)
             .then((data) => {
                 console.log(data);
+                alert("Ваше объявление добавлено успешно!")
+
             })
             .catch((error: any) => {
                 if (error.response && error.response.data) {
@@ -73,24 +74,25 @@ console.log({...createState.img, ...createState.map, ...createState.common, ...c
 
     return (
         <>
+        {/* <AlertDialog /> */}
             <Row className="mb-5">
                 <h5>
                     Шаг №1: Заполните полный адрес, включая номер и литеру дома.
                 </h5>
                 <hr />
-                <MapChoiceComp flag={flag} />
+                <MapChoiceComp flag={flag}  changeCreateObject={changeCreateObject} createObject={createObject}/>
             </Row>
             <Row className="mb-2">
                 <h5>Шаг №2: Заполните общие хар-ки</h5>
                 <hr />
-                <CommonFieldsComp flag={flag} />
+                <CommonFieldsComp flag={flag}  changeCreateObject={changeCreateObject} createObject={createObject}/>
             </Row>
             <Row className="mb-5">
                 {adCategory && (
                     <>
-                        {adCategory === "1" && <Discounts flag={flag} />}
-                        {adCategory === "3" && <Events flag={flag} />}
-                        {adCategory === "4" && <Avito flag={flag} />}
+                        {adCategory === "1" && <Discounts flag={flag} changeCreateObject={changeCreateObject} createObject={createObject}/>}
+                        {adCategory === "3" && <Events flag={flag}  changeCreateObject={changeCreateObject} createObject={createObject}/>}
+                        {adCategory === "4" && <Avito flag={flag}  changeCreateObject={changeCreateObject} createObject={createObject}/>}
                     </>
                 )}
             </Row>
@@ -100,7 +102,7 @@ console.log({...createState.img, ...createState.map, ...createState.common, ...c
                     jpeg, png
                 </h5>
                 <hr />
-                <ImageResizingComp flag={flag} />
+                <ImageResizingComp flag={flag}  changeCreateObject={changeCreateObject} createObject={createObject}/>
             </Row>
             <Row className="mb-">
                 <h5>Шаг №4: Публикация объявление о скидки</h5>

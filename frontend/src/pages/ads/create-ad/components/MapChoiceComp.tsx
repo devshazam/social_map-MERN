@@ -7,24 +7,19 @@ import Button from "@mui/material/Button";
 import { useDispatch } from "react-redux";
 
 const MapChoiceComp = (props: any) => {
-    const [addressString, setAddressString] = useState<string>("Волгоград, ");
-    const [coordinats, setCoordinats] = useState<any>([]);
-
-    const dispatch = useDispatch();
+    // const [addressString, setAddressString] = useState<string>("Волгоград, ");
+    // const [coordinats, setCoordinats] = useState<any>([]);
 
     let callFetchYandexAddress = (): void => {
-        if (!addressString) return;
-        fetchYandexAddress({ address: addressString })
+        if (!props.createObject.address) return;
+        fetchYandexAddress({ address: props.createObject.address })
             .then((data: any) => {
                 if(!data.result){
                     alert('Адрес не найден!');
                     return;}
-                dispatch({
-                    type: "MAP",
-                    payload: {address: data.result, latitude: data.latitude, longitude: data.longitude},
-                });
-                setAddressString(data.result)
-                setCoordinats([data.latitude, data.longitude]);
+                    props.changeCreateObject({address: data.result, latitude: data.latitude, longitude: data.longitude});
+          
+                // setAddressString(data.result)
             })
             .catch((error: any) => {
                 if (error.response && error.response.data) {
@@ -46,10 +41,10 @@ const MapChoiceComp = (props: any) => {
                 <YMaps query={{ apikey: process.env.REACT_APP_YANDEX_KEY }} >
                     {/* apikey - https://reactjsexample.com/yandex-maps-api-bindings-for-react/ */}
                     <section className="map container">
-                        {coordinats.length ? (
+                        { (props.createObject.latitude && props.createObject.longitude) ? (
                             <Map
                                 state={{
-                                    center: coordinats, // координаты центра карты 48.512741, 44.535905
+                                    center: [props.createObject.latitude, props.createObject.longitude], // координаты центра карты 48.512741, 44.535905
                                     zoom: 13,
                                 }}
                                 width="100%"
@@ -61,7 +56,7 @@ const MapChoiceComp = (props: any) => {
                                 ]}
                             >
                                 <Placemark
-                                    geometry={coordinats}
+                                    geometry={[props.createObject.latitude, props.createObject.longitude]}
                                     options={{
                                         preset: "islands#oliveStretchyIcon", // список темплейтов на сайте яндекса
                                         iconColor: "green", // цвет иконки
@@ -97,9 +92,10 @@ const MapChoiceComp = (props: any) => {
                     variant="outlined"
                     fullWidth
                     sx={{ mb: 1 }}
-                    error={Boolean(coordinats.length == 0 && props.flag == 0)}
-                    value={addressString}
-                    onChange={(e) => setAddressString(e.target.value)}
+                    error={Boolean(props.createObject.latitude && props.createObject.longitude && props.flag == 0)}
+                    value={props.createObject.address}
+                    // onChange={(e) => setAddressString(e.target.value)}
+                    onChange={(e:any) => props.changeCreateObject({address: e.target.value})}
                     label="Введите адрес (начните со слова Волгоград)"
                 />
 

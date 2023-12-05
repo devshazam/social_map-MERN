@@ -9,12 +9,12 @@ import {fspiralFromSameCoordinatesToYaMap} from '../../../../utils/helpFunctions
 const CharityMap = (props: any) => {
 
     // функция должно окрашивать метки в цвета в зависимости от длительности размещения, если старше 7 дней, то желтый или красный
-    let colorPoint = (props.mainDataObject.item.user.role === "USER") ? 'yellow' : 'red';
+    let colorPoint = (props.mainDataObject.item.userId.role === "USER") ? 'blue' : 'red';
 
 
     return (
         <>
-                <Placemark key={props.mainDataObject.item._id}
+                <Placemark
                         geometry={[props.mainDataObject.item.latitude, props.mainDataObject.item.longitude]}
                         options={{
                             preset: 'islands#oliveStretchyIcon', // список темплейтов на сайте яндекса
@@ -27,7 +27,7 @@ const CharityMap = (props: any) => {
                             balloonContent: `<div class="my-balloon">
                                 <h4>${props.mainDataObject.item.name}</h4>
                                 <p>
-                                    Скидка ${props.mainDataObject.item.discount}% на кофе
+                                    Скидка ${props.mainDataObject.item.discount}%
                                 </p>
                                 <a href="/ad-view/${props.mainDataObject.item._id}">Посмотреть</a>
                                 </div>`,
