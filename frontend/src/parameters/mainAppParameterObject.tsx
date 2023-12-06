@@ -29,6 +29,12 @@ export default {
             district: "Район:",
             address: "Адрес:",
         },
+        arrayAdCategory: [
+            ['discount', 'discountCategory', 'address', 'district', 'name', 'description', 'cost', 'latitude', 'longitude', 'img', 'dimensions'], 
+            ['address', 'district', 'name', 'description', 'latitude', 'longitude', 'img', 'dimensions'], 
+            ['startDate', 'endDate', 'address', 'district', 'name', 'description', 'cost', 'latitude', 'longitude', 'img', 'dimensions'], 
+            ['avitoCategory', 'uniquePart', 'address', 'district', 'name', 'description', 'cost', 'latitude', 'longitude', 'img', 'dimensions']]
+    
 
     }, 
     discounts: {

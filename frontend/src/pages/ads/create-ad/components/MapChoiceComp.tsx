@@ -92,7 +92,7 @@ const MapChoiceComp = (props: any) => {
                     variant="outlined"
                     fullWidth
                     sx={{ mb: 1 }}
-                    error={Boolean(props.createObject.latitude && props.createObject.longitude && props.flag == 0)}
+                    error={Boolean(!props.createObject.latitude && !props.createObject.longitude && props.flag == 0)}
                     value={props.createObject.address}
                     // onChange={(e) => setAddressString(e.target.value)}
                     onChange={(e:any) => props.changeCreateObject({address: e.target.value})}

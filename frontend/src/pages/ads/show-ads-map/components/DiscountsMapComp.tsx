@@ -27,7 +27,7 @@ const DiscountsMapComp = (props: any) => {
                             balloonContent: `<div class="my-balloon">
                                 <h4>${props.mainDataObject.item.name}</h4>
                                 <p>
-                                    Скидка ${props.mainDataObject.item.discount}% на кофе
+                                    Скидка ${props.mainDataObject.item.discount}%
                                 </p>
                                 <a href="/ad-view/${props.mainDataObject.item._id}">Посмотреть</a>
                                 </div>`,

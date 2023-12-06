@@ -94,6 +94,24 @@ class DiscountController {
             return next(ApiError.internal(`603: ${error.message}`));
         }
     }
+    
+    async fetchAdByIdForUser(req, res, next) {
+        const { adId } = req.body;
+        try {
+            let midDiscount;
+    
+            midDiscount = await Discount.findById(adId)
+            .select("discount discountCategory startDate endDate avitoCategory uniquePart cost name description district address image dimensions")
+            .exec();
+            
+            return res.json(midDiscount);
+        } catch (error) {
+            await appendFiles(`\n603: ${error.message}`);
+            return next(ApiError.internal(`603: ${error.message}`));
+        }
+    }
+
+
 
     async fetchAdsList(req, res, next) {
         let { itemSort, orderSort, page, limit, offset, ...rest }  = req.body;
@@ -120,32 +138,64 @@ class DiscountController {
     }
 
 
-    async checkIp(req, res, next) {
-        let clientIp = requestIp.getClientIp(req)
-console.log(clientIp)
-return
-        const headers = {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization": "Token " + process.env.API_KEY_FIND_ADDRESS_BY_ID
-        };
+    async fetchUserAdsList(req, res, next) {
+        let { page, userId }  = req.body;
+        page = page || 1;
+        let limit = 8;
+        let offset = page * limit - limit;
 
         try {
-            const midAddress = await fetch("https://suggestions.dadata.ru/suggestions/api/4_1/rs/iplocate/address?ip=", {
-                method: "GET",
-                mode: "cors",
-                headers,
-            });
-console.log(midAddress)
-            const addressObject = await midAddress.json();
-console.log(addressObject)
-return
-            return res.json(payItem);
+            const funcAgent1 = await Discount.find({userId}) // WHERE sport: Tennis 
+            .skip(offset).limit(limit) // skip тоже самое что offset
+            .sort({ createdAt: -1 })
+            .select("name image dimensions")
+            .exec();
+            return res.json(funcAgent1);
         } catch (error) {
             await appendFiles(`\n603: ${error.message}`);
             return next(ApiError.internal(`603: ${error.message}`));
         }
     }
+    
+    
+    async deleteUserAdsList(req, res, next) {
+        let { adId }  = req.body;
+        try {
+            
+            const funcAgent1 = await Discount.deleteOne({ _id: adId });
+// console.log(funcAgent1)
+            return res.json(funcAgent1);
+        } catch (error) {
+            await appendFiles(`\n603: ${error.message}`);
+            return next(ApiError.internal(`603: ${error.message}`));
+        }
+    }
+//     async checkIp(req, res, next) {
+//         let clientIp = requestIp.getClientIp(req)
+// console.log(clientIp)
+// return
+//         const headers = {
+//             "Content-Type": "application/json",
+//             "Accept": "application/json",
+//             "Authorization": "Token " + process.env.API_KEY_FIND_ADDRESS_BY_ID
+//         };
+
+//         try {
+//             const midAddress = await fetch("https://suggestions.dadata.ru/suggestions/api/4_1/rs/iplocate/address?ip=", {
+//                 method: "GET",
+//                 mode: "cors",
+//                 headers,
+//             });
+// console.log(midAddress)
+//             const addressObject = await midAddress.json();
+// console.log(addressObject)
+// return
+//             return res.json(payItem);
+//         } catch (error) {
+//             await appendFiles(`\n603: ${error.message}`);
+//             return next(ApiError.internal(`603: ${error.message}`));
+//         }
+//     }
 
     
     async recordErrorToLog(req, res, next) {

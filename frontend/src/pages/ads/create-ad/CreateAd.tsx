@@ -14,6 +14,7 @@ import Alert from '@mui/material/Alert';
 import Discounts from "./components/unique-components/Discounts";
 import Events from "./components/unique-components/Events";
 import Avito from "./components/unique-components/Avito";
+import globalParamsObject from '../../../parameters/mainAppParameterObject'
 
 // import AlertDialog from "../../../components/AlertDialog"
 
@@ -27,19 +28,11 @@ const CreateDiscount = () => {
     function changeCreateObject(agent1:any){
         setCreateObject({...createObject, ...agent1})
     }
-    console.log(createObject, 111)
+    console.log(createObject, 221)
     
     
     let sendToServer = () => {
-        // let midObject1 = {...createState.img, ...createState.map, ...createState.common, ...createState.main, ...createState.unique}
-        // ({name: '', district: '', description: ''});
-        // if(mainObject.cost && mainObject.startDate && mainObject.endDate){
-            // if(uniqObject.cost && uniqObject.discount 
-
-
-                    // avitoCategory -- discountCategory
-
-        if (!Object.values(createObject).every((i:any) => Boolean(i))) {
+        if (adCategory && !globalParamsObject.main.arrayAdCategory[+adCategory - 1].every((i:any) => Boolean(createObject[i]))) {
             setFlag(0);
             window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
             return;
@@ -53,8 +46,8 @@ const CreateDiscount = () => {
         createDiscount(formData)
             .then((data) => {
                 console.log(data);
-                alert("Ваше объявление добавлено успешно!")
-
+                alert("Ваше объявление добавлено успешно!");
+                window.location.reload();
             })
             .catch((error: any) => {
                 if (error.response && error.response.data) {

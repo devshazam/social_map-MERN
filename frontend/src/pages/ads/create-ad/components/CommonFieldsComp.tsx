@@ -40,7 +40,7 @@ const CommonFieldsComp = (props:any) => {
                 </FormControl>
                 </Col>
                 <Col xs={12} md={6}>
-                    <TextField  label="Ваше описание:" fullWidth
+                    <TextField  label="Ваше описание (до 1000 симоволов!):" fullWidth
                                 multiline
                                 rows={4}
                                 sx={{mb: 1}}

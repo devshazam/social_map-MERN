@@ -26,9 +26,7 @@ const EventMap = (props: any) => {
                             hintContent: '<em>кликни меня</em>',
                             balloonContent: `<div class="my-balloon">
                                 <h4>${props.mainDataObject.item.name}</h4>
-                                <p>
-                                    Скидка ${props.mainDataObject.item.discount}% на кофе
-                                </p>
+                                <p> Цена: ${props.mainDataObject.item.cost}%</p>
                                 <a href="/ad-view/${props.mainDataObject.item._id}">Посмотреть</a>
                                 </div>`,
                         }}

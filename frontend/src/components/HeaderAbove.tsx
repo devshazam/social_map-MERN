@@ -60,6 +60,11 @@ console.log(state)
                                     <NavDropdown.Item onClick={logOut}>
                                         Выход
                                     </NavDropdown.Item>
+                                    <NavDropdown.Item href="/user/user-ads-list">
+                                        Мои объявления
+                                    </NavDropdown.Item>
+                                    
+                                    <NavDropdown.Divider />
                                     <NavDropdown.Item href="/user/ads/create-ad/2">
                                         Создать Благотворительность
                                     </NavDropdown.Item>

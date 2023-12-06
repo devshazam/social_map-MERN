@@ -7,12 +7,13 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import ListGroup from "react-bootstrap/ListGroup";
 
-import globalParamsObject from '../../../../../parameters/mainAppParameterObject'
+import globalParamsObject from '../../../parameters/mainAppParameterObject'
 
 
 const Discounts = (props:any) => {
-    const [uniqObject, setUniqObject] = useState<any>({});
+    const [uniqObject, setUniqObject] = useState<any>(JSON.parse(props.createObject.uniquePart));
 
     useEffect(() => {
         if(Object.values(uniqObject).length > 0){
@@ -24,18 +25,12 @@ const Discounts = (props:any) => {
 
     return (
         <>
-         <Col xs={12} md={6}>
-                     <TextField label="Цена (плата):" variant="outlined" fullWidth
-                                sx={{mb: 1, pr: { sm: 0, md: 1}, width: { sm: 'none', md: '50%'}}}
-                                error={Boolean(!props.createObject.cost && props.flag == 0)}
-                                onChange={(e:any) => props.changeCreateObject({cost: e.target.value})}
-                    />
-
-                    <FormControl fullWidth sx={{mb: 1, width: { sm: 'none', md: '50%'}}}>
+                <ListGroup.Item>
+                    <FormControl fullWidth >
                         <InputLabel error={Boolean(!props.createObject.avitoCategory && props.flag == 0)}>Категория:</InputLabel>
                         <Select
-                            // value={props.createObject.avitoCategory ? props.createObject.avitoCategory : '5'}
-                            defaultValue={''}
+                            value={props.createObject.avitoCategory}
+                            // defaultValue={''}
                             error={Boolean(!props.createObject.avitoCategory && props.flag == 0)}
                             onChange={(e:any) => props.changeCreateObject({avitoCategory: e.target.value})}
                         >
@@ -48,23 +43,24 @@ const Discounts = (props:any) => {
                             }
                         </Select>
                     </FormControl>
-                    </Col>
+                </ListGroup.Item>
 
 
         {props.createObject.avitoCategory && globalParamsObject.avito.avitoParametrs[props.createObject.avitoCategory - 1].map((item:any, index2: any) => {
             return(
         
-                <Col xs={12} md={6} key={index2}>
+                <ListGroup.Item key={index2}>
                     
                     {typeof item === 'string' ?
                     <TextField  label={item} variant="outlined" fullWidth
                                 sx={{mb: 1}}
+                                value={JSON.parse(props.createObject.uniquePart)[index2][1]}
                                 onChange={(e) => setUniqObject({...uniqObject, [index2]: [item, e.target.value]})}/>
                     :   
                     <FormControl fullWidth sx={{mb: 1}}>
                         <InputLabel  >{item[0]}</InputLabel>
                         <Select
-                        value={''}
+                        value={JSON.parse(props.createObject.uniquePart)[index2][1]}
                             onChange={(e) => setUniqObject({...uniqObject, [index2]: [item[0], e.target.value]})}
                         >
                             { 
@@ -78,7 +74,7 @@ const Discounts = (props:any) => {
                         </Select>
                     </FormControl>
                     }
-                </Col>
+                </ListGroup.Item>
             );
             })
         }

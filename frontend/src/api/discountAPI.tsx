@@ -33,14 +33,32 @@ export const fetchAdsList = async (param: any) => { // TODO определить
     console.log(data)
     return data
 }
-export const checkIp = async () => { // TODO определить тип переменной
-    const {data} = await $host.post('/api/discounts/check-ip')
+// export const checkIp = async () => { // TODO определить тип переменной
+//     const {data} = await $host.post('/api/discounts/check-ip')
+//     console.log(data)
+//     return data
+// }
+
+export const recordErrorToLog = async (param: any) => { // TODO определить тип переменной
+    const {data} = await $host.post('/api/discounts/record-error-to-log', param)
     console.log(data)
     return data
 }
 
-export const recordErrorToLog = async (param: any) => { // TODO определить тип переменной
-    const {data} = await $host.post('/api/discounts/record-error-to-log', param)
+export const fetchUserAdsList = async (param: any) => {
+    const {data} = await $authHost.post('/api/discounts/fetch-user-ads-list', param)
+    console.log(data)
+    return data
+}
+
+export const deleteUserAdsList = async (param: any) => {
+    const {data} = await $authHost.post('/api/discounts/delete-user-ads-list', param)
+    console.log(data)
+    return data
+}
+
+export const fetchAdByIdForUser = async (param: any) => { // TODO определить тип переменной
+    const {data} = await $host.post('/api/discounts/fetch-ads-by-id-for-user', param)
     console.log(data)
     return data
 }

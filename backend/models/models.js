@@ -19,14 +19,6 @@ const userSchema = new Schema({
 
 
 const discountSchema = new Schema({
-    adCategory: { type: String, required: true },
-    
-    name: {  type: String, required: true },
-    description: {  type: String, required: true },
-    
-    // common
-    cost: { type: Number },
-
     // 1 - discounts
     discount: { type: Number },
     discountCategory: { type: String },
@@ -34,11 +26,16 @@ const discountSchema = new Schema({
     // 3 - events
     startDate: { type: String },
     endDate: { type: String },
-
+    
     //avito
     avitoCategory: { type: String },
     uniquePart: { type: String },
-
+    
+    // common
+    cost: { type: Number },
+    adCategory: { type: String, required: true },
+    name: {  type: String, required: true },
+    description: {  type: String, required: true },
     district: { type: String },
     address: { type: String, required: true },
     latitude: { type: String, required: true },

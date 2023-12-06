@@ -25,8 +25,8 @@ const Discounts = (props:any) => {
                         <InputLabel  error={Boolean(!props.createObject.discount && props.flag == 0)}>Размер скидки:</InputLabel>
                         <Select
                             // value={props.createObject.discount}
-                            // defaultValue={'5'}
-                            value={props.createObject.discount ? props.createObject.discount : '5'}
+                            defaultValue={''}
+                            // value={props.createObject.discount ? props.createObject.discount : '5'}
                             error={Boolean(!props.createObject.discount && props.flag == 0)}
                             onChange={(e:any) => props.changeCreateObject({discount: e.target.value})}
                         >
@@ -47,8 +47,8 @@ const Discounts = (props:any) => {
                         <InputLabel id="demo-simple-select-label" error={Boolean(!props.createObject.discountCategory && props.flag == 0)}>Категория скидки:</InputLabel>
                         <Select
                             // value={props.createObject.discountCategory}
-                            // defaultValue={'1'}
-                            value={props.createObject.discountCategory ? props.createObject.discountCategory : '1'}
+                            defaultValue={''}
+                            // value={props.createObject.discountCategory ? props.createObject.discountCategory : '1'}
                             error={Boolean(!props.createObject.discountCategory && props.flag == 0)}
                             onChange={(e:any) => props.changeCreateObject({discountCategory: e.target.value})}
                         >

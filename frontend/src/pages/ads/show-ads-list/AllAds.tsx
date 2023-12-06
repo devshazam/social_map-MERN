@@ -81,6 +81,7 @@ const AllDiscounts = () => {
 
     return (
         <>
+            {/* <p>скидки</p> */}
             <Row className="mb-5">
                 <Col xs={12} sm={3} lg={3} className="mb-3">
                     {adCategory === "1" && <DiscountsForms changefilterObject={changefilterObject} filterObject={filterObject}/>}
@@ -93,7 +94,7 @@ const AllDiscounts = () => {
                         <div
                             style={{
                                 width: "100%",
-                                height: "200px",
+                                height: "130px",
                                 borderRadius: "12px",
                                 position: "relative",
                             }}
@@ -107,7 +108,7 @@ const AllDiscounts = () => {
                                                 zoom: 10,
                                             }}
                                             width="100%"
-                                            height={200}
+                                            height={130}
                                         ></Map>
                                     </section>
                                 </YMaps>
@@ -137,8 +138,8 @@ const AllDiscounts = () => {
                                                 </a>
                                                 <Card.Body>
                                                     <Card.Title>
-                                                        Цена: {ad.cost} р <br />
-                                                        Остаток: {ad.summa}
+                                                        {ad.cost && `Цена: ${ad.cost} р`}<br />
+                                                        {/* Остаток: {ad.name} */}
                                                     </Card.Title>
                                                     <Card.Text>
                                                         {ad.name}

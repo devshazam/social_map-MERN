@@ -19,6 +19,8 @@ import AllAds from "./pages/ads/show-ads-list/AllAds";
 import AllMap from "./pages/ads/show-ads-map/AllMap";
 import CreateAd from "./pages/ads/create-ad/CreateAd";
 import AdView from "./pages/ads/Show-one-ad/OneAd";
+import UserAdsList from './pages/user-admin/UserAdsList'
+import UserUpdateOne from './pages/user-admin/UserUpdateOne'
 
 const App: React.FC = () => {
     const [loading, setLoading] = useState(true);
@@ -67,13 +69,15 @@ const App: React.FC = () => {
                         <Route path="/contacts" element={<Contacts />} />
                     </Route>
 
-                    <Route path="/user/" element={<LayoutUser />}>
-                        <Route path="/user/ads/create-ad/:adCategory" element={<CreateAd />} />
-                    </Route>
+                        <Route path="/user/" element={<LayoutUser />}>
+                            <Route path="/user/ads/create-ad/:adCategory" element={<CreateAd />} />
+                            <Route path="/user/user-ads-list" element={<UserAdsList />} />
+                            <Route path="/user/user-update-one/:adId" element={<UserUpdateOne />} />
+                        </Route>
 
-                    <Route path="/company/" element={<LayoutCompany />}>
-                        <Route path="/company/ads/create-ad/:adCategory"  element={<CreateAd />} />
-                    </Route>
+                            <Route path="/company/" element={<LayoutCompany />}>
+                                <Route path="/company/ads/create-ad/:adCategory"  element={<CreateAd />} />
+                            </Route>
                 </Routes>
             </BrowserRouter>
         </div>
