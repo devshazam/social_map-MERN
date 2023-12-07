@@ -20,7 +20,7 @@ const userSchema = new Schema({
 
 const discountSchema = new Schema({
     // 1 - discounts
-    discount: { type: Number },
+    discount: { type: String },
     discountCategory: { type: String },
     
     // 3 - events
@@ -32,7 +32,7 @@ const discountSchema = new Schema({
     uniquePart: { type: String },
     
     // common
-    cost: { type: Number },
+    cost: { type: String },
     adCategory: { type: String, required: true },
     name: {  type: String, required: true },
     description: {  type: String, required: true },

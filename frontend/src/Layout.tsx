@@ -18,8 +18,8 @@ export default function Layout() {
                 <Outlet />
             </Container>
             <Footer />
-            <LoginPage />
-            <RegPage />
+            {/* <LoginPage />
+            <RegPage /> */}
             {/* <BanSite /> */}
         </>
     );

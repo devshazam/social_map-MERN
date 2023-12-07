@@ -101,7 +101,7 @@ class DiscountController {
             let midDiscount;
     
             midDiscount = await Discount.findById(adId)
-            .select("discount discountCategory startDate endDate avitoCategory uniquePart cost name description district address image dimensions")
+            .select("discount discountCategory startDate endDate avitoCategory uniquePart cost name description district address image dimensions adCategory")
             .exec();
             
             return res.json(midDiscount);
@@ -164,6 +164,21 @@ class DiscountController {
             
             const funcAgent1 = await Discount.deleteOne({ _id: adId });
 // console.log(funcAgent1)
+            return res.json(funcAgent1);
+        } catch (error) {
+            await appendFiles(`\n603: ${error.message}`);
+            return next(ApiError.internal(`603: ${error.message}`));
+        }
+    }
+
+
+
+    async saveChangesOfDiscount(req, res, next) {
+        let { _id, ...rest }  = req.body;
+        try {
+            // discount startDate endDate uniquePart cost name description 
+            const funcAgent1 = await Discount.updateOne({ _id }, { ...rest });
+console.log(funcAgent1)
             return res.json(funcAgent1);
         } catch (error) {
             await appendFiles(`\n603: ${error.message}`);

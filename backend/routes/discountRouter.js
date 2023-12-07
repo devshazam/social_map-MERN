@@ -13,6 +13,7 @@ router.post('/record-error-to-log', discountController.recordErrorToLog)
 router.post('/fetch-user-ads-list', discountController.fetchUserAdsList)
 router.post('/delete-user-ads-list', discountController.deleteUserAdsList)
 router.post('/fetch-ads-by-id-for-user', discountController.fetchAdByIdForUser)
+router.post('/save-changes-of-discount', discountController.saveChangesOfDiscount)
 
 
 

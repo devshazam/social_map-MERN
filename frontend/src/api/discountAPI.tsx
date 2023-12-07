@@ -62,3 +62,8 @@ export const fetchAdByIdForUser = async (param: any) => { // TODO определ
     console.log(data)
     return data
 }
+export const saveChangesOfDiscount = async (param: any) => { // TODO определить тип переменной
+    const {data} = await $host.post('/api/discounts/save-changes-of-discount', param)
+    console.log(data)
+    return data
+}

@@ -55,80 +55,86 @@ const AdView: FC = () => {
                             {globalParamsObject.main.adsCategory[adsItem.adCategory - 1]}
                         </h1>
                     )}
-                    {adsItem ? (
+                    {adsItem ? 
                         <ListGroup variant="flush">
-                            {Object.keys(adsItem).map((item) => {
-                                return (
-                                    <>
-                                        {item === "name" && 
-                                            <ListGroup.Item>
-                                                {globalParamsObject.main.namesOfMongoMOdel[item] + ' ' + adsItem[item]}
-                                            </ListGroup.Item>
-                                        }
-                                        {item === "description" && 
-                                            <ListGroup.Item>
-                                                {globalParamsObject.main.namesOfMongoMOdel[item]+ ' ' + adsItem[item]}
-                                            </ListGroup.Item>
-                                        }
-                                        {item === "cost" && 
-                                            <ListGroup.Item>
-                                                {globalParamsObject.main.namesOfMongoMOdel[item] + ' ' + adsItem[item]}
-                                            </ListGroup.Item>
-                                        }
-                                        {item === "discount" && 
-                                            <ListGroup.Item>
-                                                {globalParamsObject.main.namesOfMongoMOdel[item] + ' ' + adsItem[item]}%
-                                            </ListGroup.Item>
-                                        }
-                                        {item === "discountCategory" && 
-                                            <ListGroup.Item>
-                                                {globalParamsObject.main.namesOfMongoMOdel[item] + ' ' + globalParamsObject.discounts.discountsCategory[adsItem[item] - 1]}
-                                            </ListGroup.Item>
-                                        }
-                                        {item === "district" && 
-                                            <ListGroup.Item>
-                                                {globalParamsObject.main.namesOfMongoMOdel[item] + ' ' + globalParamsObject.main.districtsNames[adsItem[item] - 1]}
-                                            </ListGroup.Item>
-                                        }
-                                        {item === "uniquePart" && 
-                                            <>
-                                                {Object.values(JSON.parse(adsItem[item])).map((item3: any,index3: any) => {
-                                                        return (
-                                                            <ListGroup.Item>
-                                                                {item3[0]+ ' ' +item3[1]}
-                                                            </ListGroup.Item>
-                                                        );
-                                                    }
-                                                )}
-                                            </>
-                                        }
+                            <ListGroup.Item>
+                                Название: {adsItem.name}
+                            </ListGroup.Item>
+                            <ListGroup.Item>
+                                Описание: {adsItem.description}
+                            </ListGroup.Item>
+                            <ListGroup.Item>
+                                Район: {globalParamsObject.main.districtsNames[adsItem.district - 1]}
+                            </ListGroup.Item>
+                            <ListGroup.Item>
+                                Адрес: {adsItem.address}
+                            </ListGroup.Item>
+                            
+                            <ListGroup.Item>
+                                Название: {adsItem.name}
+                            </ListGroup.Item>
+{/* 1 */}
+                            { adsItem.cost  && 
+                            <ListGroup.Item>
+                                Цена: {adsItem.cost}
+                            </ListGroup.Item> }
+{/* СКИДКИ */}
+                            { adsItem.discount  && 
+                            <ListGroup.Item>
+                                Скидка: {globalParamsObject.discounts.discountSize[adsItem.discount - 1]}
+                            </ListGroup.Item> }
+                            { adsItem.discountCategory  && 
+                            <ListGroup.Item>
+                                Категория скидки: {globalParamsObject.discounts.discountsCategory[adsItem.discountCategory - 1]}
+                            </ListGroup.Item> }
+{/* Мероприятия */}
+                            { adsItem.startDate  && 
+                                <ListGroup.Item>
+                                    Дата начала: {new Date(+adsItem.startDate).toISOString().split('T')[0]}
+                                </ListGroup.Item> }
+                            { adsItem.endDate  && 
+                            <ListGroup.Item>
+                                Дата конца: {new Date(+adsItem.endDate).toISOString().split('T')[0]}
+                            </ListGroup.Item> }
+                        
+{/* АВИТО */}
+                            { adsItem.avitoCategory  && 
+                                <ListGroup.Item>
+                                    Категория объявления: {globalParamsObject.avito.avitoCategory[adsItem.avitoCategory - 1]}
+                                </ListGroup.Item> }
+                            { adsItem.uniquePart && Object.values(JSON.parse(adsItem.uniquePart)).map((item:any, index:any) => {
+                                return(
+                                    <ListGroup.Item key={index}>
+                                        {`${item[0]}: ${item[1]}`}
+                                    </ListGroup.Item> 
+                                    );
+                                })
+                            }
+                          
 
-                                        {item === "userId" && 
-                                            <>
-                                                <ListGroup.Item>
-                                                    <b>Имя продавца (компании): </b>{adsItem[item].name}
-                                                </ListGroup.Item>
-                                                {stateUser ? 
-                                                    <ListGroup.Item>
-                                                        <b>Телефон: </b>{adsItem[item].phone}
-                                                    </ListGroup.Item>
-                                                    : 
-                                                    <ListGroup.Item>
-                                                        Телефон только
-                                                        для
-                                                        зарегистрированных
-                                                        пользователей!
-                                                    </ListGroup.Item>
-                                                }
-                                            </>
-                                        }
-                            </>
-                            );
-                        })}
+
+
+                            <ListGroup.Item>
+                                <b>Имя продавца (компании): </b>{adsItem.userId.name}
+                            </ListGroup.Item>
+                            {stateUser ? 
+                                <ListGroup.Item>
+                                    <b>Телефон: </b>{adsItem.userId.phone}
+                                </ListGroup.Item>
+                                : 
+                                <ListGroup.Item>
+                                    Телефон только
+                                    для
+                                    зарегистрированных
+                                    пользователей!
+                                </ListGroup.Item>
+                            }
+
+                     
                         </ListGroup>
-                    ) : (
+                     : 
                         <Spinner animation="border" />
-                    )}
+                    }
                 </Col>
             </Row>
         </>

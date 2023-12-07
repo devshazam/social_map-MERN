@@ -129,15 +129,15 @@ console.log(state)
                         ) : (
                             <>
                                 <Nav.Item>
-                                    <Nav.Link onClick={showModalLogin}>
-                                        Вход
+                                    <Nav.Link href="/login-registration">
+                                        Вход / Регистрация
                                     </Nav.Link>
                                 </Nav.Item>
-                                <Nav.Item>
+                                {/* <Nav.Item>
                                     <Nav.Link onClick={showModalRegistration}>
                                         Регистрация
                                     </Nav.Link>
-                                </Nav.Item>
+                                </Nav.Item> */}
                             </>
                         )}
                     </Nav>

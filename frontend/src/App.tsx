@@ -21,6 +21,7 @@ import CreateAd from "./pages/ads/create-ad/CreateAd";
 import AdView from "./pages/ads/Show-one-ad/OneAd";
 import UserAdsList from './pages/user-admin/UserAdsList'
 import UserUpdateOne from './pages/user-admin/UserUpdateOne'
+import LoginReg from './pages/login-reg/LoginReg'
 
 const App: React.FC = () => {
     const [loading, setLoading] = useState(true);
@@ -67,6 +68,7 @@ const App: React.FC = () => {
                         <Route path="/ad-view/:adId" element={<AdView />} />
 
                         <Route path="/contacts" element={<Contacts />} />
+                        <Route path="/login-registration" element={<LoginReg />} />
                     </Route>
 
                         <Route path="/user/" element={<LayoutUser />}>

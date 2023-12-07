@@ -26,23 +26,7 @@ const Discounts = (props:any) => {
     return (
         <>
                 <ListGroup.Item>
-                    <FormControl fullWidth >
-                        <InputLabel error={Boolean(!props.createObject.avitoCategory && props.flag == 0)}>Категория:</InputLabel>
-                        <Select
-                            value={props.createObject.avitoCategory}
-                            // defaultValue={''}
-                            error={Boolean(!props.createObject.avitoCategory && props.flag == 0)}
-                            onChange={(e:any) => props.changeCreateObject({avitoCategory: e.target.value})}
-                        >
-                            { 
-                                globalParamsObject.avito.avitoCategory.map((item:any, index:any) => {
-                                    return(
-                                        <MenuItem key={index} value={index + 1}>{item}</MenuItem>
-                                    )
-                                })
-                            }
-                        </Select>
-                    </FormControl>
+                    Категория объявления: {globalParamsObject.avito.avitoCategory[props.createObject.avitoCategory - 1]}
                 </ListGroup.Item>
 
 

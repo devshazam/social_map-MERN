@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -12,9 +12,10 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import Button from "@mui/material/Button";
 
 import { useSelector } from "react-redux";
-import { fetchAdByIdForUser } from "../../api/discountAPI";
+import { fetchAdByIdForUser, saveChangesOfDiscount } from "../../api/discountAPI";
 
 import globalParamsObject from '../../parameters/mainAppParameterObject'
 import {dimensionsToStyleObject} from '../../utils/helpFunctions'
@@ -28,6 +29,8 @@ const UserUpdateOne: FC = () => {
 
     // const stateUser = useSelector((state: any) => state.user.isAuth);
     const [adsItem, setAdsItem] = useState<any>(null);
+    const [flag, setFlag] = useState<number>(1);
+    const navigate = useNavigate();
 
     console.log(adsItem)
     function changeCreateObject(agent1:any){
@@ -51,6 +54,32 @@ const UserUpdateOne: FC = () => {
             });
     }, []);
 
+    function callSaveChanges(){
+        if (!Object.values(adsItem).every((i:any) => Boolean(i))) {
+            setFlag(0);
+            window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+            return;
+        }
+
+
+        saveChangesOfDiscount(adsItem)
+            .then((data) => {
+                console.log(data);
+                alert("Ваше объявление обновлено успешно!");
+                navigate("/ad-view/" + adId);
+                // redirect("/ad-view/" + adId);
+            })
+            .catch((error: any) => {
+                if (error.response && error.response.data) {
+                    alert(
+                        `${error.response.data.message}${error.response.status}`
+                    );
+                } else {
+                    console.log("dev", error);
+                    alert("Ошибка 138 - Обратитесь к администратору!");
+                }
+            });
+    }
     return (
         <>
             <Row className="mb-3">
@@ -76,7 +105,7 @@ const UserUpdateOne: FC = () => {
                                 <ListGroup.Item>
                                     <TextField label="Название:" variant="outlined" fullWidth
                                         // sx={{mb: 1, pr: { sm: 0, md: 1}, width: { sm: 'none', md: '50%'}}}
-                                        // error={Boolean(!props.createObject.cost && props.flag == 0)}
+                                        error={Boolean(!adsItem.name && flag == 0)}
                                         value={adsItem.name}
                                         onChange={(e:any) => setAdsItem({...adsItem, name: e.target.value})}
                                     />
@@ -84,7 +113,7 @@ const UserUpdateOne: FC = () => {
                                 <ListGroup.Item>
                                     <TextField label="Описание:" variant="outlined" fullWidth
                                         // sx={{mb: 1, pr: { sm: 0, md: 1}, width: { sm: 'none', md: '50%'}}}
-                                        // error={Boolean(!props.createObject.cost && props.flag == 0)}
+                                        error={Boolean(!adsItem.description && flag == 0)}
                                         value={adsItem.description}
                                         onChange={(e:any) => setAdsItem({...adsItem, description: e.target.value})}
                                     />
@@ -92,7 +121,7 @@ const UserUpdateOne: FC = () => {
                                 <ListGroup.Item>
                                     <TextField label="Цена:" variant="outlined" fullWidth
                                         // sx={{mb: 1, pr: { sm: 0, md: 1}, width: { sm: 'none', md: '50%'}}}
-                                        // error={Boolean(!props.createObject.cost && props.flag == 0)}
+                                        error={Boolean(!adsItem.cost && flag == 0)}
                                         value={adsItem.cost}
                                         onChange={(e:any) => setAdsItem({...adsItem, cost: e.target.value})}
                                     />
@@ -104,12 +133,15 @@ const UserUpdateOne: FC = () => {
                                         {adsItem.discount && 
                                         <>
                                             <ListGroup.Item>
+                                                Категория скидки: {globalParamsObject.discounts.discountsCategory[adsItem.discountCategory - 1]}
+                                            </ListGroup.Item>
+                                            <ListGroup.Item>
                                                 <FormControl fullWidth >
                                                     <InputLabel  
                                                     // error={Boolean(!props.createObject.discount && props.flag == 0)}
                                                     >Размер скидки:</InputLabel>
                                                     <Select
-                                                        // error={Boolean(!props.createObject.discount && props.flag == 0)}
+                                                        // error={Boolean(!adsItem.discount && flag == 0)}
                                                         value={adsItem.discount}
                                                         onChange={(e:any) => setAdsItem({...adsItem, discount: e.target.value})}
                                                     >
@@ -117,25 +149,6 @@ const UserUpdateOne: FC = () => {
                                                             globalParamsObject.discounts.discountSize.map((item:any, index:any) => {
                                                                 return(
                                                                     <MenuItem key={index + 1} value={item}>{item}%</MenuItem>
-                                                                )
-                                                            })
-                                                        }
-                                                    </Select>
-                                                </FormControl>
-                                            </ListGroup.Item>
-                                            <ListGroup.Item>
-                                                 <FormControl fullWidth >
-                                                    <InputLabel 
-                                                    //  error={Boolean(!props.createObject.discountCategory && props.flag == 0)}
-                                                    >Категория скидки:</InputLabel>
-                                                    <Select
-                                                        value={adsItem.discountCategory}
-                                                        onChange={(e:any) => setAdsItem({...adsItem, discountCategory: e.target.value})}
-                                                    >
-                                                        { 
-                                                            globalParamsObject.discounts.discountsCategory.map((item:any, index:any) => {
-                                                                return(
-                                                                    <MenuItem key={index + 1} value={index + 1}>{item}</MenuItem>
                                                                 )
                                                             })
                                                         }
@@ -157,7 +170,9 @@ const UserUpdateOne: FC = () => {
                                             <AvitoDatePicker changeCreateObject={changeCreateObject} createObject={adsItem}/>
                                     }
 
-
+                            <Button variant="contained" fullWidth onClick={callSaveChanges}>
+                                Сохранить изменения
+                            </Button>
 
                         </ListGroup>
                     ) : (

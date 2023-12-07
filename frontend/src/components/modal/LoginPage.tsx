@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import {Helmet} from "react-helmet";
+import {  useNavigate } from "react-router-dom";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -15,6 +16,8 @@ const LoginPage = () => {
     const [password, setPassword] = useState("");
     const state = useSelector((state:any) => state.user);
     const dispatch = useDispatch();
+
+    const navigate = useNavigate();
 
     const hideModal = () => {
         dispatch({type: "LOGIN", payload: false})
@@ -39,7 +42,8 @@ const LoginPage = () => {
                 alert("Успешный Вход в систему!");
                 // helpers.setModalLogin(false);
                 // user.setIsAuth(true);
-                window.location.reload();
+                // window.location.reload();
+                navigate("/");
             })
             .catch((error: any) => {
                 if (error.response && error.response.data) {
@@ -55,17 +59,7 @@ const LoginPage = () => {
 
     return (
         <>
-        <Helmet>
-                <meta charSet="utf-8" />
-                <title>My Title</title>
-                <link rel="canonical" href="http://mysite.com/example" />
-            </Helmet>
-          {/* <Modal   show={helpers.modalLogin} onHide={hideModal}> */}
-          <Modal show={state.modalLogin} onHide={hideModal} >
-                <Modal.Header closeButton>
-                    <Modal.Title>Форма входа на сайт</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
+  
                     <Form>
                         <Form.Group
                             className="mb-3"
@@ -95,8 +89,6 @@ const LoginPage = () => {
                             Вход
                         </Button>
                     </Form>
-                </Modal.Body>
-            </Modal>
         </>
     );
 };

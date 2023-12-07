@@ -1,26 +1,26 @@
 import React, { useContext, useState } from "react";
 // import { Context } from "../../index";
+import {  useNavigate } from "react-router-dom";
+
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import {useDispatch, useSelector} from "react-redux";
+// import {useDispatch, useSelector} from "react-redux";
 
 import isEmail from "validator/lib/isEmail";
 
 import { registration } from "../../api/userAPI";
 
-const RegPage = () => {
+const RegPage = (props:any) => {
     // const { helpers } = useContext(Context);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [phone, setPhone] = useState("");
-    const [name, setName] = useState("");
+    const [name, setName] = useState(""); 
 
-    const state = useSelector((state:any) => state.user);
-    const dispatch = useDispatch();
-    const hideModal = () => {
-        dispatch({type: "REG", payload: false})
-    };
+    const navigate = useNavigate();
+
+
 
     const makeReg = async () => {
         if (!email || !password || !phone || !name) {
@@ -41,13 +41,14 @@ const RegPage = () => {
             return;
         }
 
-        registration(email, password, name, phone)
+        registration(email, password, name, phone, props.role)
             .then((data) => {
                 alert("Успешная регистрация!");
-                dispatch({type: "REG", payload: false})
-                dispatch({type: "isAuth", payload: true})
+                // dispatch({type: "REG", payload: false})
+                // dispatch({type: "isAuth", payload: true})
                 // user.setIsAuth(true);
-                window.location.reload();
+                // window.location.reload();
+                navigate("/");
             })
             .catch((error) => {
                 if (error.response && error.response.data) {
@@ -63,13 +64,8 @@ const RegPage = () => {
 
     return (
         <>
-             <Modal show={state.modalReg} onHide={hideModal}>
 
-                <Modal.Header closeButton>
-                    <Modal.Title>Форма регистрации на сайте</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
+                   
                         <Form.Group
                             className="mb-3"
                             controlId="exampleForm.ControlInput1"
@@ -121,9 +117,7 @@ const RegPage = () => {
                          <Button variant="primary" onClick={makeReg}>
                             Регистрация
                         </Button>
-                    </Form>
-                </Modal.Body>
-            </Modal>
+                  
         </>
     );
 };

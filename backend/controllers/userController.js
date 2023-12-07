@@ -15,42 +15,40 @@ const generateJwt = (id, email, role ) => {
 }
 class UserController {
 
-
-    async socialRegOrLogin(req, res, next) {
-        let credentialsULogin;
-        try{
-            const { token } = req.body;
-            // возможно process.env.SERVER_HOST нужно поменять на api.daves.ru
-            credentialsULogin = await axios.get(`https://ulogin.ru/token.php?token=${token}&host=${process.env.SERVER_HOST}`)
-            const data = JSON.parse(credentialsULogin)
-                if (!credentialsULoginParse.email) {
-                    return next(ApiError.internal('В аккаунте нет email!'))
-                }
-                let user = await User.findOne({where: email}).exec();
-                if (!user) {
+// Логинится могут все, а рагистрироватся только компаниии!
+    async logReg(req, res, next) {
+        const {first_name, last_name, verified_email, bdate, email, photo, phone} = req.body
+        if(verified_email !== '1') {
+            return next(ApiError.internal('Ваш email не подтвержден!'))
+        }
+        const user = await User.findOne({ email: email }).exec();
+        if (!user) {
+            try{
                     let qObject = {};
-                    if(data.first_name) qObject = {...qObject, name: data.first_name}
-                    if(data.last_name) qObject = {...qObject, name: qObject.name + " " + data.last_name}
-                    if(data.bdate) qObject = {...qObject, birthday: data.bdate}
-                    if(data.email) qObject = {...qObject, email: data.email}
-                    if(data.photo) qObject = {...qObject, profile_image: data.photo}
-                    if(data.verified_email == 1) qObject = {...qObject, email_status: true}
-                    user = await User.create({ ...qObject })
-                }
-
+                    if(first_name) qObject = {...qObject, name: first_name};
+                    if(last_name) qObject = {...qObject, name: qObject.name + " " + last_name};
+                    if(bdate) qObject = {...qObject, birthday: bdate};
+                    if(email) qObject = {...qObject, email: email};
+                    if(photo) qObject = {...qObject, profile_image: photo};
+                    if(phone) qObject = {...qObject, phone: phone};
+                    if(verified_email === '1') qObject = {...qObject, email_status: true};
+                const userReg = await User.create({ ...qObject });
+            const token = generateJwt(userReg.id, userReg.email, userReg.role)
+            return res.json({token})
         } catch (error) {
             await appendFiles(`\n613: ${error.message}`);
             return next(ApiError.internal(`613: ${error.message}`));
         }
-
+        }
+        
         const token = generateJwt(user.id, user.email, user.role)
         return res.json({token})
     }
 
     // POST(_1_): `api/user/` + `/registration`
     async registration(req, res, next) {
-            const {name, email, password, phone} = req.body
-            const role = 'USER';
+            const {name, email, password, phone, role} = req.body
+            role = role || 'USER';
 
             if (!email || !password) {
                 return next(ApiError.internal('Некорректный email или password'))
