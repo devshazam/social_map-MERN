@@ -33,6 +33,7 @@ console.log(state)
         dispatch({type: "USER", payload: {}})
 
         localStorage.removeItem("token");
+        delete sessionStorage.socialLoginObject;
         window.location.reload();
     };
 

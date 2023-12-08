@@ -30,7 +30,7 @@ const App: React.FC = () => {
     useEffect(() => {
         check()
             .then((data) => {
-                // console.log('dev', data)
+                console.log('dev', data)
                 if (data) {
                     dispatch({ type: "AUTH", payload: true });
                     dispatch({ type: "USER", payload: data });

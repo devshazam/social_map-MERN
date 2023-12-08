@@ -4,9 +4,9 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema({
     name: {  type: String, required: true }, // имя или название компании
-    phone: { type: String },
+    phone: { type: String, default: "" },
     email: { type: String, required: true },
-    password: { type: String },
+    password: { type: String, default: "" },
     role: { type: String, default: "USER", enum: ["USER", "COMPANY", "SUPER"] }, // тип пользователя
     profile_image: { type: String, required: true, default: function() {
             if(this.role === "USER") return "https://img.icons8.com/bubbles/100/000000/user.png";

@@ -114,8 +114,8 @@ const AllMap = () => {
                 <br></br>
                 { adCategory === '1' && <p>* Обозначение цветов маркеров: <span style={{color:'white', backgroundColor: 'red'}}>Красный:</span> срок объявления до 7 дней; <span style={{color:'white', backgroundColor: 'blue'}}>Синий:</span> срок объявления более 7 дней!</p>}
                 { adCategory === '2' && <p>* Обозначение цветов маркеров: <span style={{color:'white', backgroundColor: 'red'}}>Красный:</span> объявление подано компанией; <span style={{color:'white', backgroundColor: 'blue'}}>Синий:</span> объявление подано персоной!</p>}
-                { adCategory === '3' && <p>* Обозначение цветов маркеров: <span style={{color:'white', backgroundColor: 'red'}}>Красный:</span> срок объявления до 2 дней; <span style={{color:'white', backgroundColor: 'blue'}}>Синий:</span> срок объявления более 2 дней!</p>}
-                { adCategory === '4' && <p>* Обозначение цветов маркеров: <span style={{color:'white', backgroundColor: 'red'}}>Красный:</span> Мероприятие уже идет; <span style={{color:'white', backgroundColor: 'blue'}}>Синий:</span> мероприятие начнется через время!</p>}
+                { adCategory === '3' && <p>* Обозначение цветов маркеров: <span style={{color:'white', backgroundColor: 'red'}}>Красный:</span> Мероприятие уже идет; <span style={{color:'white', backgroundColor: 'blue'}}>Синий:</span> мероприятие начнется через время!</p>}
+                { adCategory === '4' && <p>* Обозначение цветов маркеров: <span style={{color:'white', backgroundColor: 'red'}}>Красный:</span> срок объявления до 2 дней; <span style={{color:'white', backgroundColor: 'blue'}}>Синий:</span> срок объявления более 2 дней!</p>}
             </Row>
             
             

@@ -6,9 +6,9 @@ const uuid = require('uuid');
 const { appendFiles } = require("../error-log/LogHandling");
 const { Credentials } = require('aws-sdk/lib/credentials');
 
-const generateJwt = (id, email, role ) => {
+const generateJwt = (id, email, role, phone ) => {
     return jwt.sign(
-        {id, email, role},
+        {id, email, role, phone},
         process.env.SECRET_KEY,
         {expiresIn: '24h'}
     )
@@ -30,7 +30,7 @@ class UserController {
                     if(bdate) qObject = {...qObject, birthday: bdate};
                     if(email) qObject = {...qObject, email: email};
                     if(photo) qObject = {...qObject, profile_image: photo};
-                    if(phone) qObject = {...qObject, phone: phone};
+                    if(phone){qObject = {...qObject, phone: phone};}
                     if(verified_email === '1') qObject = {...qObject, email_status: true};
                 const userReg = await User.create({ ...qObject });
             const token = generateJwt(userReg.id, userReg.email, userReg.role)
@@ -41,7 +41,7 @@ class UserController {
         }
         }
         
-        const token = generateJwt(user.id, user.email, user.role)
+        const token = generateJwt(user.id, user.email, user.role, user.phone)
         return res.json({token})
     }
 
@@ -64,7 +64,7 @@ class UserController {
         // Вставка паролейй в БД
             const user = await User.create({name, phone, email, role, password: hashPassword})
         // Генерирование токена
-            const token = generateJwt(user.id, user.email, user.role)
+            const token = generateJwt(user.id, user.email, user.role, user.phone)
             return res.json({token})
     }
 
@@ -81,7 +81,7 @@ class UserController {
         if (!comparePassword) {
             return next(ApiError.internal('Указан неверный пароль'))
         }
-        const token = generateJwt(user.id, user.email, user.role)
+        const token = generateJwt(user.id, user.email, user.role, user.phone)
         return res.json({token})
     }
 
@@ -89,7 +89,7 @@ class UserController {
     // GET(_3_): `api/user/` + `/auth`
     // Проверка авторизации ползователя при обращении к сайту в файле APP.js
     async check(req, res, next) {
-        const token = generateJwt(req.user.id, req.user.email, req.user.role)
+        const token = generateJwt(req.user.id, req.user.email, req.user.role, req.user.phone)
         return res.json({token})
     }
 
