@@ -18,7 +18,7 @@ export default function Home() {
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="/files/main-banner/banner-1.jpg"
+                            src="/files/main-banner/volgograd.jpg"
                             alt="First slide"
                         />
                         {/* <Carousel.Caption>
@@ -30,7 +30,7 @@ export default function Home() {
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="/files/main-banner/banner-1.jpg"
+                            src="/files/main-banner/volgograd.jpg"
                             alt="Second slide"
                         />
                         {/* <Carousel.Caption>

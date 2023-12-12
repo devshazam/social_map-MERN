@@ -28,7 +28,7 @@ const start = async () => {
     try {
         await mongoose.connect(
             // `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/discounts`
-            `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/davseloc`
+            `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/davseloc?authSource=admin`
         );
         app.listen(PORT, () => console.log("Server started on port 5000"));
     } catch (error) {
