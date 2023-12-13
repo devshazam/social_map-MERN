@@ -4,9 +4,9 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema({
     name: {  type: String, required: true }, // имя или название компании
-    phone: { type: String, default: "" },
+    phone: { type: String, default: "0" },
     email: { type: String, required: true },
-    password: { type: String, default: "" },
+    password: { type: String, default: "0" },
     role: { type: String, default: "USER", enum: ["USER", "COMPANY", "SUPER"] }, // тип пользователя
     profile_image: { type: String, required: true, default: function() {
             if(this.role === "USER") return "https://img.icons8.com/bubbles/100/000000/user.png";
@@ -48,10 +48,7 @@ const discountSchema = new Schema({
 }, { timestamps: true });
 
 const errorSchema = new Schema({
-    name: {  type: String, required: true }, // имя или название компании
-    message: { type: String },
-    info: { type: String },
-
+    errorDesc: {  type: String, required: true }
 }, { timestamps: true });
 
 const User = mongoose.model("User", userSchema);

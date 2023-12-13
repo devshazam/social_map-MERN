@@ -34,7 +34,7 @@ const Header = () => {
                     >
                         <Offcanvas.Header closeButton>
                             <Offcanvas.Title id="offcanvasNavbarLabel-expand-lg">
-                                Offcanvas
+                                Меню сайта:
                             </Offcanvas.Title>
                         </Offcanvas.Header>
                         <Offcanvas.Body className="justify-content-between">

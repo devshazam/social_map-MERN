@@ -15,6 +15,8 @@ router.post('/delete-user-ads-list', discountController.deleteUserAdsList)
 router.post('/fetch-ads-by-id-for-user', discountController.fetchAdByIdForUser)
 router.post('/save-changes-of-discount', discountController.saveChangesOfDiscount)
 
+router.get('/error-test', discountController.errorTest)
 
 
+// /api/discounts/error-test
 module.exports = router

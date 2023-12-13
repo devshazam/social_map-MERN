@@ -6,6 +6,8 @@ import Col from "react-bootstrap/Col";
 import Figure from "react-bootstrap/Figure";
 import Image from "react-bootstrap/Image";
 
+import './home.scss';
+
 export default function Home() {
   
     return (
@@ -13,14 +15,17 @@ export default function Home() {
             <Container>
                 <Carousel
                     data-bs-theme="dark"
-                    className="mb-5 d-none d-sm-block"
+                    // className="mb-5 d-none d-sm-block"
+                    className="mb-5"
                 >
                     <Carousel.Item>
-                        <img
+                        <a href="/ads/1">
+                            <img
                             className="d-block w-100"
-                            src="/files/main-banner/volgograd.jpg"
+                            src="/files/main-banner/main-background.jpg"
                             alt="First slide"
                         />
+                        </a>
                         {/* <Carousel.Caption>
           <h3>Полиграфия в Волгограде!</h3>
           <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
@@ -40,7 +45,7 @@ export default function Home() {
                     </Carousel.Item>
                 </Carousel>
 
-                <Row className="mb-5">
+                <Row className="mb-5 main-sale-place">
                     <Col xs={12} sm={6} lg={3} className="mb-3">
                         <a href="/produce/banner">
                             <Image

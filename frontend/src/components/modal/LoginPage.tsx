@@ -43,7 +43,7 @@ const LoginPage = () => {
                 // helpers.setModalLogin(false);
                 // user.setIsAuth(true);
                 // window.location.reload();
-                navigate("/");
+                window.location.replace("/")
             })
             .catch((error: any) => {
                 if (error.response && error.response.data) {

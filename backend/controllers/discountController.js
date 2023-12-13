@@ -1,6 +1,6 @@
 const path = require("path");
 const fs = require("fs");
-const { appendFiles } = require("../error-log/LogHandling");
+const { recordBackendErrorToLog } = require("../error-log/LogHandling");
 const {
     Discount, User, Error,
 } = require("../models/models");
@@ -21,37 +21,34 @@ class DiscountController {
             };
 
         try {
-            const funcAgent1 = await axios.post(`https://cleaner.dadata.ru/api/v1/clean/address`, JSON.stringify([address]), {headers})
-            const funcAgent2 = {result: funcAgent1.data[0].result, latitude: funcAgent1.data[0].geo_lat, longitude: funcAgent1.data[0].geo_lon};
-            return res.json(funcAgent2);
+            const fyaQ1 = await axios.post(`https://cleaner.dadata.ru/api/v1/clean/address`, JSON.stringify([address]), {headers})
+            const fyaQ2 = {result: fyaQ1.data[0].result, latitude: fyaQ1.data[0].geo_lat, longitude: fyaQ1.data[0].geo_lon};
+            return res.json(fyaQ2);
 
-                // addressVar = await axios.get(`https://geocode-maps.yandex.ru/1.x/?apikey=${process.env.API_KEY_YANDEX_GEO}&geocode=${address.split(' ').join('+')}&format=json`)
-                // return res.json(addressVar.data);
             } catch (error) {
-                await appendFiles(`\n601: ${error.message}`);
+                await recordBackendErrorToLog({code: 601, eMessage: error.message});
                 return next(ApiError.internal(`601: ${error.message}`));
             }
     }
 
 
-
     async createDiscount(req, res, next) {
         const { adCategory } = req.body;
-        let arrayPath = ['discounts/', 'avito/', 'charity/', 'events/'];
+        let arrayPath = ['discounts/', 'charity/', 'events/', 'avito/'];
         try {
-            let fileLocation = null;
-            if (req.files) { 
-                fileLocation = await fileUploadCustom(
+            // let fileLocation = null;
+            // if (req.files) { 
+                const fileLocation = await fileUploadCustom(
                     req.files.img,
-                    "davse/"+arrayPath[adCategory-1]
+                    "davse/" + arrayPath[ +adCategory - 1 ]
                 );
-            }
+ 
             const currentTime = new Date().getTime();
-            const midDiscount = await Discount.create({ ...req.body, currentTime, image: fileLocation });
-            return res.json(midDiscount);
+            const cdQ1 = await Discount.create({ ...req.body, currentTime, image: fileLocation });
+            return res.json(cdQ1);
         } catch (error) {
-            await appendFiles(`\n603: ${error.message}`);
-            return next(ApiError.internal(`603: ${error.message}`));
+            await recordBackendErrorToLog({code: 602, eMessage: error.message});
+            return next(ApiError.internal(`602: ${error.message}`));
         }
     }
     
@@ -71,7 +68,7 @@ class DiscountController {
 
             return res.json(midDiscount);
         } catch (error) {
-            await appendFiles(`\n603: ${error.message}`);
+            await recordBackendErrorToLog({code: 603, eMessage: error.message});
             return next(ApiError.internal(`603: ${error.message}`));
         }
     }
@@ -90,8 +87,8 @@ class DiscountController {
 
             return res.json(midDiscount);
         } catch (error) {
-            await appendFiles(`\n603: ${error.message}`);
-            return next(ApiError.internal(`603: ${error.message}`));
+            await recordBackendErrorToLog({code: 604, eMessage: error.message});
+            return next(ApiError.internal(`604: ${error.message}`));
         }
     }
     
@@ -106,8 +103,8 @@ class DiscountController {
             
             return res.json(midDiscount);
         } catch (error) {
-            await appendFiles(`\n603: ${error.message}`);
-            return next(ApiError.internal(`603: ${error.message}`));
+            await recordBackendErrorToLog({code: 605, eMessage: error.message});
+            return next(ApiError.internal(`605: ${error.message}`));
         }
     }
 
@@ -132,8 +129,8 @@ class DiscountController {
             .exec();
             return res.json(funcAgent1);
         } catch (error) {
-            await appendFiles(`\n603: ${error.message}`);
-            return next(ApiError.internal(`603: ${error.message}`));
+            await recordBackendErrorToLog({code: 606, eMessage: error.message});
+            return next(ApiError.internal(`606: ${error.message}`));
         }
     }
 
@@ -152,8 +149,8 @@ class DiscountController {
             .exec();
             return res.json(funcAgent1);
         } catch (error) {
-            await appendFiles(`\n603: ${error.message}`);
-            return next(ApiError.internal(`603: ${error.message}`));
+            await recordBackendErrorToLog({code: 607, eMessage: error.message});
+            return next(ApiError.internal(`607: ${error.message}`));
         }
     }
     
@@ -161,13 +158,15 @@ class DiscountController {
     async deleteUserAdsList(req, res, next) {
         let { adId }  = req.body;
         try {
+            const dualQ1 = await Discount.findByIdAndDelete( adId );
+            let dualQ2 = dualQ1.image.split("//")[1].split("/");
+            let dualQ3 = await fileDelete({ Bucket: dualQ2[1] + "/" + dualQ2[2] + "/" +  dualQ2[3], Key: dualQ2[4] });
+            // console.log(dualQ3)
             
-            const funcAgent1 = await Discount.deleteOne({ _id: adId });
-// console.log(funcAgent1)
-            return res.json(funcAgent1);
+            return res.json({status: "success"});
         } catch (error) {
-            await appendFiles(`\n603: ${error.message}`);
-            return next(ApiError.internal(`603: ${error.message}`));
+            await recordBackendErrorToLog({code: 608, eMessage: error.message});
+            return next(ApiError.internal(`608: ${error.message}`));
         }
     }
 
@@ -181,8 +180,8 @@ class DiscountController {
 console.log(funcAgent1)
             return res.json(funcAgent1);
         } catch (error) {
-            await appendFiles(`\n603: ${error.message}`);
-            return next(ApiError.internal(`603: ${error.message}`));
+            await recordBackendErrorToLog({code: 609, eMessage: error.message});
+            return next(ApiError.internal(`609: ${error.message}`));
         }
     }
 //     async checkIp(req, res, next) {
@@ -207,20 +206,31 @@ console.log(funcAgent1)
 // return
 //             return res.json(payItem);
 //         } catch (error) {
-//             await appendFiles(`\n603: ${error.message}`);
-//             return next(ApiError.internal(`603: ${error.message}`));
+//             await recordBackendErrorToLog({code: 610, eMessage: error.message});
+//             return next(ApiError.internal(`610: ${error.message}`));
 //         }
 //     }
 
     
     async recordErrorToLog(req, res, next) {
-
+        const { errorDesc } = req.body;
         try{
-            const errorRes = Error.create({ ...req.body })
+            const errorRes = Error.create({ errorDesc })
             return res.json(errorRes);
         }catch (error) {
-            await appendFiles(`\n603: ${error.message}`);
-            return next(ApiError.internal(`603: ${error.message}`));
+            await recordBackendErrorToLog({code: 611, eMessage: error.message});
+            return next(ApiError.internal(`611: ${error.message}`));
+        }
+    }
+
+
+    async errorTest(req, res, next) {
+        try{
+            throw new Error('this my error');
+        }catch (error) {
+            await recordBackendErrorToLog({code: 612, eMessage: error.message});
+            console.log(error.message)
+            return next(ApiError.internal(`612: ${error.message}`));
         }
     }
 }

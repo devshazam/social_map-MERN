@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { User } = require('../models/models')
 const uuid = require('uuid');
-const { appendFiles } = require("../error-log/LogHandling");
+const { recordBackendErrorToLog } = require("../error-log/LogHandling");
 const { Credentials } = require('aws-sdk/lib/credentials');
 
 const generateJwt = (id, email, role, phone ) => {
@@ -36,8 +36,8 @@ class UserController {
             const token = generateJwt(userReg.id, userReg.email, userReg.role)
             return res.json({token})
         } catch (error) {
-            await appendFiles(`\n613: ${error.message}`);
-            return next(ApiError.internal(`613: ${error.message}`));
+            await recordBackendErrorToLog({code: 621, eMessage: error.message});
+            return next(ApiError.internal(`621: ${error.message}`));
         }
         }
         
@@ -72,7 +72,7 @@ class UserController {
     // POST(_2_): `api/user/` + `/login`
     async login(req, res, next) {
         const {email, password} = req.body
-        console.log(email, password)
+        // console.log(email, password)
         const user = await User.findOne({ email: email }).exec();
         if (!user) {
             return next(ApiError.internal('Пользователь не найден'))
@@ -104,7 +104,7 @@ class UserController {
     //             const token = generateJwt(user.id, user.email, user.role)
     //             return res.json({token})
     //             }catch(e){
-    //                 appendFiles(`\n618: ${e.message}`)
+    //                 await recordBackendErrorToLog({code: 622, eMessage: error.message});
     //                 return next(
     //                     ApiError.badRequest(
     //                         `618: ${e.message}`
@@ -112,7 +112,7 @@ class UserController {
     //                 );
     //             }
     //     }catch(e){
-    //         appendFiles(`\n619: ${e.message}`)
+    //         await recordBackendErrorToLog({code: 622, eMessage: error.message});
     //         return next(
     //             ApiError.badRequest(
     //                 `619: ${e.message}`

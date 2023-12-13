@@ -48,7 +48,7 @@ const RegPage = (props:any) => {
                 // dispatch({type: "isAuth", payload: true})
                 // user.setIsAuth(true);
                 // window.location.reload();
-                navigate("/");
+                window.location.replace("/")
             })
             .catch((error) => {
                 if (error.response && error.response.data) {

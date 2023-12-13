@@ -65,8 +65,9 @@ const xlsxUploadCustom = async (buffer) => {
 };
 
 const fileDelete = async (object) => {
-    const res = await s3.deleteObject(object).promise();
-    return res;
+    // console.log(object)
+    await s3.deleteObject(object).promise();
+    return 'success';
 };
 
 module.exports = { fileUploadCustom, fileDelete, xlsxUploadCustom };
