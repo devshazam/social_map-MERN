@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Row } from "react-bootstrap";
 import Carousel from "react-bootstrap/Carousel";
 import Container from "react-bootstrap/Container";
@@ -9,6 +9,7 @@ import Image from "react-bootstrap/Image";
 import './home.scss';
 
 export default function Home() {
+
   
     return (
         <>

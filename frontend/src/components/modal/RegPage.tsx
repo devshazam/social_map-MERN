@@ -1,11 +1,8 @@
-import React, { useContext, useState } from "react";
-// import { Context } from "../../index";
-import {  useNavigate } from "react-router-dom";
+import { useState } from "react";
+
 
 import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-// import {useDispatch, useSelector} from "react-redux";
 
 import isEmail from "validator/lib/isEmail";
 
@@ -17,10 +14,6 @@ const RegPage = (props:any) => {
     const [password, setPassword] = useState("");
     const [phone, setPhone] = useState("");
     const [name, setName] = useState(""); 
-
-    const navigate = useNavigate();
-
-
 
     const makeReg = async () => {
         if (!email || !password || !phone || !name) {
@@ -44,10 +37,6 @@ const RegPage = (props:any) => {
         registration(email, password, name, phone, props.role)
             .then((data) => {
                 alert("Успешная регистрация!");
-                // dispatch({type: "REG", payload: false})
-                // dispatch({type: "isAuth", payload: true})
-                // user.setIsAuth(true);
-                // window.location.reload();
                 window.location.replace("/")
             })
             .catch((error) => {
@@ -64,60 +53,59 @@ const RegPage = (props:any) => {
 
     return (
         <>
-
-                   
-                        <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                        >
-                            <Form.Label>Имя:</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Иванов Иван Иванович"
-                                onChange={(e) => setName(e.target.value)}
-                                value={name}
-                            />
-                        </Form.Group>
-                        <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                        >
-                            <Form.Label>Email:</Form.Label>
-                            <Form.Control
-                                type="email"
-                                placeholder="name@example.com"
-                                onChange={(e) => setEmail(e.target.value)}
-                                value={email}
-                            />
-                        </Form.Group>
-                        <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlTextarea1"
-                        >
-                            <Form.Label>Телефон для связи:</Form.Label>
-                            <Form.Control
-                                type="tel"
-                                onChange={(e) => setPhone(e.target.value)}
-                                placeholder="+7 (999) 123-45-67"
-                                value={phone}
-                            />
-                        </Form.Group>
-                        <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlTextarea1"
-                        >
-                            <Form.Label>Пароль:</Form.Label>
-                            <Form.Control
-                                type="password"
-                                onChange={(e) => setPassword(e.target.value)}
-                                placeholder="password"
-                                value={password}
-                            />
-                        </Form.Group>
-                         <Button variant="primary" onClick={makeReg}>
-                            Регистрация
-                        </Button>
-                  
+            <Form>
+                <Form.Group
+                    className="mb-3"
+                    controlId="exampleForm.ControlInput1"
+                >
+                    <Form.Label>Имя:</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Иванов Иван Иванович"
+                        onChange={(e) => setName(e.target.value)}
+                        value={name}
+                    />
+                </Form.Group>
+                <Form.Group
+                    className="mb-3"
+                    controlId="exampleForm.ControlInput1"
+                >
+                    <Form.Label>Email:</Form.Label>
+                    <Form.Control
+                        type="email"
+                        placeholder="name@example.com"
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
+                    />
+                </Form.Group>
+                <Form.Group
+                    className="mb-3"
+                    controlId="exampleForm.ControlTextarea1"
+                >
+                    <Form.Label>Телефон для связи:</Form.Label>
+                    <Form.Control
+                        type="tel"
+                        onChange={(e) => setPhone(e.target.value)}
+                        placeholder="+7 (999) 123-45-67"
+                        value={phone}
+                    />
+                </Form.Group>
+                <Form.Group
+                    className="mb-3"
+                    controlId="exampleForm.ControlTextarea1"
+                >
+                    <Form.Label>Пароль:</Form.Label>
+                    <Form.Control
+                        type="password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="password"
+                        value={password}
+                    />
+                </Form.Group>
+                <Button variant="primary" onClick={makeReg}>
+                    Регистрация
+                </Button>
+            </Form>
         </>
     );
 };

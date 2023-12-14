@@ -16,7 +16,7 @@ const logError = (error: Error, info: ErrorInfo) => {
             );
         } else {
             console.log("dev", error);
-            alert("Ошибка 141 - Обратитесь к администратору!");
+            alert("Ошибка 156 - Обратитесь к администратору!");
         }
     });
 
