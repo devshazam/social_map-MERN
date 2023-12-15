@@ -17,8 +17,7 @@ const s3 = new S3({
 });
 
 const fileUploadCustom = async (img, pathName = "") => {
-    const imgName = img.name;
-    const fileName = uuid.v4() + "_" + imgName;
+    const fileName = uuid.v4();
     await img.mv(path.resolve(__dirname, "..", "static", fileName));
 
     const stream = fs.createReadStream(
@@ -35,34 +34,34 @@ const fileUploadCustom = async (img, pathName = "") => {
     return data.Location;
 };
 
-const xlsxUploadCustom = async (buffer) => {
-    const uniqFileName = uuid.v4() + ".xlsx";
+// const xlsxUploadCustom = async (buffer) => {
+//     const uniqFileName = uuid.v4() + ".xlsx";
 
-    fs.writeFile(
-        __dirname + "/../" + "static/" + uniqFileName,
-        buffer,
-        function (err) {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log("The file was saved!");
-            }
-        }
-    );
+//     fs.writeFile(
+//         __dirname + "/../" + "static/" + uniqFileName,
+//         buffer,
+//         function (err) {
+//             if (err) {
+//                 console.log(err);
+//             } else {
+//                 console.log("The file was saved!");
+//             }
+//         }
+//     );
 
-    const stream = fs.createReadStream(
-        __dirname + "/../" + "static/" + uniqFileName
-    );
+//     const stream = fs.createReadStream(
+//         __dirname + "/../" + "static/" + uniqFileName
+//     );
 
-    uploadParams.Body = stream;
-    uploadParams.Key = "xlsx/" + uniqFileName;
-    const data = await s3.upload(uploadParams).promise();
+//     uploadParams.Body = stream;
+//     uploadParams.Key = "xlsx/" + uniqFileName;
+//     const data = await s3.upload(uploadParams).promise();
 
-    if(uniqFileName){
-        await fs.promises.unlink(__dirname + "/../" + "static/" + uniqFileName);
-    }
-    return data.Location;
-};
+//     if(uniqFileName){
+//         await fs.promises.unlink(__dirname + "/../" + "static/" + uniqFileName);
+//     }
+//     return data.Location;
+// };
 
 const fileDelete = async (object) => {
     // console.log(object)
@@ -70,4 +69,4 @@ const fileDelete = async (object) => {
     return 'success';
 };
 
-module.exports = { fileUploadCustom, fileDelete, xlsxUploadCustom };
+module.exports = { fileUploadCustom, fileDelete };
