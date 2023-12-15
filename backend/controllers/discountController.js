@@ -215,14 +215,28 @@ console.log(funcAgent1)
     async recordErrorToLog(req, res, next) {
         const { errorDesc } = req.body;
         try{
-            const errorRes = Error.create({ errorDesc })
+            const errorRes = await Error.create({ errorDesc });
             return res.json(errorRes);
         }catch (error) {
             await recordBackendErrorToLog({code: 611, eMessage: error.message});
             return next(ApiError.internal(`611: ${error.message}`));
         }
     }
+    
+    async checkNumbersOfAds(req, res, next) {
+        const { userId, adCategory } = req.body;
+        // console.log(userId, adCategory)
 
+        try{
+            const countAds = await Discount.countDocuments({ userId, adCategory }).exec();
+    console.log(countAds)
+            return res.json(countAds);
+        }catch (error) {
+            await recordBackendErrorToLog({code: 612, eMessage: error.message});
+            console.log(error.message)
+            return next(ApiError.internal(`612: ${error.message}`));
+        }
+    }
 
     async errorTest(req, res, next) {
         try{
@@ -233,6 +247,9 @@ console.log(funcAgent1)
             return next(ApiError.internal(`612: ${error.message}`));
         }
     }
+
+
+
 }
 
 module.exports = new DiscountController();

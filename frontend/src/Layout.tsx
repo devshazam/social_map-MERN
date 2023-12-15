@@ -6,7 +6,7 @@ import Footer from "./components/Footer";
 import HeaderAbove from "./components/HeaderAbove";
 import LoginPage from "./components/modal/LoginPage";
 import RegPage from "./components/modal/RegPage";
-import BanSite from "./components/modal/BanSite";
+// import BanSite from "./components/modal/BanSite.jьв";
 
 
 export default function Layout() {

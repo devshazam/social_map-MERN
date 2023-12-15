@@ -15,6 +15,11 @@ const userSchema = new Schema({
         }},
     birthday: { type: String },
     email_status: { type: Boolean, default: false },
+    score: { type: Number, default: 10 },
+    district: { type: String },
+    address: { type: String },
+    latitude: { type: String },
+    longitude: { type: String },
 }, { timestamps: true });
 
 

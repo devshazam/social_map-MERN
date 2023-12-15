@@ -28,12 +28,11 @@ function Footer(){
               </Col>
 			  <Col xs={12} lg ={3}>
 			  <div className="column">
-				
-							<p className="heading">Адреса:</p>
+							<p className="heading">Адрес:</p>
 							<ul><li className="hr">ул. Петропавловская 87</li>
-							<li className="hr">ул. Казахская 25 </li>
-							<li className="hr">ул. 2-я Динамовская д. 6 (производство)</li>
-</ul>
+							{/* <li className="hr">ул. Казахская 25 </li>
+							<li className="hr">ул. 2-я Динамовская д. 6 (производство)</li> */}
+							</ul>
 						</div>		
               </Col>
 			  <Col xs={12} lg ={3}>
@@ -41,13 +40,13 @@ function Footer(){
 							<p className="heading">Контакты:</p>
 							<ul>
 							<li>Email: <a  href="mailto:<a href='mailto: info@kopi34.ru">kopi34@yandex.ru</a></li>
-							<li>Тел: <a href='tel:89093802519'>+7(909) 380-25-19</a></li>
-							<li>Тел: <a href='tel:+78442599161'>+7 (8442) 59-91-61</a></li></ul>
-							<p>График работы с 09:00 до 19:00</p>
+							{/* <li>Тел: <a href='tel:89093802519'>+7(909) 380-25-19</a></li>
+							<li>Тел: <a href='tel:+78442599161'>+7 (8442) 59-91-61</a></li> */}
+							</ul>
 						</div>
               </Col>
             </Row>
-			<p >2023 © Копи-Принт - полиграфические услуги. Фирма работает с 2011г.</p>
+			<p style={{marginTop: "15px", fontSize: "13px"}}>Содержимое сайта является объектом авторских прав. ©2023 davse.ru. Все права защищены. Запрещается копировать, использовать, распространять любое содержимое этого сайта. <br />davse.ru не несет ответственности за информацию предоставленную пользователями.</p>
           </Container>
 		  </footer>
 

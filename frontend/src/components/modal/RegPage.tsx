@@ -1,15 +1,12 @@
 import { useState } from "react";
-
+import isEmail from "validator/lib/isEmail";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-import isEmail from "validator/lib/isEmail";
-
 import { registration } from "../../api/userAPI";
 
 const RegPage = (props:any) => {
-    // const { helpers } = useContext(Context);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [phone, setPhone] = useState("");
@@ -36,7 +33,6 @@ const RegPage = (props:any) => {
 
         registration(email, password, name, phone, props.role)
             .then((data) => {
-                alert("Успешная регистрация!");
                 window.location.replace("/")
             })
             .catch((error) => {

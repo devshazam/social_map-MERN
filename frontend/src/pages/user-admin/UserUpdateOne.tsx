@@ -14,7 +14,6 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Button from "@mui/material/Button";
 
-import { useSelector } from "react-redux";
 import { fetchAdByIdForUser, saveChangesOfDiscount } from "../../api/discountAPI";
 
 import globalParamsObject from '../../parameters/mainAppParameterObject'
@@ -27,7 +26,6 @@ import AvitoDatePicker from './unique-components/Avito'
 const UserUpdateOne: FC = () => {
     const { adId } = useParams<{adId?: string}>();
 
-    // const stateUser = useSelector((state: any) => state.user.isAuth);
     const [adsItem, setAdsItem] = useState<any>(null);
     const [flag, setFlag] = useState<number>(1);
     const navigate = useNavigate();

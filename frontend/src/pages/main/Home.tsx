@@ -36,7 +36,7 @@ export default function Home() {
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="/files/main-banner/volgograd.jpg"
+                            src="/files/main-banner/mediinaya_reklama.jpg"
                             alt="Second slide"
                         />
                         {/* <Carousel.Caption>
@@ -48,44 +48,47 @@ export default function Home() {
 
                 <Row className="mb-5 main-sale-place">
                     <Col xs={12} sm={6} lg={3} className="mb-3">
-                        <a href="/produce/banner">
+                        <a href="https://kopi34.ru/3d-details">
                             <Image
-                                src="/files/img/vykup-auto.jpg"
-                                thumbnail
-                                className="img-mob"
-                            />
-                        </a>
-                    </Col>
-                    
-                    <Col xs={12} sm={6} lg={3} className="mb-3">
-                        <a href="/produce/samokleyka">
-                            <Image
-                                src="/files/reklama.jpg"
+                                src="/files/reklama/3d-pechat.jpg"
                                 thumbnail
                                 className="img-mob"
                             />
                         </a>
                     </Col>
                     <Col xs={12} sm={6} lg={3} className="mb-3">
-                        <a href="/3d-details">
+                        <a href="https://kopi34.ru/">
                             <Image
-                                src="/files/reklama.jpg"
+                                src="/files/reklama/bagetnaya-masterskaya.jpg"
                                 thumbnail
                                 className="img-mob"
                             />
                         </a>
+                    </Col>
+                    <Col xs={12} sm={6} lg={3} className="mb-3">
+                        {/* <a href="/produce/banner"> */}
+                            <Image
+                                src="/files/reklama/vykup-auto.jpg"
+                                thumbnail
+                                className="img-mob"
+                            />
+                        {/* </a> */}
                     </Col>
                     <Col xs={12} sm={6} lg={3} className="mb-3">
                         <a href="/produce/vizitki">
                             <Image
-                                src="/files/reklama.jpg"
+                                src="/files/reklama/reklama.jpg"
                                 thumbnail
                                 className="img-mob"
                             />
                         </a>
                     </Col>
                 </Row>
+                <h1 style={{fontSize: '19px'}}>Первый агрегатор скидок и объявлений в Волгограде!</h1>
+                <p>Первый агрегатор скидок и объявлений в Волгограде это система поиска и систиматизации всех скидок, мероприятий, благотворительности и объявлений в городе! На страницах нашего сайта есть интерактивная карта на которой вы можете найти скидки, которые размещают для вас компании нашего города. Все скидки и объявления действуют до тех пор пока размещенны на сайте!
+                    Каждый житель города (только жители города могут оставлять объявления) может оставить свое объявление о продаже или благотворительности (отдать бесплатно), за объявления о благотворительностью начисляются социальные баллы, которые позволят получать дополнительные скидки в магазинах родного города!
 
+                </p>
 
 
 

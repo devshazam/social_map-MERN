@@ -1,14 +1,10 @@
 import { FC, useEffect, useState, useRef } from "react";
 import { Helmet } from "react-helmet";
 
-import Tab from "react-bootstrap/Tab";
-import Tabs from "react-bootstrap/Tabs";
-
 import { logReg } from "../../api/userAPI";
 
-import LoginPage from "../../components/modal/LoginPage";
 import RegPage from "../../components/modal/RegPage";
-import  "./LoginReg.scss";
+import  "./CompanyReg.scss";
 
 declare global {
     interface Window {
@@ -24,7 +20,7 @@ const LoginReg: FC = () => {
 
     window.qwerty = (data: any): void => {
         console.log(101, data);
-        logReg(JSON.parse(data))
+        logReg({...JSON.parse(data), role: "COMPANY"})
             .then((data: any) => {
                 window.location.replace("/");
             })
@@ -66,7 +62,7 @@ const LoginReg: FC = () => {
         <>
             <Helmet>
                 <meta charSet="utf-8" />
-                <title>My Title</title>
+                <title>Регистрация компаний</title>
                 <script
                     src="https://code.jquery.com/jquery-3.7.1.min.js"
                     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
@@ -79,35 +75,22 @@ const LoginReg: FC = () => {
                 <div className="wrapper-login-form">
 
                     <div className="login-form">
-                        <Tabs
-                            defaultActiveKey="login"
-                            id="uncontrolled-tab-example"
-                            className="mb-3"
-                        >
-                            <Tab eventKey="login" title="Вход">
-                                <LoginPage />
-                            </Tab>
-                            <Tab eventKey="reg" title="Регистрация">
-                                <RegPage role={"USER"} />
-                                <div className="company-link-wrap">
-                                    <a href="/company-registration" className="link-company">Регистрация юридических лиц (компаний)</a>
-                                </div>
-                            </Tab>
-                        </Tabs>
-                                <div 
-                                    ref={elementRef}
-                                    className="social-icons"
-                                    id="uLogin30465678"
-                                    data-ulogin="display=panel;fields=first_name,email;optional=phone,last_name,photo,bdate;lang=ru;providers=vkontakte,yandex,odnoklassniki,google,mailru,youtube;redirect_uri=http%3A%2F%2Fwww.davse.ru%2Flogin-registration;callback=preview"
-                                ></div>
-                                {flag && (
-                                    <p className="note-reg">
-                                        Для входа или регистрации через социальные сети - отключите
-                                        блокировщик рекламы в браузере (привер: Adblock
-                                        Plus)!
-                                    </p>
-                                )}
-
+                        <h3 className="reg-company-title">Регистрация компаний</h3>
+                        <p className="text-reg-company">(доступна регистрация через соц. сети)</p>
+                        <RegPage role={"COMPANY"} />
+                        <div 
+                            ref={elementRef}
+                            className="social-icons"
+                            id="uLogin30465678"
+                            data-ulogin="display=panel;fields=first_name,email;optional=phone,last_name,photo,bdate;lang=ru;providers=vkontakte,yandex,odnoklassniki,google,mailru,youtube;redirect_uri=http%3A%2F%2Fwww.davse.ru%2Flogin-registration;callback=preview"
+                        ></div>
+                        {flag && (
+                            <p className="note-reg">
+                                Для входа или регистрации через социальные сети - отключите
+                                блокировщик рекламы в браузере (привер: Adblock
+                                Plus)!
+                            </p>
+                        )}
                     </div>
                 </div>
         </>

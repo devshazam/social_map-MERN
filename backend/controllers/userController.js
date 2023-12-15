@@ -6,18 +6,18 @@ const uuid = require('uuid');
 const { recordBackendErrorToLog } = require("../error-log/LogHandling");
 const { Credentials } = require('aws-sdk/lib/credentials');
 
-const generateJwt = (id, email, role, phone ) => {
+const generateJwt = (id, email, role, phone, score ) => {
     return jwt.sign(
-        {id, email, role, phone},
+        {id, email, role, phone, score},
         process.env.SECRET_KEY,
-        {expiresIn: '24h'}
+        {expiresIn: '7d'}
     )
 }
 class UserController {
 
 // Логинится могут все, а рагистрироватся только компаниии!
     async logReg(req, res, next) {
-        const {first_name, last_name, verified_email, bdate, email, photo, phone} = req.body
+        const {first_name, last_name, verified_email, bdate, email, photo, phone, role} = req.body
         if(verified_email !== '1') {
             return next(ApiError.internal('Ваш email не подтвержден!'))
         }
@@ -31,9 +31,10 @@ class UserController {
                     if(email) qObject = {...qObject, email: email};
                     if(photo) qObject = {...qObject, profile_image: photo};
                     if(phone){qObject = {...qObject, phone: phone};}
+                    if(role){qObject = {...qObject, role: role};}
                     if(verified_email === '1') qObject = {...qObject, email_status: true};
                 const userReg = await User.create({ ...qObject });
-            const token = generateJwt(userReg.id, userReg.email, userReg.role)
+            const token = generateJwt(userReg.id, userReg.email, userReg.role, userReg.phone, userReg.score)
             return res.json({token})
         } catch (error) {
             await recordBackendErrorToLog({code: 621, eMessage: error.message});
@@ -41,7 +42,7 @@ class UserController {
         }
         }
         
-        const token = generateJwt(user.id, user.email, user.role, user.phone)
+        const token = generateJwt(user.id, user.email, user.role, user.phone, user.score)
         return res.json({token})
     }
 
@@ -64,7 +65,7 @@ class UserController {
         // Вставка паролейй в БД
             const user = await User.create({name, phone, email, role, password: hashPassword})
         // Генерирование токена
-            const token = generateJwt(user.id, user.email, user.role, user.phone)
+            const token = generateJwt(user.id, user.email, user.role, user.phone, user.score)
             return res.json({token})
     }
 
@@ -81,7 +82,7 @@ class UserController {
         if (!comparePassword) {
             return next(ApiError.internal('Указан неверный пароль'))
         }
-        const token = generateJwt(user.id, user.email, user.role, user.phone)
+        const token = generateJwt(user.id, user.email, user.role, user.phone, user.score)
         return res.json({token})
     }
 
@@ -89,7 +90,7 @@ class UserController {
     // GET(_3_): `api/user/` + `/auth`
     // Проверка авторизации ползователя при обращении к сайту в файле APP.js
     async check(req, res, next) {
-        const token = generateJwt(req.user.id, req.user.email, req.user.role, req.user.phone)
+        const token = generateJwt(req.user.id, req.user.email, req.user.role, req.user.phone, req.user.score)
         return res.json({token})
     }
 
@@ -101,7 +102,7 @@ class UserController {
     //     try{await User.update({email, phone}, {where: {id : req.user.id}});
     //             try{
     //                 const user = await User.findOne({where: {id: req.user.id}})
-    //             const token = generateJwt(user.id, user.email, user.role)
+    //             const token = generateJwt(user.id, user.email, user.role, user.phone, user.score)
     //             return res.json({token})
     //             }catch(e){
     //                 await recordBackendErrorToLog({code: 622, eMessage: error.message});

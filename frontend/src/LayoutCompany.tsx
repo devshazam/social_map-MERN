@@ -20,8 +20,6 @@ const LayoutCompany = () => {
                 { (stateIsAuth && stateUser.role === "COMPANY") ? <Outlet /> : <Navigate to="/" />}
             </Container>
             <Footer />
-            {/* <LoginPage />
-            <RegPage /> */}
         </>
     );
 };

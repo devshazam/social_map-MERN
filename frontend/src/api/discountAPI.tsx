@@ -67,3 +67,8 @@ export const saveChangesOfDiscount = async (param: any) => { // TODO опред�
     console.log(data)
     return data
 }
+export const checkNumbersOfAds = async (param: any) => { // TODO определить тип переменной
+    const {data} = await $host.post('/api/discounts/check-numbers-of-ads', param)
+    console.log(data)
+    return data
+}
