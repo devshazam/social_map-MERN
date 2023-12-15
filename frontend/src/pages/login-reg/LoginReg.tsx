@@ -8,7 +8,7 @@ import { logReg } from "../../api/userAPI";
 
 import LoginPage from "../../components/modal/LoginPage";
 import RegPage from "../../components/modal/RegPage";
-import  "./LoginReg.scss";
+import  "./loginreg.scss";
 
 declare global {
     interface Window {
