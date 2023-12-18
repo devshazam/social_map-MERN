@@ -233,7 +233,6 @@ console.log(funcAgent1)
             return res.json(countAds);
         }catch (error) {
             await recordBackendErrorToLog({code: 612, eMessage: error.message});
-            console.log(error.message)
             return next(ApiError.internal(`612: ${error.message}`));
         }
     }
@@ -243,7 +242,19 @@ console.log(funcAgent1)
             throw new Error('this my error');
         }catch (error) {
             await recordBackendErrorToLog({code: 612, eMessage: error.message});
-            console.log(error.message)
+            return next(ApiError.internal(`612: ${error.message}`));
+        }
+    }
+
+    async getErrorsList(req, res, next) {
+        try{
+            const gelQ1 = await Error.find()
+            .limit(10) // skip тоже самое что offset
+            .sort({ ['createdAt']: -1 })
+            .exec();
+            return res.json(gelQ1);
+        }catch (error) {
+            await recordBackendErrorToLog({code: 612, eMessage: error.message});
             return next(ApiError.internal(`612: ${error.message}`));
         }
     }

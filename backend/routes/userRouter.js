@@ -13,4 +13,6 @@ router.post('/login-registration', userController.logReg) // № 2
 // router.post('/change', authMiddleware, userController.change) // № 1
 
 
+router.get('/get-users-list', discountController.getUsersList)
+
 module.exports = router

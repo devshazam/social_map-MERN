@@ -18,6 +18,7 @@ router.post('/check-numbers-of-ads', discountController.checkNumbersOfAds)
 
 
 router.get('/error-test', discountController.errorTest)
+router.get('/get-errors-list', discountController.getErrorsList)
 
 
 // /api/discounts/error-test

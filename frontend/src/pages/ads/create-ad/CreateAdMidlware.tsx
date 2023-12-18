@@ -37,10 +37,10 @@ console.log(11, 'число объявлений:', number)
         <>
             {(number > 4 || stateUser.phone === '0') ?
                 <div className="filter-wrap">
-                    <p style={{width: '60%', fontSize: '19px', margin: 'auto',}} >К сожалению вы не можете создать объявление по следующей причине: <br />
+                    <p style={{width: '60%', fontSize: '19px', margin: 'auto',}} >Вы не можете создать объявление по следующей причине: <br />
                     <span className="span-aten">
                         {number > 4 && 'Превышено кол-во объявлений в данной группе'}
-                        {stateUser.phone === '0' && 'Вы не указан телефон! (телефон можно указать во вкладке "Редактировать профиль" в верху справа)'}
+                        {stateUser.phone === '0' && 'Для создания объявления нужно указать номер телефона (телефон можно указать во вкладке "Редактировать профиль" в верху справа)'}
                         </span>
                     </p>
                     <img src="/files/icons/attention.png" style={{width: '150px', margin: 'auto'}}></img>
