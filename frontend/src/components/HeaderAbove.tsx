@@ -46,6 +46,9 @@ const HeaderAbove = () => {
                                     <NavDropdown.Item href="/user/user-ads-list">
                                         Мои объявления
                                     </NavDropdown.Item>
+                                    <NavDropdown.Item href="/user/private-cab">
+                                        Личный кабинет
+                                    </NavDropdown.Item>
                                     
                                     <NavDropdown.Divider />
                                     <NavDropdown.Item href="/user/ads/create-ad/2">
@@ -73,7 +76,7 @@ const HeaderAbove = () => {
                                     )}
                                 </NavDropdown>
                                     <Nav.Item>
-                                        <Nav.Link href="/admin/user/private-office">
+                                        <Nav.Link href="#">
                                             <Image
                                                 src="/files/icons8-thumbs-60.png"
                                                 className="bascket_img"

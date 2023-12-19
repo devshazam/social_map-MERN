@@ -13,36 +13,34 @@ class DiscountController {
 
 
     async fetchYandexAddress(req, res, next) {
-        const {address} = req.body;
-        const headers = {
-            "Content-Type": "application/json",
-            "Authorization": "Token " + process.env.API_KEY_FIND_ADDRESS_BY_ID,
-            "X-Secret": process.env.SECRET_KEY_FIND_ADDRESS_BY_ID
-            };
-
         try {
-            const fyaQ1 = await axios.post(`https://cleaner.dadata.ru/api/v1/clean/address`, JSON.stringify([address]), {headers})
+            const {address} = req.body;
+            const headers = {
+                "Content-Type": "application/json",
+                "Authorization": "Token " + process.env.API_KEY_FIND_ADDRESS_BY_ID,
+                "X-Secret": process.env.SECRET_KEY_FIND_ADDRESS_BY_ID
+                };
+            const fyaQ1 = await axios.post(`https://cleaner.dadata.ru/api/v1/clean/address`, JSON.stringify([address]), {headers});
             const fyaQ2 = {result: fyaQ1.data[0].result, latitude: fyaQ1.data[0].geo_lat, longitude: fyaQ1.data[0].geo_lon};
+            console.log(fyaQ2)
             return res.json(fyaQ2);
-
-            } catch (error) {
-                await recordBackendErrorToLog({code: 601, eMessage: error.message});
-                return next(ApiError.internal(`601: ${error.message}`));
-            }
+        } catch (error) {
+            await recordBackendErrorToLog({code: 601, eMessage: error.message});
+            return next(ApiError.internal(`601: ${error.message}`));
+        }
     }
 
 
     async createDiscount(req, res, next) {
-        const { adCategory } = req.body;
-        let arrayPath = ['discounts/', 'charity/', 'events/', 'avito/'];
         try {
+            const { adCategory } = req.body;
+            let arrayPath = ['discounts/', 'charity/', 'events/', 'avito/'];
             // let fileLocation = null;
             // if (req.files) { 
                 const fileLocation = await fileUploadCustom(
                     req.files.img,
                     "davse/" + arrayPath[ +adCategory - 1 ]
                 );
- 
             const currentTime = new Date().getTime();
             const cdQ1 = await Discount.create({ ...req.body, currentTime, image: fileLocation });
             return res.json(cdQ1);
@@ -54,11 +52,10 @@ class DiscountController {
     
 
     async fetchDiscountByMap(req, res, next) {
-        const { adCategory, xLatitude, xLongitude, yLatitude, yLongitude, ...rest } = req.body;
-
-
-        const agent2 = Object.fromEntries(Object.entries(rest).filter(([_, v]) => v != 0));
         try {
+            const { adCategory, xLatitude, xLongitude, yLatitude, yLongitude, ...rest } = req.body;
+            const agent2 = Object.fromEntries(Object.entries(rest).filter(([_, v]) => v != 0));
+
             const midDiscount = await Discount.find({adCategory, ...agent2})
             .where("latitude").gt(xLatitude).lt(yLatitude) // Additional where query
             .where("longitude").gt(xLongitude).lt(yLongitude) // Additional where query
@@ -72,36 +69,33 @@ class DiscountController {
             return next(ApiError.internal(`603: ${error.message}`));
         }
     }
-    // подбор скидок на странице
 
     
     async fetchAdsById(req, res, next) {
-        const { adId } = req.body;
         try {
-            let midDiscount;
-    
-            midDiscount = await Discount.findById(adId)
+            const { adId } = req.body;
+
+            const fabiQ1 = await Discount.findById(adId)
             .populate('userId', 'name phone')
             .exec();
 
-
-            return res.json(midDiscount);
+            return res.json(fabiQ1);
         } catch (error) {
             await recordBackendErrorToLog({code: 604, eMessage: error.message});
             return next(ApiError.internal(`604: ${error.message}`));
         }
     }
     
+
     async fetchAdByIdForUser(req, res, next) {
-        const { adId } = req.body;
         try {
-            let midDiscount;
-    
-            midDiscount = await Discount.findById(adId)
+            const { adId } = req.body;
+
+            const fabifuQ1 = await Discount.findById(adId)
             .select("discount discountCategory startDate endDate avitoCategory uniquePart cost name description district address image dimensions adCategory")
             .exec();
             
-            return res.json(midDiscount);
+            return res.json(fabifuQ1);
         } catch (error) {
             await recordBackendErrorToLog({code: 605, eMessage: error.message});
             return next(ApiError.internal(`605: ${error.message}`));
@@ -111,17 +105,17 @@ class DiscountController {
 
 
     async fetchAdsList(req, res, next) {
-        let { itemSort, orderSort, page, limit, offset, ...rest }  = req.body;
-        page = page || 1;
-        limit = limit || 8;
-        itemSort = itemSort || "createdAt";
-        orderSort = orderSort || 1;
-        offset = page * limit - limit;
-        const sortArray = [1, -1];
-
-        const agent2 = Object.fromEntries(Object.entries(rest).filter(([_, v]) => v != 0));
-
         try {
+            let { itemSort, orderSort, page, limit, offset, ...rest }  = req.body;
+            page = page || 1;
+            limit = limit || 8;
+            itemSort = itemSort || "createdAt";
+            orderSort = orderSort || 1;
+            offset = page * limit - limit;
+            const sortArray = [1, -1];
+
+            const agent2 = Object.fromEntries(Object.entries(rest).filter(([_, v]) => v != 0));
+
             const funcAgent1 = await Discount.find({...agent2}) // WHERE sport: Tennis 
             .skip(offset).limit(limit) // skip тоже самое что offset
             .sort({ [itemSort]: sortArray[+orderSort] })
@@ -136,12 +130,12 @@ class DiscountController {
 
 
     async fetchUserAdsList(req, res, next) {
-        let { page, userId }  = req.body;
-        page = page || 1;
-        let limit = 8;
-        let offset = page * limit - limit;
-
         try {
+            let { page, userId }  = req.body;
+            page = page || 1;
+            let limit = 8;
+            let offset = page * limit - limit;
+
             const funcAgent1 = await Discount.find({userId}) // WHERE sport: Tennis 
             .skip(offset).limit(limit) // skip тоже самое что offset
             .sort({ createdAt: -1 })
@@ -156,8 +150,8 @@ class DiscountController {
     
     
     async deleteUserAdsList(req, res, next) {
-        let { adId }  = req.body;
         try {
+            let { adId }  = req.body;
             const dualQ1 = await Discount.findByIdAndDelete( adId );
             let dualQ2 = dualQ1.image.split("//")[1].split("/");
             let dualQ3 = await fileDelete({ Bucket: dualQ2[1] + "/" + dualQ2[2] + "/" +  dualQ2[3], Key: dualQ2[4] });
@@ -223,19 +217,18 @@ console.log(funcAgent1)
         }
     }
     
-    async checkNumbersOfAds(req, res, next) {
-        const { userId, adCategory } = req.body;
-        // console.log(userId, adCategory)
-
+    
+    async checkNumbersOfAds(req, res, next){
         try{
-            const countAds = await Discount.countDocuments({ userId, adCategory }).exec();
-    console.log(countAds)
-            return res.json(countAds);
+            const { userId, adCategory } = req.body;
+            const cnoaQ1 = await Discount.countDocuments({ userId, adCategory }).exec();
+            return res.json(cnoaQ1);
         }catch (error) {
             await recordBackendErrorToLog({code: 612, eMessage: error.message});
             return next(ApiError.internal(`612: ${error.message}`));
         }
     }
+
 
     async errorTest(req, res, next) {
         try{
@@ -245,6 +238,7 @@ console.log(funcAgent1)
             return next(ApiError.internal(`612: ${error.message}`));
         }
     }
+
 
     async getErrorsList(req, res, next) {
         try{
@@ -258,8 +252,6 @@ console.log(funcAgent1)
             return next(ApiError.internal(`612: ${error.message}`));
         }
     }
-
-
 
 }
 

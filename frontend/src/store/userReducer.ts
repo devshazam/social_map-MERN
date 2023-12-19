@@ -5,7 +5,8 @@ interface actionState {
 
 const defaultState = {
     isAuth: false,
-    user: {}
+    user: {},
+    phoneModal: false,
 }
 
 export const userReducer = (state = defaultState, action: actionState) =>{
@@ -14,6 +15,8 @@ export const userReducer = (state = defaultState, action: actionState) =>{
             return {...state, isAuth: action.payload}
         case "USER":
             return {...state, user: action.payload}
+        case "PHONE":
+            return {...state, phoneModal: action.payload}
         default:
             return state
 

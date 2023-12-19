@@ -25,6 +25,9 @@ import UserUpdateOne from './pages/user-admin/UserUpdateOne'
 import LoginReg from './pages/login-reg/LoginReg'
 import CompanyReg from './pages/login-reg/CompanyReg'
 
+import UserPrivateCab from './pages/user-admin/UserPrivateCab';
+// import UserChangeAddress from './pages/user-admin/UserChangeAddress';
+
 const App: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
@@ -78,6 +81,8 @@ const App: React.FC = () => {
                             <Route path="/user/ads/create-ad/:adCategory" element={<CreateAdMidlware />} />
                             <Route path="/user/user-ads-list" element={<UserAdsList />} />
                             <Route path="/user/user-update-one/:adId" element={<UserUpdateOne />} />
+                            <Route path="/user/private-cab" element={<UserPrivateCab />} />
+                            {/* <Route path="/user/user-change-address" element={<UserChangeAddress />} /> */}
                         </Route>
 
                             <Route path="/company/" element={<LayoutCompany />}>

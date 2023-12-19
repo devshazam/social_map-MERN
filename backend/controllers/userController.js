@@ -15,9 +15,9 @@ const generateJwt = (id, email, role, phone, score ) => {
 }
 class UserController {
 
-// Логинится могут все, а рагистрироватся только компаниии!
+
     async logReg(req, res, next) {
-        const {first_name, last_name, verified_email, bdate, email, photo, phone, role} = req.body
+        let {first_name, last_name, verified_email, bdate, email, photo, phone, role} = req.body
         if(verified_email !== '1') {
             return next(ApiError.internal('Ваш email не подтвержден!'))
         }
@@ -46,31 +46,26 @@ class UserController {
         return res.json({token})
     }
 
-    // POST(_1_): `api/user/` + `/registration`
+
     async registration(req, res, next) {
-            const {name, email, password, phone, role} = req.body
+            let {name, email, password, phone, role} = req.body
             role = role || 'USER';
 
             if (!email || !password) {
                 return next(ApiError.internal('Некорректный email или password'))
             }
-        // проверка дублирования
             const candidate = await User.findOne({where: email}).exec();
 
             if (candidate) {
                 return next(ApiError.internal('Пользователь с таким email уже существует'))
             }
-        // Хеширование паролей
             const hashPassword = await bcrypt.hash(password, 5)
-        // Вставка паролейй в БД
             const user = await User.create({name, phone, email, role, password: hashPassword})
-        // Генерирование токена
             const token = generateJwt(user.id, user.email, user.role, user.phone, user.score)
             return res.json({token})
     }
 
 
-    // POST(_2_): `api/user/` + `/login`
     async login(req, res, next) {
         const {email, password} = req.body
         // console.log(email, password)
@@ -87,21 +82,32 @@ class UserController {
     }
 
 
-    // GET(_3_): `api/user/` + `/auth`
-    // Проверка авторизации ползователя при обращении к сайту в файле APP.js
     async check(req, res, next) {
         const token = generateJwt(req.user.id, req.user.email, req.user.role, req.user.phone, req.user.score)
         return res.json({token})
     }
 
     
-    async getUsersList(req, res, next) {
+    async fetchUserDataById(req, res, next) {
         try{
-            const gulQ1 = await User.find()
-            .limit(10) // skip тоже самое что offset
-            .sort({ ['createdAt']: -1 })
+            let {userId} = req.body
+            let fudbiQ1 = await User.findById(userId)
+            .select("name phone email role address score")
             .exec();
-            return res.json(gulQ1);
+            return res.json(fudbiQ1);
+        }catch (error) {
+            await recordBackendErrorToLog({code: 612, eMessage: error.message});
+            return next(ApiError.internal(`612: ${error.message}`));
+        }
+    }
+
+
+    async changeCredencials(req, res, next) {
+        try{
+            let {phone, userId} = req.body
+            let ccQ1 = await User.updateOne({ _id: userId }, { phone });
+            console.log(ccQ1)
+            return res.json({status: 'success'});
         }catch (error) {
             await recordBackendErrorToLog({code: 612, eMessage: error.message});
             return next(ApiError.internal(`612: ${error.message}`));
