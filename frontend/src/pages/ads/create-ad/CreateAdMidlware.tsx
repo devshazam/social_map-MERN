@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { checkNumbersOfAds } from "../../../api/discountAPI";
+import { fetchUserDataById } from "../../../api/userAPI";
 import CreateAd from "./CreateAd"
 
 import './CreateAdMidlware.scss';
@@ -17,9 +18,24 @@ console.log(11, 'число объявлений:', number)
     useEffect(() => {
         checkNumbersOfAds({userId: stateUser.id, adCategory})
             .then((data) => {
-                // console.log(data[0].userId.phone)
-                setNumber(data.length)
-                setPhone(data[0].userId.phone)
+                setNumber(data)
+            })
+            .catch((error: any) => {
+                if (error.response && error.response.data) {
+                    alert(
+                        `${error.response.data.message}${error.response.status}`
+                    );
+                } else {
+                    console.log("dev", error);
+                    alert("Ошибка 178 - Обратитесь к администратору!");
+                }
+            });
+    }, [])
+
+    useEffect(() => {
+        fetchUserDataById({userId: stateUser.id})
+            .then((data) => {
+                setPhone(data.phone)
             })
             .catch((error: any) => {
                 if (error.response && error.response.data) {
