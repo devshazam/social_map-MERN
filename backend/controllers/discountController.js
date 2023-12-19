@@ -217,11 +217,14 @@ console.log(funcAgent1)
         }
     }
     
-    
+
     async checkNumbersOfAds(req, res, next){
         try{
             const { userId, adCategory } = req.body;
-            const cnoaQ1 = await Discount.countDocuments({ userId, adCategory }).exec();
+            const cnoaQ1 = await Discount.find({ userId, adCategory })
+            .select("_id")
+            .populate('userId', 'phone')
+            .exec();
             return res.json(cnoaQ1);
         }catch (error) {
             await recordBackendErrorToLog({code: 612, eMessage: error.message});

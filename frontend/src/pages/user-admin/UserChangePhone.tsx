@@ -30,6 +30,9 @@ const UserChangePhone = (props: any) => {
             changeCredencials({phone, userId: stateUser.user.id})
                 .then((data: any) => {
                     console.log(data)
+                    if(data.status === 'success'){
+                        localStorage.setItem('phone', phone)
+                    }
                     window.location.replace("/user/private-cab");
                 })
                 .catch((error: any) => {
