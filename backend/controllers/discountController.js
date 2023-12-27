@@ -239,8 +239,9 @@ console.log(funcAgent1)
         }
     }
     async errorTestos(req, res, next) {
-        throw new Error('this my error');
+        r + 1;
         try{
+            throw new Error('this my errorwwwwww');
         }catch (error) {
             await recordBackendErrorToLog({code: 612, eMessage: error.message});
             return next(ApiError.internal(`612: ${error.message}`));
