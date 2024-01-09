@@ -1,4 +1,4 @@
-export default {
+const globalParamsObject = {
     main: {
         adsCategory: [
             "Скидки",
@@ -95,4 +95,6 @@ export default {
     }
 
 };
+
+export default globalParamsObject;
 

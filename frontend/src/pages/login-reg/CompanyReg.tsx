@@ -78,12 +78,12 @@ const LoginReg: FC = () => {
                         <h3 className="reg-company-title">Регистрация компаний</h3>
                         <p className="text-reg-company">(доступна регистрация через соц. сети)</p>
                         <RegPage role={"COMPANY"} />
-                        <div 
+                            <div 
                             ref={elementRef}
                             className="social-icons"
-                            id="uLogin30465678"
-                            data-ulogin="display=panel;fields=first_name,email;optional=phone,last_name,photo,bdate;lang=ru;providers=vkontakte,yandex,odnoklassniki,google,mailru,youtube;redirect_uri=http%3A%2F%2Fwww.davse.ru%2Flogin-registration;callback=preview"
-                        ></div>
+                            id="uLogin30465678" 
+                            data-ulogin="display=panel;fields=first_name,email;optional=phone,last_name,photo,bdate;lang=ru;providers=vkontakte,yandex,google,mailru,youtube;redirect_uri=http%3A%2F%2Fwww.davse.ru%2Flogin-registration;callback=preview">
+                            </div>
                         {flag && (
                             <p className="note-reg">
                                 Для входа или регистрации через социальные сети - отключите

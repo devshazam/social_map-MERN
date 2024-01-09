@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
 import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
 import Col from "react-bootstrap/Col";
 import { TextField } from "@mui/material";
 import { fetchYandexAddress } from "../../../../api/discountAPI";
 import Button from "@mui/material/Button";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 
 const MapChoiceComp = (props: any) => {
     // const [addressString, setAddressString] = useState<string>("Волгоград, ");
@@ -92,7 +92,7 @@ const MapChoiceComp = (props: any) => {
                     variant="outlined"
                     fullWidth
                     sx={{ mb: 1 }}
-                    error={Boolean(!props.createObject.latitude && !props.createObject.longitude && props.flag == 0)}
+                    error={Boolean(!props.createObject.latitude && !props.createObject.longitude && props.flag === 0)}
                     value={props.createObject.address}
                     // onChange={(e) => setAddressString(e.target.value)}
                     onChange={(e:any) => props.changeCreateObject({address: e.target.value})}

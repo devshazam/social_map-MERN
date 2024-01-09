@@ -89,7 +89,7 @@ const ImageResizingComp = (props:any) => {
                         :
                         <img id="img" ref={mapRef} alt="Место для картинки" src={imageUrl} />
                     }
-                {Boolean(!imageUrl && props.flag == 0) &&
+                {Boolean(!imageUrl && props.flag === 0) &&
                     <p style={{color: 'red', fontSize: '15px', border: '1px solid red'}}>Картинка не загружена!</p>
                 }
             </Col>

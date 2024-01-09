@@ -62,7 +62,7 @@ console.log(11, 'число объявлений:', number)
                         {phone === '0' && 'Для создания объявления нужно указать номер телефона (телефон можно указать во вкладке "Личный кабинет" в верху справа)'}
                         </span>
                     </p>
-                    <img src="/files/icons/attention.png" style={{width: '150px', margin: 'auto'}}></img>
+                    <img alt="Картинка" src="/files/icons/attention.png" style={{width: '150px', margin: 'auto'}}></img>
                 </div>
             :
                 <CreateAd />

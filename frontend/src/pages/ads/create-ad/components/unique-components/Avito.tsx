@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef }from 'react';
+import React, { useState, useEffect }from 'react';
 
 import Col from "react-bootstrap/Col";
 import { TextField} from "@mui/material";
@@ -27,22 +27,22 @@ const Discounts = (props:any) => {
          <Col xs={12} md={6}>
                      <TextField label="Цена (плата):" variant="outlined" fullWidth
                                 sx={{mb: 1, pr: { sm: 0, md: 1}, width: { sm: 'none', md: '50%'}}}
-                                error={Boolean(!props.createObject.cost && props.flag == 0)}
+                                error={Boolean(!props.createObject.cost && props.flag === 0)}
                                 onChange={(e:any) => props.changeCreateObject({cost: e.target.value})}
                     />
 
                     <FormControl fullWidth sx={{mb: 1, width: { sm: 'none', md: '50%'}}}>
-                        <InputLabel error={Boolean(!props.createObject.avitoCategory && props.flag == 0)}>Категория:</InputLabel>
+                        <InputLabel error={Boolean(!props.createObject.avitoCategory && props.flag === 0)}>Категория:</InputLabel>
                         <Select
                             // value={props.createObject.avitoCategory ? props.createObject.avitoCategory : '5'}
                             defaultValue={''}
-                            error={Boolean(!props.createObject.avitoCategory && props.flag == 0)}
+                            error={Boolean(!props.createObject.avitoCategory && props.flag === 0)}
                             onChange={(e:any) => props.changeCreateObject({avitoCategory: e.target.value})}
                         >
                             { 
                                 globalParamsObject.avito.avitoCategory.map((item:any, index:any) => {
                                     return(
-                                        <MenuItem key={index} value={index + 1}>{item}</MenuItem>
+                                        <MenuItem key={index + 1} value={index + 1}>{item}</MenuItem>
                                     )
                                 })
                             }

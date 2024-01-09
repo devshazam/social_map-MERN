@@ -16,7 +16,7 @@ const Events = (props:any) => {
         <>
                 <Col xs={12} md={6}>
                     <TextField  label="Цена:" variant="outlined" fullWidth sx={{ mb: 1}} 
-                                error={Boolean(!props.createObject.cost && props.flag == 0)}
+                                error={Boolean(!props.createObject.cost && props.flag === 0)}
                                 onChange={(e:any) => props.changeCreateObject({cost: e.target.value})}
                                 />
                 </Col>

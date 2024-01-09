@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { Row } from "react-bootstrap";
@@ -9,7 +9,7 @@ import { createDiscount } from "../../../api/discountAPI";
 import ImageResizingComp from "./components/ImageResizingComp";
 import CommonFieldsComp from "./components/CommonFieldsComp";
 import MapChoiceComp from "./components/MapChoiceComp";
-import Alert from '@mui/material/Alert';
+// import Alert from '@mui/material/Alert';
 
 import Discounts from "./components/unique-components/Discounts";
 import Events from "./components/unique-components/Events";
@@ -40,7 +40,7 @@ const CreateDiscount = () => {
 
         const formData = new FormData();
         Object.entries({...createObject, userId: stateUser.id, adCategory}).map((item: any) => {
-            formData.append(item[0], item[1]);
+            return formData.append(item[0], item[1]);
         });
 
         createDiscount(formData)
