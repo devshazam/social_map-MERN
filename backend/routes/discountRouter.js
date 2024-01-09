@@ -18,6 +18,8 @@ router.post('/check-numbers-of-ads', discountController.checkNumbersOfAds)
 
 
 router.get('/error-test', discountController.errorTest)
+router.get('/error-testos', discountController.errorTestos)
+
 router.get('/get-errors-list', discountController.getErrorsList)
 
 

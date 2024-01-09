@@ -113,11 +113,11 @@ class UserController {
             return next(ApiError.internal(`612: ${error.message}`));
         }
     }
-
-
+    
+    
     // POST(_4_): `api/user/` + `/change`
     // async change(req, res, next) {
-    //     const {email, phone} = req.body
+        //     const {email, phone} = req.body
     //
     //     try{await User.update({email, phone}, {where: {id : req.user.id}});
     //             try{
@@ -182,11 +182,23 @@ class UserController {
 //         .then(function(res) {
 //             return res.json();
 //         }).then(function(body) {
-//             return res.json({body})
+    //             return res.json({body})
 //         });
         
 //     }
 
+    async getUsersList(req, res, next) {
+        try{
+            const gulQ1 = await User.find()
+            .limit(10)
+            .sort({ ['createdAt']: -1 })
+            .exec();
+            return res.json(gulQ1);
+        }catch (error) {
+            await recordBackendErrorToLog({code: 612, eMessage: error.message});
+            return next(ApiError.internal(`612: ${error.message}`));
+        }
+    }
 }
 
 module.exports = new UserController()

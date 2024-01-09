@@ -16,4 +16,8 @@ router.post('/login-registration', userController.logReg) // № 2
 router.post('/fetch-user-data-by-id', userController.fetchUserDataById)
 router.post('/change-credencials', userController.changeCredencials)
 
+
+
+router.get('/get-users-list', userController.getUsersList) // № 3
+
 module.exports = router

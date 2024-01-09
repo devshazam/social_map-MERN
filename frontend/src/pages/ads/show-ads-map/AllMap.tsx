@@ -82,8 +82,8 @@ const AllMap = () => {
                                 <Map
                                     defaultState={{
                                         // center: [48.707067, 44.516975],
-                                        center: [48.514045, 44.527467],
-                                        zoom: 16
+                                        center: [48.512273, 44.555203],
+                                        zoom: 14
                                     }}
                                     width="100%"
                                     height={600}
