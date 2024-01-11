@@ -238,15 +238,15 @@ console.log(funcAgent1)
             return next(ApiError.internal(`612: ${error.message}`));
         }
     }
-    async errorTestos(req, res, next) {
-        r + 1;
-        try{
-            throw new Error('this my errorwwwwww');
-        }catch (error) {
-            await recordBackendErrorToLog({code: 612, eMessage: error.message});
-            return next(ApiError.internal(`612: ${error.message}`));
-        }
-    }
+    // async errorTestos(req, res, next) {
+    //     r + 1;
+    //     try{
+    //         throw new Error('this my errorwwwwww');
+    //     }catch (error) {
+    //         await recordBackendErrorToLog({code: 612, eMessage: error.message});
+    //         return next(ApiError.internal(`612: ${error.message}`));
+    //     }
+    // }
 
 
     async getErrorsList(req, res, next) {
