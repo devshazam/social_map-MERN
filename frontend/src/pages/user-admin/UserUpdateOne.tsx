@@ -103,7 +103,7 @@ const UserUpdateOne: FC = () => {
                                 <ListGroup.Item>
                                     <TextField label="Название:" variant="outlined" fullWidth
                                         // sx={{mb: 1, pr: { sm: 0, md: 1}, width: { sm: 'none', md: '50%'}}}
-                                        error={Boolean(!adsItem.name && flag == 0)}
+                                        error={Boolean(!adsItem.name && flag === 0)}
                                         value={adsItem.name}
                                         onChange={(e:any) => setAdsItem({...adsItem, name: e.target.value})}
                                     />
@@ -111,7 +111,7 @@ const UserUpdateOne: FC = () => {
                                 <ListGroup.Item>
                                     <TextField label="Описание:" variant="outlined" fullWidth
                                         // sx={{mb: 1, pr: { sm: 0, md: 1}, width: { sm: 'none', md: '50%'}}}
-                                        error={Boolean(!adsItem.description && flag == 0)}
+                                        error={Boolean(!adsItem.description && flag === 0)}
                                         value={adsItem.description}
                                         onChange={(e:any) => setAdsItem({...adsItem, description: e.target.value})}
                                     />
@@ -119,7 +119,7 @@ const UserUpdateOne: FC = () => {
                                 <ListGroup.Item>
                                     <TextField label="Цена:" variant="outlined" fullWidth
                                         // sx={{mb: 1, pr: { sm: 0, md: 1}, width: { sm: 'none', md: '50%'}}}
-                                        error={Boolean(!adsItem.cost && flag == 0)}
+                                        error={Boolean(!adsItem.cost && flag === 0)}
                                         value={adsItem.cost}
                                         onChange={(e:any) => setAdsItem({...adsItem, cost: e.target.value})}
                                     />

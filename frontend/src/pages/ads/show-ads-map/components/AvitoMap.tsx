@@ -1,5 +1,4 @@
 
-import React, { useState,  useRef, useEffect } from "react";
 
 import {Placemark} from "@pbe/react-yandex-maps";
 

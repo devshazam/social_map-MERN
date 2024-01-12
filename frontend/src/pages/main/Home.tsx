@@ -1,9 +1,8 @@
-import React, {useState} from "react";
+
 import { Row } from "react-bootstrap";
 import Carousel from "react-bootstrap/Carousel";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
-import Figure from "react-bootstrap/Figure";
 import Image from "react-bootstrap/Image";
 
 import './home.scss';
@@ -48,9 +47,9 @@ export default function Home() {
 
                 <Row className="mb-5 main-sale-place">
                     <Col xs={12} sm={6} lg={3} className="mb-3">
-                        <a href="https://kopi34.ru/3d-details">
+                        <a href="/ads/1">
                             <Image
-                                src="/files/reklama/3d-pechat.jpg"
+                                src="/files/reklama/sale.jpg"
                                 thumbnail
                                 className="img-mob"
                             />
@@ -66,6 +65,15 @@ export default function Home() {
                         </a>
                     </Col>
                     <Col xs={12} sm={6} lg={3} className="mb-3">
+                        <a href="https://kopi34.ru/3d-details">
+                            <Image
+                                src="/files/reklama/3d-pechat.jpg"
+                                thumbnail
+                                className="img-mob"
+                            />
+                        </a>
+                    </Col>
+                    <Col xs={12} sm={6} lg={3} className="mb-3">
                         {/* <a href="/produce/banner"> */}
                             <Image
                                 src="/files/reklama/vykup-auto.jpg"
@@ -74,7 +82,7 @@ export default function Home() {
                             />
                         {/* </a> */}
                     </Col>
-                    <Col xs={12} sm={6} lg={3} className="mb-3">
+                    {/* <Col xs={12} sm={6} lg={3} className="mb-3">
                         <a href="/produce/vizitki">
                             <Image
                                 src="/files/reklama/reklama.jpg"
@@ -82,7 +90,7 @@ export default function Home() {
                                 className="img-mob"
                             />
                         </a>
-                    </Col>
+                    </Col> */}
                 </Row>
                 <h1 style={{fontSize: '19px'}}>Первый агрегатор скидок и объявлений в Волгограде!</h1>
                 <p>Первый агрегатор скидок и объявлений в Волгограде это система поиска и систиматизации всех скидок, мероприятий, благотворительности и объявлений в городе! На страницах нашего сайта есть интерактивная карта на которой вы можете найти скидки, которые размещают для вас компании нашего города. Все скидки и объявления действуют до тех пор пока размещенны на сайте!

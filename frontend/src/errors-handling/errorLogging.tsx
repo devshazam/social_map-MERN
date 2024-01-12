@@ -28,7 +28,7 @@ const logError = (error: Error, info: ErrorInfo) => {
     return (
       <div role="alert" style={{ margin: 'auto', textAlign: 'center', paddingTop: '10vh'}}>
         <p style={{width: '60%', fontSize: '25px', margin: 'auto',}} >Произошла непредвиденная ошибка, но в этом нет ничего страшного! <br /> Продолжайте использование других разделов сайта! <br /> <span style={{fontSize: '14px'}}>Администрация уже проинформирована и примет меры для ее устранения в ближайшее время!</span></p>
-        <img src="/files/icons/attention.png" style={{width: '150px', margin: 'auto'}}></img>
+        <img alt="Ошибка" src="/files/icons/attention.png" style={{width: '150px', margin: 'auto'}}></img>
       </div>
     );
   }

@@ -64,7 +64,7 @@ const Discounts = (props:any) => {
                     <FormControl fullWidth sx={{mb: 1}}>
                         <InputLabel  >{item[0]}</InputLabel>
                         <Select
-                        value={''}
+                        defaultValue={''}
                             onChange={(e) => setUniqObject({...uniqObject, [index2]: [item[0], e.target.value]})}
                         >
                             { 

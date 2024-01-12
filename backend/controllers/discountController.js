@@ -1,6 +1,5 @@
 const path = require("path");
 const fs = require("fs");
-const { recordBackendErrorToLog } = require("../error-log/LogHandling");
 const {
     Discount, User, Error,
 } = require("../models/models");
@@ -9,8 +8,8 @@ const { fileUploadCustom, fileDelete } = require("../S3/s3Upload");
 const axios = require("axios");
 const requestIp = require('request-ip');
 
-class DiscountController {
 
+class DiscountController {
 
     async fetchYandexAddress(req, res, next) {
         try {
@@ -25,7 +24,6 @@ class DiscountController {
             console.log(fyaQ2)
             return res.json(fyaQ2);
         } catch (error) {
-            await recordBackendErrorToLog({code: 601, eMessage: error.message});
             return next(ApiError.internal(`601: ${error.message}`));
         }
     }
@@ -45,7 +43,6 @@ class DiscountController {
             const cdQ1 = await Discount.create({ ...req.body, currentTime, image: fileLocation });
             return res.json(cdQ1);
         } catch (error) {
-            await recordBackendErrorToLog({code: 602, eMessage: error.message});
             return next(ApiError.internal(`602: ${error.message}`));
         }
     }
@@ -65,7 +62,6 @@ class DiscountController {
 
             return res.json(midDiscount);
         } catch (error) {
-            await recordBackendErrorToLog({code: 603, eMessage: error.message});
             return next(ApiError.internal(`603: ${error.message}`));
         }
     }
@@ -81,7 +77,6 @@ class DiscountController {
 
             return res.json(fabiQ1);
         } catch (error) {
-            await recordBackendErrorToLog({code: 604, eMessage: error.message});
             return next(ApiError.internal(`604: ${error.message}`));
         }
     }
@@ -97,7 +92,6 @@ class DiscountController {
             
             return res.json(fabifuQ1);
         } catch (error) {
-            await recordBackendErrorToLog({code: 605, eMessage: error.message});
             return next(ApiError.internal(`605: ${error.message}`));
         }
     }
@@ -123,7 +117,6 @@ class DiscountController {
             .exec();
             return res.json(funcAgent1);
         } catch (error) {
-            await recordBackendErrorToLog({code: 606, eMessage: error.message});
             return next(ApiError.internal(`606: ${error.message}`));
         }
     }
@@ -143,7 +136,6 @@ class DiscountController {
             .exec();
             return res.json(funcAgent1);
         } catch (error) {
-            await recordBackendErrorToLog({code: 607, eMessage: error.message});
             return next(ApiError.internal(`607: ${error.message}`));
         }
     }
@@ -159,7 +151,6 @@ class DiscountController {
             
             return res.json({status: "success"});
         } catch (error) {
-            await recordBackendErrorToLog({code: 608, eMessage: error.message});
             return next(ApiError.internal(`608: ${error.message}`));
         }
     }
@@ -174,7 +165,6 @@ class DiscountController {
 console.log(funcAgent1)
             return res.json(funcAgent1);
         } catch (error) {
-            await recordBackendErrorToLog({code: 609, eMessage: error.message});
             return next(ApiError.internal(`609: ${error.message}`));
         }
     }
@@ -200,7 +190,6 @@ console.log(funcAgent1)
 // return
 //             return res.json(payItem);
 //         } catch (error) {
-//             await recordBackendErrorToLog({code: 610, eMessage: error.message});
 //             return next(ApiError.internal(`610: ${error.message}`));
 //         }
 //     }
@@ -212,7 +201,6 @@ console.log(funcAgent1)
             const errorRes = await Error.create({ errorDesc });
             return res.json(errorRes);
         }catch (error) {
-            await recordBackendErrorToLog({code: 611, eMessage: error.message});
             return next(ApiError.internal(`611: ${error.message}`));
         }
     }
@@ -224,7 +212,6 @@ console.log(funcAgent1)
             const cnoaQ1 = await Discount.countDocuments({ userId, adCategory }).exec();
             return res.json(cnoaQ1);
         }catch (error) {
-            await recordBackendErrorToLog({code: 612, eMessage: error.message});
             return next(ApiError.internal(`612: ${error.message}`));
         }
     }
@@ -234,20 +221,18 @@ console.log(funcAgent1)
         try{
             throw new Error('this my error');
         }catch (error) {
-            await recordBackendErrorToLog({code: 612, eMessage: error.message});
-            return next(ApiError.internal(`612: ${error.message}`));
+            return next(ApiError.internal(`617: ${error.message}`));
         }
     }
+
     // async errorTestos(req, res, next) {
     //     r + 1;
     //     try{
     //         throw new Error('this my errorwwwwww');
     //     }catch (error) {
-    //         await recordBackendErrorToLog({code: 612, eMessage: error.message});
     //         return next(ApiError.internal(`612: ${error.message}`));
     //     }
     // }
-
 
     async getErrorsList(req, res, next) {
         try{
@@ -257,7 +242,6 @@ console.log(funcAgent1)
             .exec();
             return res.json(gelQ1);
         }catch (error) {
-            await recordBackendErrorToLog({code: 612, eMessage: error.message});
             return next(ApiError.internal(`612: ${error.message}`));
         }
     }

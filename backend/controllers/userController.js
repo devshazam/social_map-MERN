@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { User } = require('../models/models')
 const uuid = require('uuid');
-const { recordBackendErrorToLog } = require("../error-log/LogHandling");
 const { Credentials } = require('aws-sdk/lib/credentials');
 
 const generateJwt = (id, email, role, phone, score ) => {
@@ -37,7 +36,6 @@ class UserController {
             const token = generateJwt(userReg.id, userReg.email, userReg.role, userReg.phone, userReg.score)
             return res.json({token})
         } catch (error) {
-            await recordBackendErrorToLog({code: 621, eMessage: error.message});
             return next(ApiError.internal(`621: ${error.message}`));
         }
         }
@@ -96,7 +94,6 @@ class UserController {
             .exec();
             return res.json(fudbiQ1);
         }catch (error) {
-            await recordBackendErrorToLog({code: 612, eMessage: error.message});
             return next(ApiError.internal(`612: ${error.message}`));
         }
     }
@@ -109,7 +106,6 @@ class UserController {
             console.log(ccQ1)
             return res.json({status: 'success'});
         }catch (error) {
-            await recordBackendErrorToLog({code: 612, eMessage: error.message});
             return next(ApiError.internal(`612: ${error.message}`));
         }
     }
@@ -125,7 +121,6 @@ class UserController {
     //             const token = generateJwt(user.id, user.email, user.role, user.phone, user.score)
     //             return res.json({token})
     //             }catch(e){
-    //                 await recordBackendErrorToLog({code: 622, eMessage: error.message});
     //                 return next(
     //                     ApiError.badRequest(
     //                         `618: ${e.message}`
@@ -133,7 +128,6 @@ class UserController {
     //                 );
     //             }
     //     }catch(e){
-    //         await recordBackendErrorToLog({code: 622, eMessage: error.message});
     //         return next(
     //             ApiError.badRequest(
     //                 `619: ${e.message}`
@@ -195,7 +189,6 @@ class UserController {
             .exec();
             return res.json(gulQ1);
         }catch (error) {
-            await recordBackendErrorToLog({code: 612, eMessage: error.message});
             return next(ApiError.internal(`612: ${error.message}`));
         }
     }

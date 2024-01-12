@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 // import {Context} from "./index";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -10,6 +10,7 @@ import LayoutUser from "./LayoutUser";
 import LayoutCompany from "./LayoutCompany";
 import Home from "./pages/main/Home";
 import Empty from "./pages/main/Empty";
+import Oferta from "./pages/main/Oferta";
 import Test from "./pages/main/Test";
 import Contacts from "./pages/main/Contacts";
 import { useDispatch } from "react-redux";
@@ -73,6 +74,7 @@ const App: React.FC = () => {
                         <Route path="/ad-view/:adId" element={<AdView />} />
 
                         <Route path="/contacts" element={<Contacts />} />
+                        <Route path="/oferta" element={<Oferta />} />
                         <Route path="/login-registration" element={<LoginReg />} />
                         <Route path="/company-registration" element={<CompanyReg />} />
                     </Route>

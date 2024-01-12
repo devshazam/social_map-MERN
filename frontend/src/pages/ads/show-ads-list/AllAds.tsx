@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
 import Col from "react-bootstrap/Col";
 import Pagination from "react-bootstrap/Pagination";
 import Row from "react-bootstrap/Row";
@@ -9,13 +8,16 @@ import Spinner from "react-bootstrap/Spinner";
 import { Map, YMaps } from "@pbe/react-yandex-maps";
 
 import DiscountsForms from "./components/DiscountsForms";
-import DistrictForm from "./components/components/DistrictForm";
+import DistrictForm from "./components/DistrictForm";
 import EventsForms from "./components/EventsForms";
 import AvitoForms from "./components/AvitoForms";
+import Accordion from "react-bootstrap/Accordion";
 
 import { fetchAdsList } from "../../../api/discountAPI";
-import {dimensionsToStyleObject} from '../../../utils/helpFunctions'
+import { dimensionsToStyleObject } from "../../../utils/helpFunctions";
+import globalParamsObject from "../../../parameters/mainAppParameterObject";
 
+import "./AllAds.scss";
 
 const AllDiscounts = () => {
     const { adCategory } = useParams();
@@ -27,12 +29,15 @@ const AllDiscounts = () => {
 
     const [filterObject, setFilterObject] = useState<any>({});
 
-    function changefilterObject(agent1:any){
-        setFilterObject({...filterObject, ...agent1})
+    function changefilterObject(agent1: any) {
+        setFilterObject({ ...filterObject, ...agent1 });
     }
 
     useEffect(() => {
-        if (!adCategory || !Object.values(filterObject).every((i:any) => Boolean(i))) {
+        if (
+            !adCategory ||
+            !Object.values(filterObject).every((i: any) => Boolean(i))
+        ) {
             return;
         }
         fetchAdsList({ ...filterObject, page, adCategory })
@@ -83,11 +88,62 @@ const AllDiscounts = () => {
         <>
             {/* <p>скидки</p> */}
             <Row className="mb-5">
-                <Col xs={12} sm={3} lg={3} className="mb-3">
-                    {adCategory === "1" && <DiscountsForms changefilterObject={changefilterObject} filterObject={filterObject}/>}
-                    {adCategory === "2" && <DistrictForm changefilterObject={changefilterObject} filterObject={filterObject}/>}
-                    {adCategory === "3" && <EventsForms changefilterObject={changefilterObject} filterObject={filterObject}/>}
-                    {adCategory === '4' && <AvitoForms changefilterObject={changefilterObject} filterObject={filterObject}/> }
+                <Col sm={3} className="mb-3 d-none d-sm-block">
+                    {adCategory === "1" && (
+                        <DiscountsForms
+                            changefilterObject={changefilterObject}
+                            filterObject={filterObject}
+                        />
+                    )}
+                    {adCategory === "3" && (
+                        <EventsForms
+                        changefilterObject={changefilterObject}
+                        filterObject={filterObject}
+                        />
+                        )}
+                    {adCategory === "4" && (
+                        <AvitoForms
+                        changefilterObject={changefilterObject}
+                        filterObject={filterObject}
+                        />
+                        )}
+                    <DistrictForm
+                            changefilterObject={changefilterObject}
+                            filterObject={filterObject}
+                        />
+                </Col>
+                <Col xs={12} className="mb-3 d-sm-none">
+                    <Accordion>
+                        <Accordion.Item eventKey="0">
+                            <Accordion.Header className="accordion-name">
+                                Открыть фильтры
+                            </Accordion.Header>
+                            <Accordion.Body>
+                                {adCategory === "1" && (
+                                    <DiscountsForms
+                                        changefilterObject={changefilterObject}
+                                        filterObject={filterObject}
+                                    />
+                                )}
+                                {adCategory === "3" && (
+                                    <EventsForms
+                                    changefilterObject={changefilterObject}
+                                    filterObject={filterObject}
+                                    />
+                                    )}
+                                {adCategory === "4" && (
+                                    <AvitoForms
+                                    changefilterObject={changefilterObject}
+                                    filterObject={filterObject}
+                                    />
+                                    )}
+                                <DistrictForm
+                                    changefilterObject={changefilterObject}
+                                    filterObject={filterObject}
+                                />
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    </Accordion>
                 </Col>
                 <Col xs={12} sm={9} lg={9} className="mb-3">
                     <Row className="mb-5">
@@ -100,7 +156,12 @@ const AllDiscounts = () => {
                             }}
                         >
                             <a href={"/ads-map/" + adCategory}>
-                                <YMaps query={{ apikey: process.env.REACT_APP_YANDEX_KEY }}>
+                                <YMaps
+                                    query={{
+                                        apikey: process.env
+                                            .REACT_APP_YANDEX_KEY,
+                                    }}
+                                >
                                     <section className="map container">
                                         <Map
                                             state={{
@@ -112,43 +173,88 @@ const AllDiscounts = () => {
                                         ></Map>
                                     </section>
                                 </YMaps>
-                            
-                                <div style={{display: 'flex', position: 'absolute', left: '0', top: '0', width: '100%', height: '100%', zIndex: '999'}}>
-                                    <p style={{fontSize: '50px', margin: 'auto', width: '80%', color: 'rgb(217 98 98 / 75%)', fontWeight: '100', textAlign: 'center' }}>ОТКРЫТЬ КАРТУ</p>
+
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        position: "absolute",
+                                        left: "0",
+                                        top: "0",
+                                        width: "100%",
+                                        height: "100%",
+                                        zIndex: "999",
+                                    }}
+                                >
+                                    <p
+                                        style={{
+                                            fontSize: "50px",
+                                            margin: "auto",
+                                            width: "80%",
+                                            color: "rgb(217 98 98 / 75%)",
+                                            fontWeight: "100",
+                                            textAlign: "center",
+                                        }}
+                                    >
+                                        ОТКРЫТЬ КАРТУ
+                                    </p>
                                 </div>
-                            {/* </div> */}
+                                {/* </div> */}
                             </a>
                         </div>
                     </Row>
-                    <Row className="mb-5">
+                    <Row className="mb-5 main-row">
                         {spiner ? (
                             <>
-                                {count ? 
-                                    adsList.map((ad: any, index:number) => {
-                                        return(
-                                        <Col xs={12} sm={6} lg={3} className="mb-3" key={index} >
-                                            <Card>
-                                                <a href={"/ad-view/" + ad._id} style={{backgroundColor: '#cbcbcb'}}>
-                                                    
-                                                    <Card.Img 
-                                                        style={ad.dimensions && {...dimensionsToStyleObject(JSON.parse(ad.dimensions))}}
-                                                        variant="top"
-                                                        src={ad.image} 
-                                                    />
-                                                </a>
-                                                <Card.Body>
-                                                    <Card.Title>
-                                                        {ad.cost && `Цена: ${ad.cost} р`}<br />
-                                                        {/* Остаток: {ad.name} */}
-                                                    </Card.Title>
-                                                    <Card.Text>
-                                                        {ad.name}
-                                                    </Card.Text>
-                                                </Card.Body>
-                                            </Card>
-                                        </Col>);
+                                {count ? (
+                                    adsList.map((ad: any, index: number) => {
+                                        return (
+                                            <Col
+                                                xs={12}
+                                                sm={6}
+                                                lg={3}
+                                                className="mb-3"
+                                                key={index}
+                                            >
+                                                <Card>
+                                                    <a
+                                                        href={
+                                                            "/ad-view/" + ad._id
+                                                        }
+                                                        style={{
+                                                            backgroundColor:
+                                                                "#cbcbcb",
+                                                        }}
+                                                    >
+                                                        <Card.Img
+                                                            style={
+                                                                ad.dimensions && {
+                                                                    ...dimensionsToStyleObject(
+                                                                        JSON.parse(
+                                                                            ad.dimensions
+                                                                        )
+                                                                    ),
+                                                                }
+                                                            }
+                                                            variant="top"
+                                                            src={ad.image}
+                                                        />
+                                                    </a>
+                                                    <Card.Body>
+                                                        <Card.Title>
+                                                            {ad.cost &&
+                                                                `Цена: ${ad.cost} р`}
+                                                            <br />
+                                                            {/* Остаток: {ad.name} */}
+                                                        </Card.Title>
+                                                        <Card.Text>
+                                                            {ad.name}
+                                                        </Card.Text>
+                                                    </Card.Body>
+                                                </Card>
+                                            </Col>
+                                        );
                                     })
-                                 : (
+                                ) : (
                                     <h3>В данной категории нет товаров!</h3>
                                 )}
                             </>

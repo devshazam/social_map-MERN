@@ -15,7 +15,7 @@ function Footer(){
 			  <div className="column">
 							<p className="heading">Документы:</p>
 							<ul>
-							<li><a href="#">Договор офетры</a></li></ul>
+							<li><a href="/oferta">Договор офетры</a></li></ul>
 						</div>
               </Col>
               <Col xs={12} lg ={3}>

@@ -1,13 +1,7 @@
-import React from "react";
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
-import Image from "react-bootstrap/Image";
-import Accordion from 'react-bootstrap/Accordion';
-
 
 const Header = () => {
     return (

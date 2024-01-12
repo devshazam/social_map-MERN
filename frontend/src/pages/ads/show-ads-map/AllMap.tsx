@@ -1,6 +1,6 @@
 
-import React, { useState,  useRef, useEffect } from "react";
-import { useParams , useSearchParams} from "react-router-dom";
+import { useState,  useRef, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import Row from "react-bootstrap/Row";
 import {Map, YMaps} from "@pbe/react-yandex-maps";
@@ -112,7 +112,7 @@ const AllMap = () => {
                     </YMaps>
                 </div>
                 <br></br>
-                { adCategory === '1' && <p>* Обозначение цветов маркеров: <span style={{color:'white', backgroundColor: 'red'}}>Красный:</span> срок объявления до 7 дней; <span style={{color:'white', backgroundColor: 'blue'}}>Синий:</span> срок объявления более 7 дней!</p>}
+                { adCategory === '1' && <p>* Обозначение цветов маркеров: <span style={{color:'white', backgroundColor: 'red'}}>Красный:</span> срок объявления до 7 дней; <span style={{color:'white', backgroundColor: 'yellow'}}>Желтый:</span> срок объявления от 7 до 30 дней; <span style={{color:'white', backgroundColor: 'blue'}}>Синий:</span> срок объявления более 30 дней!</p>}
                 { adCategory === '2' && <p>* Обозначение цветов маркеров: <span style={{color:'white', backgroundColor: 'red'}}>Красный:</span> объявление подано компанией; <span style={{color:'white', backgroundColor: 'blue'}}>Синий:</span> объявление подано персоной!</p>}
                 { adCategory === '3' && <p>* Обозначение цветов маркеров: <span style={{color:'white', backgroundColor: 'red'}}>Красный:</span> Мероприятие уже идет; <span style={{color:'white', backgroundColor: 'blue'}}>Синий:</span> мероприятие начнется через время!</p>}
                 { adCategory === '4' && <p>* Обозначение цветов маркеров: <span style={{color:'white', backgroundColor: 'red'}}>Красный:</span> срок объявления до 2 дней; <span style={{color:'white', backgroundColor: 'blue'}}>Синий:</span> срок объявления более 2 дней!</p>}

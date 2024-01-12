@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps'
 
 const Test = () => {

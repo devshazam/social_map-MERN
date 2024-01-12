@@ -1,4 +1,4 @@
-
+import './HeaderAbove.scss';
 import Container from "react-bootstrap/esm/Container";
 import Image from "react-bootstrap/Image";
 import {useDispatch, useSelector} from "react-redux";
@@ -25,6 +25,7 @@ const HeaderAbove = () => {
             <Row>
                 <Col xs={12} lg={6}>
                     <h5 className="h-five">Социальный проект города Волгограда!</h5>
+                    {/* <img className="volg-gerb" alt="герб Волгограда" src="/files/img/gerb.png"></img> */}
                 </Col>
                 <Col xs={12} lg={6}>
                     <Nav
@@ -57,7 +58,7 @@ const HeaderAbove = () => {
                                     <NavDropdown.Item href="/user/ads/create-ad/4">
                                         Создать Объявление
                                     </NavDropdown.Item>
-                                    {stateUser.user.role == "COMPANY" && (
+                                    {stateUser.user.role === "COMPANY" && (
                                         <>
                                             <NavDropdown.Divider />
                                             <NavDropdown.Item
@@ -76,7 +77,7 @@ const HeaderAbove = () => {
                                     )}
                                 </NavDropdown>
                                     <Nav.Item>
-                                        <Nav.Link href="#">
+                                        <Nav.Link href="/user/private-cab">
                                             <Image
                                                 src="/files/icons8-thumbs-60.png"
                                                 className="bascket_img"

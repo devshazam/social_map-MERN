@@ -76,12 +76,12 @@ const AdView: FC = () => {
 {/* 1 */}
                             { adsItem.cost  && 
                             <ListGroup.Item>
-                                Цена: {adsItem.cost}
+                                Цена (руб.): {adsItem.cost}
                             </ListGroup.Item> }
 {/* СКИДКИ */}
                             { adsItem.discount  && 
                             <ListGroup.Item>
-                                Скидка: {globalParamsObject.discounts.discountSize[adsItem.discount - 1]}
+                                Скидка (%): {globalParamsObject.discounts.discountSize[adsItem.discount - 1]}
                             </ListGroup.Item> }
                             { adsItem.discountCategory  && 
                             <ListGroup.Item>
@@ -105,7 +105,7 @@ const AdView: FC = () => {
                             { adsItem.uniquePart && Object.values(JSON.parse(adsItem.uniquePart)).map((item:any, index:any) => {
                                 return(
                                     <ListGroup.Item key={index}>
-                                        {`${item[0]}: ${item[1]}`}
+                                        {`${item[0]} ${item[1]}`}
                                     </ListGroup.Item> 
                                     );
                                 })
