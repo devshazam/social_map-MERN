@@ -14,34 +14,51 @@ const generateJwt = (id, email, role, phone, score ) => {
 }
 class UserController {
 
-
+    // Только для входа и регистрации через соц. сети
+    // @return: {token: STRING}
     async logReg(req, res, next) {
-        let {first_name, last_name, verified_email, bdate, email, photo, phone, role} = req.body
-        if(verified_email !== '1') {
-            return next(ApiError.internal('Ваш email не подтвержден!'))
-        }
-        const user = await User.findOne({ email: email }).exec();
-        if (!user) {
-            try{
-                    let qObject = {};
-                    if(first_name) qObject = {...qObject, name: first_name};
-                    if(last_name) qObject = {...qObject, name: qObject.name + " " + last_name};
+        try{
+            const midObject1 = req.body;
+            Object.keys(midObject1)
+            let {first_name, last_name, name=`${first_name} ${last_name}`, verified_email:email_status=false, bdate, photo:profile_image=, email, phone, role } = req.body;
+
+            if(!email){
+                return next(ApiError.internal('Некорректный email!'));
+            }
+
+            const user = await User.findOne({ email }).exec();
+
+            // let name = (Boolean(first_name) ? first_name : '') + (Boolean(last_name) ? (' ' + last_name) : '');
+
+            if (!user) {
+            
+
+https://www.freecodecamp.org/news/javascript-object-destructuring-spread-operator-rest-parameter/#dynamic-name-property
+
+
+
+                    // let midleObject = {email, name, ...(yourConditionalBoolean && {b:2})  }
+                    // let qObject = {};
+                    // if(first_name) qObject = {...qObject, name: first_name};
+                    // if(last_name) qObject = {...qObject, name: qObject.name + " " + last_name};
                     if(bdate) qObject = {...qObject, birthday: bdate};
-                    if(email) qObject = {...qObject, email: email};
+                    // if(email) qObject = {...qObject, email: email};
                     if(photo) qObject = {...qObject, profile_image: photo};
                     if(phone){qObject = {...qObject, phone: phone};}
                     if(role){qObject = {...qObject, role: role};}
                     if(verified_email === '1') qObject = {...qObject, email_status: true};
-                const userReg = await User.create({ ...qObject });
-            const token = generateJwt(userReg.id, userReg.email, userReg.role, userReg.phone, userReg.score)
-            return res.json({token})
+
+                    const userReg = await User.create({email, name, ...(Boolean(bdate) && {birthday: bdate}), ...(Boolean(photo) && {profile_image: photo}), ...(Boolean(phone) && {phone}), ...(Boolean(role) && {role}), ...(Boolean(verified_email) && {email_status: true})});
+
+                    const token = generateJwt(userReg.id, userReg.email, userReg.role, userReg.phone, userReg.score)
+                    return res.json({token})
+                }else{
+                    const token = generateJwt(user.id, user.email, user.role, user.phone, user.score)
+                    return res.json({token})
+                }
         } catch (error) {
             return next(ApiError.internal(`621: ${error.message}`));
         }
-        }
-        
-        const token = generateJwt(user.id, user.email, user.role, user.phone, user.score)
-        return res.json({token})
     }
 
 

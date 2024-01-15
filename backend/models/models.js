@@ -3,18 +3,18 @@ const { Schema } = mongoose;
 
 
 const userSchema = new Schema({
-    name: {  type: String, required: true }, // имя или название компании
+    name: {  type: String }, // имя или название компании
     phone: { type: String, default: "0" },
     email: { type: String, required: true },
     password: { type: String, default: "0" },
     role: { type: String, default: "USER", enum: ["USER", "COMPANY", "SUPER"] }, // тип пользователя
-    profile_image: { type: String, required: true, default: function() {
+    profile_image: { type: String, default: function() {
             if(this.role === "USER") return "https://img.icons8.com/bubbles/100/000000/user.png";
             if(this.role === "COMPANY") return "https://img.icons8.com/bubbles/100/company.png";
             if(this.role === "SUPER") return "https://img.icons8.com/bubbles/100/super-mario.png";
         }},
     birthday: { type: String },
-    email_status: { type: Boolean, default: false },
+    email_status: { type: Boolean },
     score: { type: Number, default: 10 },
     district: { type: String },
     address: { type: String },

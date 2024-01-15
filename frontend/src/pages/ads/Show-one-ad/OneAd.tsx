@@ -111,26 +111,13 @@ const AdView: FC = () => {
                                 })
                             }
                           
-
-
-
                             <ListGroup.Item>
                                 <b>Имя продавца (компании): </b>{adsItem.userId.name}
                             </ListGroup.Item>
-                            {stateUser ? 
-                                <ListGroup.Item>
-                                    <b>Телефон: </b>{adsItem.userId.phone}
-                                </ListGroup.Item>
-                                : 
-                                <ListGroup.Item>
-                                    Телефон только
-                                    для
-                                    зарегистрированных
-                                    пользователей!
-                                </ListGroup.Item>
-                            }
+                            <ListGroup.Item>
+                                <b>Телефон: </b>{adsItem.userId.phone}
+                            </ListGroup.Item>
 
-                     
                         </ListGroup>
                      : 
                         <Spinner animation="border" />
