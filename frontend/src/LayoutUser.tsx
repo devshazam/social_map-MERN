@@ -19,8 +19,6 @@ const LayoutUser = () => {
                 { stateIsAuth ? <Outlet /> : <Navigate to="/" />}
             </Container>
             <Footer />
-            {/* <LoginPage />
-            <RegPage /> */}
         </>
     );
 };

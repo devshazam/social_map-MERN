@@ -1,4 +1,7 @@
 const globalParamsObject = {
+    config: {
+        adsNumber: 5, // предельное кол-во объявлений каждого пользователя по каждой категории
+    },
     main: {
         adsCategory: [
             "Скидки",
@@ -29,11 +32,13 @@ const globalParamsObject = {
             district: "Район:",
             address: "Адрес:",
         },
-        arrayAdCategory: [
-            ['discount', 'discountCategory', 'address', 'district', 'name', 'description', 'cost', 'latitude', 'longitude', 'img', 'dimensions'], 
-            ['address', 'district', 'name', 'description', 'latitude', 'longitude', 'img', 'dimensions'], 
-            ['startDate', 'endDate', 'address', 'district', 'name', 'description', 'cost', 'latitude', 'longitude', 'img', 'dimensions'], 
-            ['avitoCategory', 'uniquePart', 'address', 'district', 'name', 'description', 'cost', 'latitude', 'longitude', 'img', 'dimensions']]
+        checkAdCategory: [
+            [['img'], ['address', 'latitude', 'longitude'], ['district', 'name', 'description'], ['cost', 'discount', 'discountCategory']],
+            [['img'], ['address', 'latitude', 'longitude'], ['district', 'name', 'description']],
+            [['img'], ['address', 'latitude', 'longitude'], ['district', 'name', 'description'], ['cost', 'startDate', 'endDate']],
+            [['img'], ['address', 'latitude', 'longitude'], ['district', 'name', 'description'], ['cost', 'avitoCategory', 'uniquePart']],
+
+        ]
     
 
     }, 
@@ -49,6 +54,7 @@ const globalParamsObject = {
             "Хобби и отдых",
             "Продукты",
             "Фитнес и спорт",
+            "Другое",
         ], 
         discountSize: [
             '5', '10', '15', '20', '25', '30', '35', '40', '45', '50'

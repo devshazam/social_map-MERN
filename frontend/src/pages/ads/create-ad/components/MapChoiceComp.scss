@@ -1,0 +1,32 @@
+.click_bottom{
+    width: 100%;
+    // margin-bottom: 10px;
+}
+.click_bottom:hover{
+    background-color: #ce5d5d;
+    // margin-bottom: 10px;
+}
+.map-wrapper{
+    border: 1px solid black;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+
+
+
+.image_res-alert_note{
+    color: rgb(255, 255, 255);
+    font-size: 15px;
+    margin-top: 4px;
+    background-color: #ce5d5d;
+    border-radius: 4px;
+    padding: 2px;
+    text-align: center;
+    margin-bottom: 0;
+    // border: 1px solid red;
+}
+
+.lable_button{
+    flex-direction: column;
+}

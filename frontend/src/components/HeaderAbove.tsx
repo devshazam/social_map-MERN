@@ -44,37 +44,33 @@ const HeaderAbove = () => {
                                     <NavDropdown.Item onClick={logOut}>
                                         Выход
                                     </NavDropdown.Item>
-                                    <NavDropdown.Item href="/user/user-ads-list">
-                                        Мои объявления
-                                    </NavDropdown.Item>
                                     <NavDropdown.Item href="/user/private-cab">
                                         Личный кабинет
                                     </NavDropdown.Item>
+                                    <NavDropdown.Item href="/user/user-ads-list">
+                                        Мои объявления
+                                    </NavDropdown.Item>
                                     
                                     <NavDropdown.Divider />
-                                    <NavDropdown.Item href="/user/ads/create-ad/2">
-                                        Создать Благотворительность
-                                    </NavDropdown.Item>
                                     <NavDropdown.Item href="/user/ads/create-ad/4">
                                         Создать Объявление
                                     </NavDropdown.Item>
-                                    {stateUser.user.role === "COMPANY" && (
-                                        <>
-                                            <NavDropdown.Divider />
-                                            <NavDropdown.Item
-                                                href="/company/ads/create-ad/1"
-                                                className="redLink"
-                                            >
-                                                Создать Cкидку
-                                            </NavDropdown.Item>
-                                            <NavDropdown.Item
-                                                href="/company/ads/create-ad/3"
-                                                className="redLink"
-                                            >
-                                                Создать Мероприятие
-                                            </NavDropdown.Item>
-                                        </>
-                                    )}
+                                    <NavDropdown.Item href="/user/ads/create-ad/2">
+                                        Создать Благотворительность
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Divider />
+                                    <NavDropdown.Item
+                                        href="/user/ads/create-ad/3"
+                                        className="redLink"
+                                    >
+                                        Создать Мероприятие
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item
+                                        href="/user/ads/create-ad/1"
+                                        className="redLink"
+                                    >
+                                        Создать CКИДКУ
+                                    </NavDropdown.Item>
                                 </NavDropdown>
                                     <Nav.Item>
                                         <Nav.Link href="/user/private-cab">

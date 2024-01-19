@@ -15,16 +15,16 @@ const Events = (props:any) => {
     return (
         <>
                 <Col xs={12} md={6}>
-                    <TextField  label="Цена:" variant="outlined" fullWidth sx={{ mb: 1}} 
+                    <TextField  label="7) Введите цену*:" variant="outlined" fullWidth sx={{ mb: 1}} 
                                 error={Boolean(!props.createObject.cost && props.flag === 0)}
                                 onChange={(e:any) => props.changeCreateObject({cost: e.target.value})}
                                 />
                 </Col>
                 <Col xs={12} md={6}>
                     <LocalizationProvider dateAdapter={AdapterDayjs} >
-                        <DatePicker label="Дата начала:" onChange={(newValue:any) => props.changeCreateObject({startDate: newValue['$d'].getTime()})} sx={{ mb:1, pr: { sm: 0, md: 1}, width: { sm: '100%', md: '50%'}}} />
+                        <DatePicker label="8) Выберите дату начала*:" onChange={(newValue:any) => props.changeCreateObject({startDate: newValue['$d'].getTime()})} sx={{ mb:1, pr: { sm: 0, md: 1}, width: { xs: '100%', md: '50%'}}} />
                         
-                        <DatePicker label="Дата конца:" onChange={(newValue:any) => props.changeCreateObject({endDate: newValue['$d'].getTime()})} sx={{ mb:1, width: { sm: '100%', md: '50%'}}}/>
+                        <DatePicker label="9) Выберите дату конца*:" onChange={(newValue:any) => props.changeCreateObject({endDate: newValue['$d'].getTime()})} sx={{ mb:1, width: { xs: '100%', md: '50%'}}}/>
                     </LocalizationProvider>
                 </Col>
 

@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema({
     name: {  type: String }, // имя или название компании
-    phone: { type: String, default: "0" },
+    phone: { type: String, default: "0" }, // телефон аккаунта 
     email: { type: String, required: true },
     password: { type: String, default: "0" },
     role: { type: String, default: "USER", enum: ["USER", "COMPANY", "SUPER"] }, // тип пользователя
@@ -14,7 +14,7 @@ const userSchema = new Schema({
             if(this.role === "SUPER") return "https://img.icons8.com/bubbles/100/super-mario.png";
         }},
     birthday: { type: String },
-    email_status: { type: Boolean },
+    email_status: { type: String },
     score: { type: Number, default: 10 },
     district: { type: String },
     address: { type: String },
@@ -46,7 +46,7 @@ const discountSchema = new Schema({
     latitude: { type: String, required: true },
     longitude: { type: String, required: true },
     image: { type: String, required: true },
-    dimensions: { type: String, required: true },
+    dimensions: { type: String },
     currentTime: { type: Number, required: true },
     userId: { type: Schema.Types.ObjectId, ref: "User" }
 

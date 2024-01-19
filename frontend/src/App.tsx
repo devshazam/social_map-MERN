@@ -7,10 +7,11 @@ import Spinner from "react-bootstrap/Spinner";
 
 import Layout from "./Layout";
 import LayoutUser from "./LayoutUser";
-import LayoutCompany from "./LayoutCompany";
+// import LayoutCompany from "./LayoutCompany";
 import Home from "./pages/main/Home";
 import Empty from "./pages/main/Empty";
 import Oferta from "./pages/main/Oferta";
+import Conditions from "./pages/main/Conditions";
 import Test from "./pages/main/Test";
 import Contacts from "./pages/main/Contacts";
 import { useDispatch } from "react-redux";
@@ -26,8 +27,11 @@ import UserUpdateOne from './pages/user-admin/UserUpdateOne'
 import LoginReg from './pages/login-reg/LoginReg'
 import CompanyReg from './pages/login-reg/CompanyReg'
 
+import AlertPage from './components/modal/AlertPage';
+
 import UserPrivateCab from './pages/user-admin/UserPrivateCab';
 // import UserChangeAddress from './pages/user-admin/UserChangeAddress';
+import './style.scss';
 
 const App: React.FC = () => {
     const [loading, setLoading] = useState(true);
@@ -67,7 +71,6 @@ const App: React.FC = () => {
                 <Routes>
                     <Route path="/" element={<Layout />}>
                         <Route index element={<Home />} />
-                        <Route path="/test" element={<Test />} />
                         <Route path="/*" element={<Empty />} />
                         <Route path="/ads/:adCategory" element={<AllAds />} />
                         <Route path="/ads-map/:adCategory" element={<AllMap />} />
@@ -75,8 +78,11 @@ const App: React.FC = () => {
 
                         <Route path="/contacts" element={<Contacts />} />
                         <Route path="/oferta" element={<Oferta />} />
+                        <Route path="/conditions" element={<Conditions />} />
                         <Route path="/login-registration" element={<LoginReg />} />
                         <Route path="/company-registration" element={<CompanyReg />} />
+
+                        <Route path="/test" element={<Test />} />
                     </Route>
 
                         <Route path="/user/" element={<LayoutUser />}>
@@ -87,11 +93,12 @@ const App: React.FC = () => {
                             {/* <Route path="/user/user-change-address" element={<UserChangeAddress />} /> */}
                         </Route>
 
-                            <Route path="/company/" element={<LayoutCompany />}>
+                            {/* <Route path="/company/" element={<LayoutCompany />}>
                                 <Route path="/company/ads/create-ad/:adCategory"  element={<CreateAdMidlware />} />
-                            </Route>
+                            </Route> */}
                 </Routes>
             </BrowserRouter>
+            <AlertPage />
         </div>
     );
 };

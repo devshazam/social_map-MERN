@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import Image from "react-bootstrap/Image";
+// import Image from "react-bootstrap/Image";
 import Spinner from "react-bootstrap/Spinner";
 import ListGroup from "react-bootstrap/ListGroup";
 import { TextField} from "@mui/material";
@@ -17,7 +17,7 @@ import Button from "@mui/material/Button";
 import { fetchAdByIdForUser, saveChangesOfDiscount } from "../../api/discountAPI";
 
 import globalParamsObject from '../../parameters/mainAppParameterObject'
-import {dimensionsToStyleObject} from '../../utils/helpFunctions'
+// import {dimensionsToStyleObject} from '../../utils/helpFunctions'
 
 import EventDatePicker from './unique-components/Events'
 import AvitoDatePicker from './unique-components/Avito'
@@ -82,13 +82,22 @@ const UserUpdateOne: FC = () => {
         <>
             <Row className="mb-3">
                 <Col xs={12} md={6} className="wrap-image">
-                    {adsItem ? (
-                        <div style={{border: '1px solid black', margin: 'auto', backgroundColor: '#c5c5c5'}}>
-                        <Image src={adsItem.image} id="goods-image" thumbnail style={adsItem.dimensions && {...dimensionsToStyleObject(JSON.parse(adsItem.dimensions))}}/>
-                        </div>
-                    ) : (
+                    {adsItem ? 
+                        <>
+                            <div className="card-user_cab">
+                                <div className="back_wrap_new" 
+                                // style={{backgroundImage: `url(${adsItem.image})`}}
+                                >
+                                    <img  alt="Место для картинки" src={adsItem.image} className='card_img-user_cab' />
+                                </div>
+                            </div>
+                            {/*<div style={{border: '1px solid black', margin: 'auto', backgroundColor: '#c5c5c5'}}>
+                            <Image src={adsItem.image} id="goods-image" thumbnail style={adsItem.dimensions && {...dimensionsToStyleObject(JSON.parse(adsItem.dimensions))}}/> 
+                            </div>*/}
+                        </>
+                     : 
                         <Spinner animation="border" />
-                    )}
+                        }
                 </Col>
                 <Col xs={12} lg={6}>
                         <h3>Внесите изменения:</h3>

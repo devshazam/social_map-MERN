@@ -6,7 +6,7 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 const Header = () => {
     return (
         <>
-            <Navbar expand="lg" className="bg-body-tertiary mb-3" sticky="top">
+            <Navbar expand="lg" className="bg-body-tertiary-one mb-3" sticky="top">
                 <Container>
                     {/* <Navbar.Brand href="#">Navbar Offcanvas</Navbar.Brand> */}
 

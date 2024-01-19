@@ -4,8 +4,10 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 import { login } from "../../api/userAPI";
+import {useDispatch} from "react-redux";
 
 const LoginPage = () => {
+    const dispatch = useDispatch();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -24,14 +26,11 @@ const LoginPage = () => {
                 window.location.replace("/")
             })
             .catch((error: any) => {
+                // STOP - спровоцировать ошибку
+                alert(2)
+                dispatch({type: "ALERT", payload: {modal: true, variant: 'warning', text: `${error.response.data.message.u.u}`}});
                 if (error.response && error.response.data) {
-                    alert(
-                        `${error.response.data.message}${error.response.status}`
-                    );
-                } else {
-                    console.log("dev", error);
-                    alert("Ошибка 168 - Обратитесь к администратору!");
-                }
+                } 
             });
     };
 

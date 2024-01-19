@@ -15,7 +15,7 @@ import Accordion from "react-bootstrap/Accordion";
 
 import { fetchAdsList } from "../../../api/discountAPI";
 import { dimensionsToStyleObject } from "../../../utils/helpFunctions";
-import globalParamsObject from "../../../parameters/mainAppParameterObject";
+// import globalParamsObject from "../../../parameters/mainAppParameterObject";
 
 import "./AllAds.scss";
 
@@ -86,7 +86,6 @@ const AllDiscounts = () => {
 
     return (
         <>
-            {/* <p>скидки</p> */}
             <Row className="mb-5">
                 <Col sm={3} className="mb-3 d-none d-sm-block">
                     {adCategory === "1" && (
@@ -225,19 +224,16 @@ const AllDiscounts = () => {
                                                                 "#cbcbcb",
                                                         }}
                                                     >
-                                                        <Card.Img
-                                                            style={
-                                                                ad.dimensions && {
-                                                                    ...dimensionsToStyleObject(
-                                                                        JSON.parse(
-                                                                            ad.dimensions
-                                                                        )
-                                                                    ),
-                                                                }
-                                                            }
-                                                            variant="top"
-                                                            src={ad.image}
-                                                        />
+                                                        <div className="card-user_cab">
+                                                            <div className="back_wrap_new">
+                                                                <Card.Img className="card_img-user_cab"
+                                                                    // style={ad.dimensions && {...dimensionsToStyleObject(JSON.parse(ad.dimensions))}}
+                                                                    variant="top"
+                                                                    src={ad.image} 
+                                                                    alt="Объявление davse.ru"
+                                                                />
+                                                            </div>
+                                                        </div>
                                                     </a>
                                                     <Card.Body>
                                                         <Card.Title>

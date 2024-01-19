@@ -8,7 +8,10 @@ import { logReg } from "../../api/userAPI";
 
 import LoginPage from "../../components/modal/LoginPage";
 import RegPage from "../../components/modal/RegPage";
-import  "./loginreg.scss";
+import {useDispatch, useSelector} from "react-redux";
+
+import  "./LoginReg.scss";
+
 
 declare global {
     interface Window {
@@ -17,22 +20,21 @@ declare global {
 }
 
 const LoginReg: FC = () => {
+    const dispatch = useDispatch();
 
     const [flag, setFlag] = useState<boolean>(false);
 
     const elementRef = useRef<any>(null)
 
     window.qwerty = (data: any): void => {
-        console.log(101, data);
+        console.log('Иконки соц.сетей не видны при 0', data);
         logReg(JSON.parse(data))
             .then((data: any) => {
                 window.location.replace("/");
             })
             .catch((error: any) => {
                 if (error.response && error.response.data) {
-                    alert(
-                        `${error.response.data.message}${error.response.status}`
-                    );
+                    dispatch({type: "ALERT", payload: {modal: false, variant: 'warning', text: `${error.response.data.message}`,}})
                 } else {
                     console.log("dev", error);
                     alert("Ошибка 111 - Обратитесь к администратору!");

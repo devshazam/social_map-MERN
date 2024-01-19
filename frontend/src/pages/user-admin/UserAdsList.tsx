@@ -9,7 +9,8 @@ import Spinner from "react-bootstrap/Spinner";
 import Button from 'react-bootstrap/Button';
 
 import { fetchUserAdsList, deleteUserAdsList } from "../../api/discountAPI";
-import {dimensionsToStyleObject} from '../../utils/helpFunctions'
+// import {dimensionsToStyleObject} from '../../utils/helpFunctions'
+
 
 const UserAdsList = () => {
 
@@ -98,14 +99,18 @@ const UserAdsList = () => {
                                     adsList.map((ad: any, index:number) => {
                                         return(
                                         <Col xs={12} sm={6} lg={3} className="mb-3" key={index} >
-                                            <Card>
+                                            <Card >
                                                 <a href={"/ad-view/" + ad._id} style={{backgroundColor: '#cbcbcb'}}>
-                                                    
-                                                    <Card.Img 
-                                                        style={ad.dimensions && {...dimensionsToStyleObject(JSON.parse(ad.dimensions))}}
-                                                        variant="top"
-                                                        src={ad.image} 
-                                                    />
+                                                    <div className="card-user_cab">
+                                                        <div className="back_wrap_new">
+                                                            <Card.Img className="card_img-user_cab"
+                                                                // style={ad.dimensions && {...dimensionsToStyleObject(JSON.parse(ad.dimensions))}}
+                                                                variant="top"
+                                                                src={ad.image} 
+                                                                alt="Объявление davse.ru"
+                                                            />
+                                                        </div>
+                                                    </div>
                                                 </a>
                                                 <Card.Body>
                                                     <Card.Title>

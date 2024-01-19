@@ -226,15 +226,15 @@
     font-size: 18px;
 } */
 footer{
-    margin-top: 160Px;
+    margin-top: 50px;
     width: 100%;
-    background-color: #f2f2f2;
+    background-color: #dbdbdb;
     padding: 50px;
 }
-nav.bg-body-tertiary{
+nav.bg-body-tertiary-one{
     
-    /* background-color: #d9d9d9!important; */
-    background: url(/file/cover.jpg)  no-repeat;
+    background-color: #e5e4e4;
+    /* background: url(/file/cover.jpg)  no-repeat; */
     background-position: center;
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -380,9 +380,7 @@ margin-right: 15px;
     .wrap-image{
         padding: 20px;
     }
-    .redLink{
-        color: #f35858!important;
-    }
+
     .fioLink{
         color: #f800ba!important;
     }

@@ -3,21 +3,20 @@ import { useParams } from "react-router-dom";
 
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import Image from "react-bootstrap/Image";
+// import Image from "react-bootstrap/Image";
 import Spinner from "react-bootstrap/Spinner";
 import ListGroup from "react-bootstrap/ListGroup";
 
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { fetchAdById } from "../../../api/discountAPI";
 
 import globalParamsObject from '../../../parameters/mainAppParameterObject'
-import {dimensionsToStyleObject} from '../../../utils/helpFunctions'
-
+// import {dimensionsToStyleObject} from '../../../utils/helpFunctions'
 
 const AdView: FC = () => {
     const { adId } = useParams<{adId?: string}>();
 
-    const stateUser = useSelector((state: any) => state.user.isAuth);
+    // const stateUser = useSelector((state: any) => state.user.isAuth);
     const [adsItem, setAdsItem] = useState<any>(null);
 
     useEffect(() => {
@@ -42,8 +41,12 @@ const AdView: FC = () => {
             <Row className="mb-3">
                 <Col xs={12} md={6} className="wrap-image">
                     {adsItem ? (
-                        <div style={{border: '1px solid black', margin: 'auto', backgroundColor: '#c5c5c5'}}>
-                        <Image src={adsItem.image} id="goods-image" thumbnail style={adsItem.dimensions && {...dimensionsToStyleObject(JSON.parse(adsItem.dimensions))}}/>
+                        <div className="card-user_cab">
+                            <div className="back_wrap_new" 
+                            // style={{backgroundImage: `url(${adsItem.image})`}}
+                            >
+                                <img  alt="Место для картинки" src={adsItem.image} className='card_img-user_cab' />
+                            </div>
                         </div>
                     ) : (
                         <Spinner animation="border" />

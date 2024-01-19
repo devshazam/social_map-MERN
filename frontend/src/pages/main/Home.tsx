@@ -5,7 +5,7 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 
-import './home.scss';
+import './Home.scss';
 
 export default function Home() {
 

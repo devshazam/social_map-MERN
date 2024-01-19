@@ -11,14 +11,14 @@ function Footer(){
 		<Container>
             
             <Row>
-              <Col xs={12} lg={3}>
+              <Col xs={12} sm={6} lg={3}>
 			  <div className="column">
 							<p className="heading">Документы:</p>
 							<ul>
 							<li><a href="/oferta">Договор офетры</a></li></ul>
 						</div>
               </Col>
-              <Col xs={12} lg ={3}>
+              <Col xs={12} sm={6} lg ={3}>
 			  <div className="column">
 							<p className="heading"><a className="sjdkit" href="https://seo-cy.ru/">Разработка сайтов</a></p>
 								<ul>
@@ -26,7 +26,7 @@ function Footer(){
 
 						</div>
               </Col>
-			  <Col xs={12} lg ={3}>
+			  <Col xs={12} sm={6} lg ={3}>
 			  <div className="column">
 							<p className="heading">Адрес:</p>
 							<ul><li className="hr">ул. Петропавловская 87</li>
@@ -35,7 +35,7 @@ function Footer(){
 							</ul>
 						</div>		
               </Col>
-			  <Col xs={12} lg ={3}>
+			  <Col xs={12} sm={6} lg ={3}>
 			  <div className="column">
 							<p className="heading">Контакты:</p>
 							<ul>

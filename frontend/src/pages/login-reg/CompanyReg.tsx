@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet";
 import { logReg } from "../../api/userAPI";
 
 import RegPage from "../../components/modal/RegPage";
-import  "./CompanyReg.scss";
+
 
 declare global {
     interface Window {

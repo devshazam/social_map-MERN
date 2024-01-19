@@ -7,6 +7,7 @@ import { fetchUserDataById } from "../../../api/userAPI";
 import CreateAd from "./CreateAd"
 
 import './CreateAdMidlware.scss';
+import globalParamsObject from '../../../parameters/mainAppParameterObject'
 
 const CreateDiscount = () => {
     const [number, setNumber] = useState<number>(0);
@@ -14,7 +15,6 @@ const CreateDiscount = () => {
     const { adCategory } = useParams<string>();
     const stateUser = useSelector((state: any) => state.user.user);
     
-console.log(11, 'число объявлений:', number)
     useEffect(() => {
         checkNumbersOfAds({userId: stateUser.id, adCategory})
             .then((data) => {
@@ -54,15 +54,15 @@ console.log(11, 'число объявлений:', number)
 
     return (
         <>
-            {(number > 4 || phone === '0') ?
+            {(number >= globalParamsObject.config.adsNumber || phone === '0') ?
                 <div className="filter-wrap">
-                    <p style={{width: '60%', fontSize: '19px', margin: 'auto',}} >Вы не можете создать объявление по следующей причине: <br />
+                    <p className="alert-p">Вы не можете создать объявление по следующей причине: <br />
                     <span className="span-aten">
-                        {number > 4 && 'Превышено кол-во объявлений в данной группе'}
+                        {number >= globalParamsObject.config.adsNumber && `Превышено кол-во объявлений в данной группе - ${globalParamsObject.config.adsNumber}`}
                         {phone === '0' && 'Для создания объявления нужно указать номер телефона (телефон можно указать во вкладке "Личный кабинет" в верху справа)'}
                         </span>
                     </p>
-                    <img alt="Картинка" src="/files/icons/attention.png" style={{width: '150px', margin: 'auto'}}></img>
+                    <img alt="Картинка" src="/files/icons/attention.png" className="alert-img" ></img>
                 </div>
             :
                 <CreateAd />

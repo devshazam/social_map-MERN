@@ -16,31 +16,32 @@ const CommonFieldsComp = (props:any) => {
     return (
         <>
                 <Col xs={12} md={6}>
-                    <TextField  id="outlined-basic" label="Ваше название:" variant="outlined" fullWidth
+                    <TextField  id="outlined-basic" label="Введите заголовок объявления*:" variant="outlined" fullWidth
                                 sx={{mb: 1}}
                                 error={Boolean(!props.createObject.name && props.flag === 0)}
                                 onChange={(e:any) => props.changeCreateObject({name: e.target.value})}
 
                     />
-                <FormControl fullWidth sx={{mb: 1}}>
-                    <InputLabel error={Boolean(!props.createObject.district && props.flag === 0)}>Ваш район:</InputLabel>
-                    <Select
-                        error={Boolean(!props.createObject.district && props.flag === 0)}
-                        onChange={(e:any) => props.changeCreateObject({district: e.target.value})}
-                        value={props.createObject.district ? props.createObject.district : '4'}
-                        >
-                        { 
-                            globalParamsObject.main.districtsNames.map((item:any, index:any) => {
-                                return(
-                                    <MenuItem key={index + 1} value={index + 1}>{item}</MenuItem>
-                                )
-                            })
-                        }
-                    </Select>
-                </FormControl>
+                    <FormControl fullWidth sx={{mb: 1}}>
+                        <InputLabel error={Boolean(!props.createObject.district && props.flag === 0)}>Выберите район*:</InputLabel>
+                        <Select
+                            error={Boolean(!props.createObject.district && props.flag === 0)}
+                            onChange={(e:any) => props.changeCreateObject({district: e.target.value})}
+                            // value={props.createObject.district ? props.createObject.district : '4'}
+                            defaultValue={''}
+                            >
+                            { 
+                                globalParamsObject.main.districtsNames.map((item:any, index:any) => {
+                                    return(
+                                        <MenuItem key={index + 1} value={index + 1}>{item}</MenuItem>
+                                    )
+                                })
+                            }
+                        </Select>
+                    </FormControl>
                 </Col>
-                <Col xs={12} md={6}>
-                    <TextField  label="Ваше описание (до 1000 симоволов!):" fullWidth
+                <Col xs={12} md={6} className="mb-2">
+                    <TextField  label="Введите описание объявления (до 1000 символов)*:" fullWidth
                                 multiline
                                 rows={4}
                                 sx={{mb: 1}}

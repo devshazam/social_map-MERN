@@ -2,8 +2,8 @@ const ApiError = require('../error/ApiError');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { User } = require('../models/models')
-const uuid = require('uuid');
-const { Credentials } = require('aws-sdk/lib/credentials');
+// const uuid = require('uuid');
+// const { Credentials } = require('aws-sdk/lib/credentials');
 
 const generateJwt = (id, email, role, phone, score ) => {
     return jwt.sign(
@@ -18,37 +18,18 @@ class UserController {
     // @return: {token: STRING}
     async logReg(req, res, next) {
         try{
-            const midObject1 = req.body;
-            Object.keys(midObject1)
-            let {first_name, last_name, name=`${first_name} ${last_name}`, verified_email:email_status=false, bdate, photo:profile_image=, email, phone, role } = req.body;
+            let {email, first_name, last_name, name=`${first_name || 'Имя'} ${last_name || 'Фамилия'}`, verified_email:email_status, bdate:birthday, photo:profile_image, ...rest } = req.body;
 
             if(!email){
-                return next(ApiError.internal('Некорректный email!'));
+                return next(ApiError.internal('Email адрес не привязан к аккаунту!'));
             }
 
             const user = await User.findOne({ email }).exec();
 
-            // let name = (Boolean(first_name) ? first_name : '') + (Boolean(last_name) ? (' ' + last_name) : '');
+            const agentObject1 = Object.fromEntries(Object.entries({name, email_status, birthday, profile_image, ...rest }).filter(([_, v]) => Boolean(v)));
 
             if (!user) {
-            
-
-https://www.freecodecamp.org/news/javascript-object-destructuring-spread-operator-rest-parameter/#dynamic-name-property
-
-
-
-                    // let midleObject = {email, name, ...(yourConditionalBoolean && {b:2})  }
-                    // let qObject = {};
-                    // if(first_name) qObject = {...qObject, name: first_name};
-                    // if(last_name) qObject = {...qObject, name: qObject.name + " " + last_name};
-                    if(bdate) qObject = {...qObject, birthday: bdate};
-                    // if(email) qObject = {...qObject, email: email};
-                    if(photo) qObject = {...qObject, profile_image: photo};
-                    if(phone){qObject = {...qObject, phone: phone};}
-                    if(role){qObject = {...qObject, role: role};}
-                    if(verified_email === '1') qObject = {...qObject, email_status: true};
-
-                    const userReg = await User.create({email, name, ...(Boolean(bdate) && {birthday: bdate}), ...(Boolean(photo) && {profile_image: photo}), ...(Boolean(phone) && {phone}), ...(Boolean(role) && {role}), ...(Boolean(verified_email) && {email_status: true})});
+                    const userReg = await User.create(agentObject1);
 
                     const token = generateJwt(userReg.id, userReg.email, userReg.role, userReg.phone, userReg.score)
                     return res.json({token})
@@ -57,7 +38,7 @@ https://www.freecodecamp.org/news/javascript-object-destructuring-spread-operato
                     return res.json({token})
                 }
         } catch (error) {
-            return next(ApiError.internal(`621: ${error.message}`));
+            return next(ApiError.internal(`${error.message}-logReg`));
         }
     }
 
@@ -67,12 +48,12 @@ https://www.freecodecamp.org/news/javascript-object-destructuring-spread-operato
             role = role || 'USER';
 
             if (!email || !password) {
-                return next(ApiError.internal('Некорректный email или password'))
+                return next(ApiError.internal('Некорректный email или пароль!'))
             }
             const candidate = await User.findOne({where: email}).exec();
 
             if (candidate) {
-                return next(ApiError.internal('Пользователь с таким email уже существует'))
+                return next(ApiError.internal('Пользователь с таким email уже существует!'))
             }
             const hashPassword = await bcrypt.hash(password, 5)
             const user = await User.create({name, phone, email, role, password: hashPassword})
@@ -86,11 +67,11 @@ https://www.freecodecamp.org/news/javascript-object-destructuring-spread-operato
         // console.log(email, password)
         const user = await User.findOne({ email: email }).exec();
         if (!user) {
-            return next(ApiError.internal('Пользователь не найден'))
+            return next(ApiError.internal('Пользователь не найден!'))
         }
         let comparePassword = bcrypt.compareSync(password, user.password)
         if (!comparePassword) {
-            return next(ApiError.internal('Указан неверный пароль'))
+            return next(ApiError.internal('Указан неверный пароль!'))
         }
         const token = generateJwt(user.id, user.email, user.role, user.phone, user.score)
         return res.json({token})
@@ -111,7 +92,7 @@ https://www.freecodecamp.org/news/javascript-object-destructuring-spread-operato
             .exec();
             return res.json(fudbiQ1);
         }catch (error) {
-            return next(ApiError.internal(`612: ${error.message}`));
+            return next(ApiError.internal(`${error.message}-fetchUserDataById`));
         }
     }
 
@@ -123,7 +104,7 @@ https://www.freecodecamp.org/news/javascript-object-destructuring-spread-operato
             console.log(ccQ1)
             return res.json({status: 'success'});
         }catch (error) {
-            return next(ApiError.internal(`612: ${error.message}`));
+            return next(ApiError.internal(`${error.message}-changeCredencials`));
         }
     }
     
@@ -206,7 +187,7 @@ https://www.freecodecamp.org/news/javascript-object-destructuring-spread-operato
             .exec();
             return res.json(gulQ1);
         }catch (error) {
-            return next(ApiError.internal(`612: ${error.message}`));
+            return next(ApiError.internal(`${error.message}-getUsersList`));
         }
     }
 }
