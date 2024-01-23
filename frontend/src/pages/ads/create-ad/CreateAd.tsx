@@ -31,7 +31,6 @@ const CreateDiscount = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [flag, setFlag] = useState<number>(1);
     const [createObject, setCreateObject] = useState<any>({});
-console.log(step)
     
     function changeCreateObject(agent1:any){
         setCreateObject({...createObject, ...agent1})
@@ -46,7 +45,7 @@ console.log(step)
         setStep(step + 1);
     }
     
-    const stepsComponents:any = [<ImageResizingComp flag={flag}  changeCreateObject={changeCreateObject} createObject={createObject}/>,
+    const stepsComponents:any[] = [<ImageResizingComp flag={flag}  changeCreateObject={changeCreateObject} createObject={createObject}/>,
                                 <MapChoiceComp flag={flag}  changeCreateObject={changeCreateObject} createObject={createObject}/>,
                                 <CommonFieldsComp flag={flag}  changeCreateObject={changeCreateObject} createObject={createObject}/>,
                                 [<Discounts flag={flag} changeCreateObject={changeCreateObject} createObject={createObject}/>,
@@ -71,14 +70,11 @@ console.log(step)
         createDiscount(formData)
             .then((data) => {
                 dispatch({type: "ALERT", payload: {modal: true, variant: 'success', text: `Успешно!`}});
-                // alert("Ваше объявление добавлено успешно!");
                 setTimeout(function() {window.location.replace("/user/user-ads-list"); }, 800); 
             })
             .catch((error: any) => {
                 if (error.response && error.response.data) {
-                    alert(
-                        `${error.response.data.message}${error.response.status}`
-                    );
+                    dispatch({type: "ALERT", payload: {modal: true, variant: 'warning', text: `${error.response.data.message}`}});
                 } 
             }).finally(() => setLoading(false));
     };

@@ -20,19 +20,19 @@ import { fetchDiscountByMap }from '../../../api/discountAPI';
 
 import globalParamsObject from '../../../parameters/mainAppParameterObject';
 
+import {useDispatch} from "react-redux";
+
 const AllMap = () => {
+    const dispatch = useDispatch();
     const { adCategory } = useParams();
 
     const mapRef = useRef<any>();
     
     const [map, setMap] = useState<any>(null);
     const [zoom, setZoom] = useState<any>(16);
-
     const [drawerFilter, setDrawerFilter] = useState<any>(false);
-
     const [discountList, setDiscountList] = useState<any>(null);
     const [arrayCoordinates, setArrayCoordinates] = useState<any>([]);
-    
     const [mainObject, setMainObject] = useState<any>({});
 
     const refreshData = () => {
@@ -47,21 +47,17 @@ const AllMap = () => {
             setTimeout(function() {setZoom(13) }, 1000); 
             return;}
 
-        fetchDiscountByMap({ ...mainObject, adCategory, xLatitude: map[0][0], xLongitude: map[0][1], yLatitude: map[1][0], yLongitude: map[1][1] }).then((data) => {
+        fetchDiscountByMap({ ...mainObject, adCategory, xLatitude: map[0][0], xLongitude: map[0][1], yLatitude: map[1][0], yLongitude: map[1][1] })
+        .then((data) => {
             let mid2:any = []
             data.map((item:any) => {mid2 = [...mid2, [item.latitude, item.longitude]]})
             setArrayCoordinates(mid2)
             setDiscountList(data)
         })
         .catch((error:any) => {
-            if (error.response && error.response.data) {
-                alert(
-                    `${error.response.data.message}${error.response.status}`
-                );
-            } else {
-                console.log("dev", error);
-                // alert("Ошибка 138 - Обратитесь к администратору!");
-            }
+            if(error.response && error.response.data) {
+                dispatch({type: "ALERT", payload: {modal: true, variant: 'warning', text: `${error.response.data.message}`}});
+            } 
         });
     }, [map, JSON.stringify(mainObject)])
 
@@ -72,7 +68,7 @@ const AllMap = () => {
     return (
         <>
             <Row className="mb-5">
-                { (adCategory === '1' || adCategory === '1') && <Button onClick={() => toggleDrawer(true)}>ОТКРЫТЬ ФИЛЬТРЫ</Button> }
+                { (adCategory === '1' || adCategory === '4') && <Button onClick={() => toggleDrawer(true)}>ОТКРЫТЬ ФИЛЬТРЫ</Button> }
 
                 <div style={{position: 'relative'}}>
                     {zoom < 12 && <div style={{display: 'flex', position: 'absolute', left: '0', top: '0', width: '100%', height: '100%', zIndex: '999'}}><p style={{fontSize: '50px', margin: 'auto', width: '80%', color: 'rgb(217 98 98 / 75%);', fontWeight: '100', textAlign: 'center' }}>Для появления объявлений увеличьте (приблизьте) карту!</p></div>}
@@ -146,21 +142,42 @@ const AllMap = () => {
                     </FormControl>}
                     
                     {adCategory === '4' && 
-                    <FormControl fullWidth >
-                        <InputLabel  >Категория авито:</InputLabel>
-                        <Select
-                            onChange={(e: any) => setMainObject({...mainObject, avitoCategory: e.target.value})}
-                        >
-                            <MenuItem key={0} value={0}>Все категории</MenuItem>
-                            { 
-                                globalParamsObject.avito.avitoCategory.map((item:any, index:any) => {
-                                    return(
-                                        <MenuItem key={index + 1} value={index + 1}>{item}</MenuItem>
-                                    )
-                                })
+                        <>
+                            <FormControl fullWidth >
+                                <InputLabel  >Категория авито:</InputLabel>
+                                <Select
+                                    value={mainObject.avitoCategory || ''}
+                                    onChange={(e: any) => setMainObject({...mainObject, avitoCategory: e.target.value})}
+                                >
+                                    <MenuItem key={0} value={0}>Все категории</MenuItem>
+                                    { 
+                                        globalParamsObject.avito.avitoCategory.map((item:any, index:any) => {
+                                            return(
+                                                <MenuItem key={index + 1} value={index + 1}>{item}</MenuItem>
+                                            )
+                                        })
+                                    }
+                                </Select>
+                            </FormControl>
+                            { (mainObject.avitoCategory && Boolean(+mainObject.avitoCategory) ) && 
+                                <FormControl fullWidth >
+                                    <InputLabel  >Подкатегория авито:</InputLabel>
+                                    <Select
+                                        value={mainObject.avitoSubCategory || ''}
+                                        onChange={(e: any) => setMainObject({...mainObject, avitoSubCategory: e.target.value})}
+                                    >
+                                        <MenuItem key={0} value={0}>Все категории</MenuItem>
+                                        {(mainObject.avitoCategory && Boolean(+mainObject.avitoCategory) )&& globalParamsObject.avito.avitoSubCategory[+mainObject.avitoCategory - 1].map(
+                                            (item: any, index: any) => {
+                                                return (
+                                                    <MenuItem key={index + 1} value={index + 1}>{item}</MenuItem>
+                                                );
+                                            }
+                                        )}
+                                    </Select>
+                                </FormControl>
                             }
-                        </Select>
-                    </FormControl>
+                        </>
                     }
           </Drawer>
         </>
@@ -168,3 +185,4 @@ const AllMap = () => {
 };
 
 export default AllMap;
+

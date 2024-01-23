@@ -1,7 +1,7 @@
-FROM node:16
+FROM node:18.15.0
 
 # Create app directory
-WORKDIR /backend
+WORKDIR /app
 
 RUN apt-get update && apt-get install -y vim
 
@@ -11,7 +11,7 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-RUN npm i --location=global nodemon
+RUN npm i -g nodemon
 
 # Copy source directory
 COPY . .

@@ -21,14 +21,7 @@ const CreateDiscount = () => {
                 setNumber(data)
             })
             .catch((error: any) => {
-                if (error.response && error.response.data) {
-                    alert(
-                        `${error.response.data.message}${error.response.status}`
-                    );
-                } else {
-                    console.log("dev", error);
-                    alert("Ошибка 178 - Обратитесь к администратору!");
-                }
+                // серверные ошибки пишутся на стороне сервера
             });
     }, [])
 
@@ -38,14 +31,7 @@ const CreateDiscount = () => {
                 setPhone(data.phone)
             })
             .catch((error: any) => {
-                if (error.response && error.response.data) {
-                    alert(
-                        `${error.response.data.message}${error.response.status}`
-                    );
-                } else {
-                    console.log("dev", error);
-                    alert("Ошибка 178 - Обратитесь к администратору!");
-                }
+                // серверные ошибки пишутся на стороне сервера
             });
     }, [])
     

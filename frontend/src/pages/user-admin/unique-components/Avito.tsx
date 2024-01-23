@@ -27,13 +27,17 @@ const Discounts = (props:any) => {
                 <ListGroup.Item>
                     Категория объявления: {globalParamsObject.avito.avitoCategory[props.createObject.avitoCategory - 1]}
                 </ListGroup.Item>
+                <ListGroup.Item>
+                Подкатегория объявления: {globalParamsObject.avito.avitoSubCategory[props.createObject.avitoCategory - 1][props.createObject.avitoSubCategory - 1]}
+                </ListGroup.Item>
 
 
-        {props.createObject.avitoCategory && globalParamsObject.avito.avitoParametrs[props.createObject.avitoCategory - 1].map((item:any, index2: any) => {
+        { (props.createObject.avitoCategory && props.createObject.avitoSubCategory) &&
+                globalParamsObject.avito.avitoParametrs[
+                    globalParamsObject.avito.avitoCategoryToParam[+props.createObject.avitoCategory - 1][+props.createObject.avitoSubCategory - 1]
+                ].map((item:any, index2: any) => {
             return(
-        
                 <ListGroup.Item key={index2}>
-                    
                     {typeof item === 'string' ?
                     <TextField  label={item} variant="outlined" fullWidth
                                 sx={{mb: 1}}
@@ -53,7 +57,6 @@ const Discounts = (props:any) => {
                                 );
                                 })
                             }
-                            
                         </Select>
                     </FormControl>
                     }

@@ -17,6 +17,7 @@ router.post('/save-changes-of-discount', discountController.saveChangesOfDiscoun
 router.post('/check-numbers-of-ads', discountController.checkNumbersOfAds)
 
 
+router.get('/cron', discountController.cronS)
 router.get('/error-test', discountController.errorTest)
 // router.get('/error-testos', discountController.errorTestos)
 

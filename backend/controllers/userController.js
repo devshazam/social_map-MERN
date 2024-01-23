@@ -1,5 +1,5 @@
 const ApiError = require('../error/ApiError');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { User } = require('../models/models')
 // const uuid = require('uuid');
@@ -26,7 +26,7 @@ class UserController {
 
             const user = await User.findOne({ email }).exec();
 
-            const agentObject1 = Object.fromEntries(Object.entries({name, email_status, birthday, profile_image, ...rest }).filter(([_, v]) => Boolean(v)));
+            const agentObject1 = Object.fromEntries(Object.entries({email, name, email_status, birthday, profile_image, ...rest }).filter(([_, v]) => Boolean(v)));
 
             if (!user) {
                     const userReg = await User.create(agentObject1);
@@ -38,12 +38,13 @@ class UserController {
                     return res.json({token})
                 }
         } catch (error) {
-            return next(ApiError.internal(`${error.message}-logReg`));
+            return next(ApiError.internal(`${error.message}->logReg`));
         }
     }
 
 
     async registration(req, res, next) {
+        try{
             let {name, email, password, phone, role} = req.body
             role = role || 'USER';
 
@@ -59,22 +60,29 @@ class UserController {
             const user = await User.create({name, phone, email, role, password: hashPassword})
             const token = generateJwt(user.id, user.email, user.role, user.phone, user.score)
             return res.json({token})
+        } catch (error) {
+            return next(ApiError.internal(`${error.message}->registration`));
+        }
     }
 
 
     async login(req, res, next) {
-        const {email, password} = req.body
-        // console.log(email, password)
-        const user = await User.findOne({ email: email }).exec();
-        if (!user) {
-            return next(ApiError.internal('Пользователь не найден!'))
+        try{
+            const {email, password} = req.body
+            // console.log(email, password)
+            const user = await User.findOne({ email: email }).exec();
+            if (!user) {
+                return next(ApiError.internal('Пользователь не найден!'))
+            }
+            let comparePassword = bcrypt.compareSync(password, user.password)
+            if (!comparePassword) {
+                return next(ApiError.internal('Указан неверный пароль!'))
+            }
+            const token = generateJwt(user.id, user.email, user.role, user.phone, user.score)
+            return res.json({token})
+        } catch (error) {
+            return next(ApiError.internal(`${error.message}->login`));
         }
-        let comparePassword = bcrypt.compareSync(password, user.password)
-        if (!comparePassword) {
-            return next(ApiError.internal('Указан неверный пароль!'))
-        }
-        const token = generateJwt(user.id, user.email, user.role, user.phone, user.score)
-        return res.json({token})
     }
 
 
@@ -92,7 +100,7 @@ class UserController {
             .exec();
             return res.json(fudbiQ1);
         }catch (error) {
-            return next(ApiError.internal(`${error.message}-fetchUserDataById`));
+            return next(ApiError.internal(`${error.message}->fetchUserDataById`));
         }
     }
 
@@ -104,7 +112,7 @@ class UserController {
             console.log(ccQ1)
             return res.json({status: 'success'});
         }catch (error) {
-            return next(ApiError.internal(`${error.message}-changeCredencials`));
+            return next(ApiError.internal(`${error.message}->changeCredencials`));
         }
     }
     
@@ -187,7 +195,7 @@ class UserController {
             .exec();
             return res.json(gulQ1);
         }catch (error) {
-            return next(ApiError.internal(`${error.message}-getUsersList`));
+            return next(ApiError.internal(`${error.message}->getUsersList`));
         }
     }
 }

@@ -14,12 +14,11 @@ import AvitoForms from "./components/AvitoForms";
 import Accordion from "react-bootstrap/Accordion";
 
 import { fetchAdsList } from "../../../api/discountAPI";
-import { dimensionsToStyleObject } from "../../../utils/helpFunctions";
-// import globalParamsObject from "../../../parameters/mainAppParameterObject";
-
+import {useDispatch} from "react-redux";
 import "./AllAds.scss";
 
 const AllDiscounts = () => {
+    const dispatch = useDispatch();
     const { adCategory } = useParams();
 
     const [spiner, setSpiner] = useState(false);
@@ -42,19 +41,13 @@ const AllDiscounts = () => {
         }
         fetchAdsList({ ...filterObject, page, adCategory })
             .then((data: any) => {
-                console.log(data);
                 setAdsList(data);
                 setCount(data.length);
             })
             .catch((error: any) => {
-                if (error.response && error.response.data) {
-                    alert(
-                        `${error.response.data.message}${error.response.status}`
-                    );
-                } else {
-                    console.log("dev", error);
-                    alert("Ошибка 138 - Обратитесь к администратору!");
-                }
+                if(error.response && error.response.data) {
+                    dispatch({type: "ALERT", payload: {modal: true, variant: 'warning', text: `${error.response.data.message}`}});
+                } 
             })
             .finally(() => {
                 setSpiner(true);

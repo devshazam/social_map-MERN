@@ -7,7 +7,7 @@ const ApiError = require("../error/ApiError");
 const { fileUploadCustom, fileDelete } = require("../S3/s3Upload");
 const axios = require("axios");
 const requestIp = require('request-ip');
-
+const cron = require('node-cron');
 
 class DiscountController {
 
@@ -88,7 +88,7 @@ class DiscountController {
             const { adId } = req.body;
 
             const fabifuQ1 = await Discount.findById(adId)
-            .select("discount discountCategory startDate endDate avitoCategory uniquePart cost name description district address image dimensions adCategory")
+            .select("discount discountCategory startDate endDate avitoCategory uniquePart cost name description district address image dimensions adCategory avitoSubCategory")
             .exec();
             
             return res.json(fabifuQ1);
@@ -101,7 +101,7 @@ class DiscountController {
 
     async fetchAdsList(req, res, next) {
         try {
-            let { itemSort, orderSort, page, limit, offset, ...rest }  = req.body;
+            let { itemSort, orderSort, page, limit, offset, ...rest } = req.body;
             page = page || 1;
             limit = limit || 8;
             itemSort = itemSort || "createdAt";
@@ -245,6 +245,14 @@ console.log(funcAgent1)
         }catch (error) {
             return next(ApiError.internal(`612: ${error.message}`));
         }
+    }
+
+    async cronS(req, res, next) {
+
+        console.log(123)
+
+            // return res.json({w: 1});
+
     }
 
 }

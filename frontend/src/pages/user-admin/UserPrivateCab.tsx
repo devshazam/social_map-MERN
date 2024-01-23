@@ -14,9 +14,10 @@ import { fetchUserDataById } from "../../api/userAPI";
 
 
 const UserUpdateOne: FC = () => {
+    const dispatch = useDispatch();
+    
     const stateUser = useSelector((state: any) => state.user.user);
     const [userData, setUserData] = useState<any>({});
-    const dispatch = useDispatch();
 
     const showModal = () => {
         dispatch({ type: "PHONE", payload: true });
@@ -28,14 +29,9 @@ const UserUpdateOne: FC = () => {
                 setUserData(data);
             })
             .catch((error) => {
-                if (error.response && error.response.data) {
-                    alert(
-                        `${error.response.data.message}${error.response.status}`
-                    );
-                } else {
-                    console.log("dev", error);
-                    alert("Ошибка 141 - Обратитесь к администратору!");
-                }
+                if(error.response && error.response.data) {
+                    dispatch({type: "ALERT", payload: {modal: true, variant: 'warning', text: `${error.response.data.message}`}});
+                } 
             });
     }, []);
 

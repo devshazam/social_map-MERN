@@ -4,9 +4,12 @@ import isEmail from "validator/lib/isEmail";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
+import {useDispatch} from "react-redux";
+
 import { registration } from "../../api/userAPI";
 
 const RegPage = (props:any) => {
+    const dispatch = useDispatch();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [phone, setPhone] = useState("");
@@ -33,17 +36,13 @@ const RegPage = (props:any) => {
 
         registration(email, password, name, phone, props.role)
             .then((data) => {
-                window.location.replace("/")
+                dispatch({type: "ALERT", payload: {modal: true, variant: 'success', text: `Успешно!`}});
+                setTimeout(function() {window.location.replace("/"); }, 800); 
             })
             .catch((error) => {
                 if (error.response && error.response.data) {
-                    alert(
-                        `${error.response.data.message}${error.response.status}`
-                    );
-                } else {
-                    console.log("dev", error);
-                    alert("Ошибка 112 - Обратитесь к администратору!");
-                }
+                    dispatch({type: "ALERT", payload: {modal: true, variant: 'warning', text: `${error.response.data.message}`}});
+                } 
             });
     };
 

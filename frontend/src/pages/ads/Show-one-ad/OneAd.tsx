@@ -12,8 +12,10 @@ import { fetchAdById } from "../../../api/discountAPI";
 
 import globalParamsObject from '../../../parameters/mainAppParameterObject'
 // import {dimensionsToStyleObject} from '../../../utils/helpFunctions'
+import {useDispatch} from "react-redux";
 
 const AdView: FC = () => {
+    const dispatch = useDispatch();
     const { adId } = useParams<{adId?: string}>();
 
     // const stateUser = useSelector((state: any) => state.user.isAuth);
@@ -25,14 +27,9 @@ const AdView: FC = () => {
                 setAdsItem(data);
             })
             .catch((error) => {
-                if (error.response && error.response.data) {
-                    alert(
-                        `${error.response.data.message}${error.response.status}`
-                    );
-                } else {
-                    console.log("dev", error);
-                    alert("Ошибка 141 - Обратитесь к администратору!");
-                }
+                if(error.response && error.response.data) {
+                    dispatch({type: "ALERT", payload: {modal: true, variant: 'warning', text: `${error.response.data.message}`}});
+                } 
             });
     }, []);
 
@@ -104,6 +101,10 @@ const AdView: FC = () => {
                             { adsItem.avitoCategory  && 
                                 <ListGroup.Item>
                                     Категория объявления: {globalParamsObject.avito.avitoCategory[adsItem.avitoCategory - 1]}
+                                </ListGroup.Item> }
+                            { adsItem.avitoSubCategory  && 
+                                <ListGroup.Item>
+                                    Подкатегория объявления: {globalParamsObject.avito.avitoSubCategory[adsItem.avitoCategory - 1][adsItem.avitoSubCategory - 1]}
                                 </ListGroup.Item> }
                             { adsItem.uniquePart && Object.values(JSON.parse(adsItem.uniquePart)).map((item:any, index:any) => {
                                 return(

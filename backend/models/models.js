@@ -34,6 +34,7 @@ const discountSchema = new Schema({
     
     //avito
     avitoCategory: { type: String },
+    avitoSubCategory: { type: String },
     uniquePart: { type: String },
     
     // common

@@ -23,13 +23,12 @@ const LoginPage = () => {
 
         login(email, password)
             .then((data: any) => {
-                window.location.replace("/")
+                dispatch({type: "ALERT", payload: {modal: true, variant: 'success', text: `Успешно!`}});
+                setTimeout(function() {window.location.replace("/"); }, 800); 
             })
             .catch((error: any) => {
-                // STOP - спровоцировать ошибку
-                alert(2)
-                dispatch({type: "ALERT", payload: {modal: true, variant: 'warning', text: `${error.response.data.message.u.u}`}});
                 if (error.response && error.response.data) {
+                    dispatch({type: "ALERT", payload: {modal: true, variant: 'warning', text: `${error.response.data.message}`}});
                 } 
             });
     };

@@ -1,10 +1,10 @@
 db.createUser({
-  user: "local_user",
-  pwd: "Password123",
+  user: "qwerty",
+  pwd: "1029384756",
   roles: [
     {
       role: "readWrite",
-      db: "mern_docker_starter",
+      db: "davseloc",
     },
   ],
 });

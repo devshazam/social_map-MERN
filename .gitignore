@@ -14,7 +14,7 @@ node_modules/
 /frontend/build
 # env (use '.env.local' for dev; '.env.prod' for prod)
 .env
-
+/backend/docker-setup/mongo/mongo-volume/
 
 # Файлы конфигурации редакторов ...
 .idea

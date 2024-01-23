@@ -9,9 +9,10 @@ import { useSelector, useDispatch } from "react-redux";
 
 
 const UserChangePhone = (props: any) => {
+    const dispatch = useDispatch();
+    
     const stateUser = useSelector((state: any) => state.user);
         const [phone, setPhone] = useState<any>(props.phone);
-        const dispatch = useDispatch();
     
         const hideModal = () => {
             dispatch({ type: "PHONE", payload: false });
@@ -29,21 +30,12 @@ const UserChangePhone = (props: any) => {
 
             changeCredencials({phone, userId: stateUser.user.id})
                 .then((data: any) => {
-                    console.log(data)
-                    // if(data.status === 'success'){
-                    //     localStorage.setItem('phone', phone)
-                    // }
                     window.location.replace("/user/private-cab");
                 })
                 .catch((error: any) => {
-                    if (error.response && error.response.data) {
-                        alert(
-                            `${error.response.data.message}${error.response.status}`
-                        );
-                    } else {
-                        console.log("dev", error);
-                        alert("Ошибка 141 - Обратитесь к администратору!");
-                    }
+                    if(error.response && error.response.data) {
+                        dispatch({type: "ALERT", payload: {modal: true, variant: 'warning', text: `${error.response.data.message}`}});
+                    } 
                 });
         };
         return (

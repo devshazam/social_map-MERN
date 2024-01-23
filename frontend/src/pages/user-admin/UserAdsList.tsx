@@ -11,8 +11,10 @@ import Button from 'react-bootstrap/Button';
 import { fetchUserAdsList, deleteUserAdsList } from "../../api/discountAPI";
 // import {dimensionsToStyleObject} from '../../utils/helpFunctions'
 
+import {useDispatch} from "react-redux";
 
 const UserAdsList = () => {
+    const dispatch = useDispatch();
 
     const [spiner, setSpiner] = useState(false);
     const [adsList, setAdsList] = useState([]);
@@ -28,19 +30,13 @@ const UserAdsList = () => {
         }
         fetchUserAdsList({ page, userId: stateUser.id })
             .then((data: any) => {
-                console.log(data);
                 setAdsList(data);
                 setCount(data.length);
             })
             .catch((error: any) => {
-                if (error.response && error.response.data) {
-                    alert(
-                        `${error.response.data.message}${error.response.status}`
-                    );
-                } else {
-                    console.log("dev", error);
-                    alert("Ошибка 138 - Обратитесь к администратору!");
-                }
+                if(error.response && error.response.data) {
+                    dispatch({type: "ALERT", payload: {modal: true, variant: 'warning', text: `${error.response.data.message}`}});
+                } 
             })
             .finally(() => {
                 setSpiner(true);
@@ -51,19 +47,13 @@ const UserAdsList = () => {
     function deleteAds(adId: any) {
         deleteUserAdsList({ adId })
         .then((data: any) => {
-            console.log(data);
-            alert('Объявление успешно удалено!')
+            dispatch({type: "ALERT", payload: {modal: true, variant: 'success', text: `Успешно!`}});
             setDeleteFlag(deleteFlag + 1)
         })
         .catch((error: any) => {
-            if (error.response && error.response.data) {
-                alert(
-                    `${error.response.data.message}${error.response.status}`
-                );
-            } else {
-                console.log("dev", error);
-                alert("Ошибка 138 - Обратитесь к администратору!");
-            }
+            if(error.response && error.response.data) {
+                dispatch({type: "ALERT", payload: {modal: true, variant: 'warning', text: `${error.response.data.message}`}});
+            } 
         })
     }
 

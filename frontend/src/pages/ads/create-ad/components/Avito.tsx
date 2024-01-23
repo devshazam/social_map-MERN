@@ -32,8 +32,6 @@ const Discounts = (props: any) => {
                     fullWidth
                     sx={{
                         mb: 1,
-                        pr: { sm: 0, md: 1 },
-                        width: { sm: "none", md: "50%" },
                     }}
                     error={Boolean(
                         !props.createObject.cost && props.flag === 0
@@ -42,10 +40,12 @@ const Discounts = (props: any) => {
                         props.changeCreateObject({ cost: e.target.value })
                     }
                 />
-
+            </Col>
+            <Col xs={12} md={6} className="mb-2">
+    
                 <FormControl
                     fullWidth
-                    sx={{ mb: 1, width: { sm: "none", md: "50%" } }}
+                    sx={{ mb: 1,  }}
                 >
                     <InputLabel
                         error={Boolean(
@@ -79,11 +79,51 @@ const Discounts = (props: any) => {
                         )}
                     </Select>
                 </FormControl>
-            </Col>
+                </Col>
+                { props.createObject.avitoCategory && 
+                    <Col xs={12} md={6} className="mb-2">
+                        <FormControl
+                        fullWidth
+                        sx={{ mb: 1, }}
+                        >
+                        <InputLabel
+                            error={Boolean(
+                                !props.createObject.avitoSubCategory &&
+                                    props.flag === 0
+                            )}
+                        >
+                            8) Выберите подкатегорию*:
+                        </InputLabel>
+                        <Select
+                            // value={props.createObject.avitoCategory ? props.createObject.avitoCategory : '5'}
+                            defaultValue={""}
+                            error={Boolean(
+                                !props.createObject.avitoSubCategory &&
+                                    props.flag === 0
+                            )}
+                            onChange={(e: any) =>
+                                props.changeCreateObject({
+                                    avitoSubCategory: e.target.value,
+                                })
+                            }
+                        >
+                                {props.createObject.avitoCategory && globalParamsObject.avito.avitoSubCategory[+props.createObject.avitoCategory - 1].map(
+                                    (item: any, index: any) => {
+                                        return (
+                                            <MenuItem key={index + 1} value={index + 1}>
+                                            {item}
+                                        </MenuItem>
+                                        );
+                                    }
+                                )}
+                        </Select>
+                        </FormControl>
+                    </Col>
+                }
 
-            {props.createObject.avitoCategory &&
+            { (props.createObject.avitoCategory && props.createObject.avitoSubCategory) &&
                 globalParamsObject.avito.avitoParametrs[
-                    props.createObject.avitoCategory - 1
+                    globalParamsObject.avito.avitoCategoryToParam[+props.createObject.avitoCategory - 1][+props.createObject.avitoSubCategory - 1]
                 ].map((item: any, index2: any) => {
                     return (
                         <Col xs={12} md={6} key={index2}>

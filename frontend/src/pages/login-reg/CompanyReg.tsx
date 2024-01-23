@@ -5,6 +5,7 @@ import { logReg } from "../../api/userAPI";
 
 import RegPage from "../../components/modal/RegPage";
 
+import {useDispatch} from "react-redux";
 
 declare global {
     interface Window {
@@ -13,6 +14,7 @@ declare global {
 }
 
 const LoginReg: FC = () => {
+    const dispatch = useDispatch();
 
     const [flag, setFlag] = useState<boolean>(false);
 
@@ -22,17 +24,13 @@ const LoginReg: FC = () => {
         console.log(101, data);
         logReg({...JSON.parse(data), role: "COMPANY"})
             .then((data: any) => {
-                window.location.replace("/");
+                dispatch({type: "ALERT", payload: {modal: true, variant: 'success', text: `Успешно!`}});
+                setTimeout(function() {window.location.replace("/"); }, 800); 
             })
             .catch((error: any) => {
-                if (error.response && error.response.data) {
-                    alert(
-                        `${error.response.data.message}${error.response.status}`
-                    );
-                } else {
-                    console.log("dev", error);
-                    alert("Ошибка 111 - Обратитесь к администратору!");
-                }
+                if(error.response && error.response.data) {
+                    dispatch({type: "ALERT", payload: {modal: true, variant: 'warning', text: `${error.response.data.message}`}});
+                } 
             });
     };
 

@@ -10,14 +10,7 @@ const logError = (error: Error, info: ErrorInfo) => {
       console.log(101, data)
     })
     .catch((error:any) => {
-        if (error.response && error.response.data) {
-            alert(
-                `${error.response.data.message}${error.response.status}`
-            );
-        } else {
-            console.log("dev", error);
-            alert("Ошибка 156 - Обратитесь к администратору!");
-        }
+        // если ошибка не запишется, то мы ее потеряли, а а= серверные ошибки пишутся на стороне сервера
     });
 
   };

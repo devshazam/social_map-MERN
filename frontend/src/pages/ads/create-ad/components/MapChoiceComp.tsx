@@ -6,8 +6,10 @@ import { fetchYandexAddress } from "../../../../api/discountAPI";
 import Button from "@mui/material/Button";
 // import { useDispatch } from "react-redux";
 import './MapChoiceComp.scss';
+import {useDispatch} from "react-redux";
 
 const MapChoiceComp = (props: any) => {
+    const dispatch = useDispatch();
     // const [addressString, setAddressString] = useState<string>("Волгоград, ");
     // const [coordinats, setCoordinats] = useState<any>([]);
 
@@ -16,21 +18,15 @@ const MapChoiceComp = (props: any) => {
         fetchYandexAddress({ address: props.createObject.address })
             .then((data: any) => {
                 if(!data.result){
-                    alert('Адрес не найден!');
-                    return;}
+                    dispatch({type: "ALERT", payload: {modal: true, variant: 'warning', text: `Адрес не найден!`}});
+                    return;
+                }
                     props.changeCreateObject({address: data.result, latitude: data.latitude, longitude: data.longitude});
-          
-                // setAddressString(data.result)
             })
             .catch((error: any) => {
                 if (error.response && error.response.data) {
-                    alert(
-                        `${error.response.data.message}${error.response.status}`
-                    );
-                } else {
-                    console.log("dev", error);
-                    alert("Ошибка 111 - Обратитесь к администратору!");
-                }
+                    dispatch({type: "ALERT", payload: {modal: true, variant: 'warning', text: `${error.response.data.message}`}});
+                } 
             });
     };
 

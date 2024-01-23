@@ -8,7 +8,7 @@ import { logReg } from "../../api/userAPI";
 
 import LoginPage from "../../components/modal/LoginPage";
 import RegPage from "../../components/modal/RegPage";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch } from "react-redux";
 
 import  "./LoginReg.scss";
 
@@ -30,15 +30,13 @@ const LoginReg: FC = () => {
         console.log('Иконки соц.сетей не видны при 0', data);
         logReg(JSON.parse(data))
             .then((data: any) => {
-                window.location.replace("/");
+                dispatch({type: "ALERT", payload: {modal: true, variant: 'success', text: `Успешно!`}});
+                setTimeout(function() {window.location.replace("/"); }, 800); 
             })
             .catch((error: any) => {
-                if (error.response && error.response.data) {
-                    dispatch({type: "ALERT", payload: {modal: false, variant: 'warning', text: `${error.response.data.message}`,}})
-                } else {
-                    console.log("dev", error);
-                    alert("Ошибка 111 - Обратитесь к администратору!");
-                }
+                if(error.response && error.response.data) {
+                    dispatch({type: "ALERT", payload: {modal: true, variant: 'warning', text: `${error.response.data.message}`}});
+                } 
             });
     };
 

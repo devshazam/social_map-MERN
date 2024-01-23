@@ -44,6 +44,41 @@ const AvitoForms = (props: any) => {
                     </Form.Select>
                 </FloatingLabel>
             </Form.Group>
+            { (props.filterObject.avitoCategory && Boolean(+props.filterObject.avitoCategory) ) && 
+                <Form.Group
+                    as={Col}
+                    md="12"
+                    controlId="formGridStateR"
+                    className="mb-3"
+                >
+                    <FloatingLabel
+                        controlId="floatingPasswordR"
+                        label="Подкатегория товаров:"
+                    >
+                        <Form.Select
+                            aria-label="Default select example"
+                            onChange={(e: any) =>
+                                props.changefilterObject({
+                                    avitoSubCategory: e.target.value,
+                                })
+                            }
+                        >
+                            <option key={0} value={0}>
+                                Все подкатегории
+                            </option>
+                            {(props.filterObject.avitoCategory && Boolean(+props.filterObject.avitoCategory) )&& globalParamsObject.avito.avitoSubCategory[+props.filterObject.avitoCategory - 1].map(
+                                (item: any, index: any) => {
+                                    return (
+                                        <option key={index + 1} value={index + 1}>
+                                            {item}
+                                        </option>
+                                    );
+                                }
+                            )}
+                        </Form.Select>
+                    </FloatingLabel>
+                </Form.Group>
+            }
             <Form.Group
                 as={Col}
                 md="12"

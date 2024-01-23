@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+// import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -22,13 +23,16 @@ import globalParamsObject from '../../parameters/mainAppParameterObject'
 import EventDatePicker from './unique-components/Events'
 import AvitoDatePicker from './unique-components/Avito'
 
+import {useDispatch} from "react-redux";
 
 const UserUpdateOne: FC = () => {
+    const dispatch = useDispatch();
+    
     const { adId } = useParams<{adId?: string}>();
 
     const [adsItem, setAdsItem] = useState<any>(null);
     const [flag, setFlag] = useState<number>(1);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     console.log(adsItem)
     function changeCreateObject(agent1:any){
@@ -41,14 +45,9 @@ const UserUpdateOne: FC = () => {
                 setAdsItem(data);
             })
             .catch((error) => {
-                if (error.response && error.response.data) {
-                    alert(
-                        `${error.response.data.message}${error.response.status}`
-                    );
-                } else {
-                    console.log("dev", error);
-                    alert("Ошибка 141 - Обратитесь к администратору!");
-                }
+                if(error.response && error.response.data) {
+                    dispatch({type: "ALERT", payload: {modal: true, variant: 'warning', text: `${error.response.data.message}`}});
+                } 
             });
     }, []);
 
@@ -58,24 +57,17 @@ const UserUpdateOne: FC = () => {
             window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
             return;
         }
-
-
         saveChangesOfDiscount(adsItem)
             .then((data) => {
-                console.log(data);
-                alert("Ваше объявление обновлено успешно!");
-                navigate("/ad-view/" + adId);
-                // redirect("/ad-view/" + adId);
+                // console.log(data);
+                dispatch({type: "ALERT", payload: {modal: true, variant: 'success', text: `Успешно!`}});
+                setTimeout(function() {window.location.replace("/ad-view/" + adId); }, 800); 
+                // navigate("/ad-view/" + adId);
             })
             .catch((error: any) => {
-                if (error.response && error.response.data) {
-                    alert(
-                        `${error.response.data.message}${error.response.status}`
-                    );
-                } else {
-                    console.log("dev", error);
-                    alert("Ошибка 138 - Обратитесь к администратору!");
-                }
+                if(error.response && error.response.data) {
+                    dispatch({type: "ALERT", payload: {modal: true, variant: 'warning', text: `${error.response.data.message}`}});
+                } 
             });
     }
     return (

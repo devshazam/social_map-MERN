@@ -1,0 +1,58 @@
+version: "3"
+services:
+  mongo:
+    container_name: mongo-doc
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    networks:
+      - default
+    volumes:
+      - ./backend/docker-setup/mongo/db-init.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - ./backend/docker-setup/mongo/mongo-volume:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=davseloc
+      - MONGO_INITDB_USER=qwerty
+      - MONGO_INITDB_PASSWORD=1029384756
+
+  backend:
+    container_name: node-doc
+    build:
+      context: ./backend
+      dockerfile: docker-setup/node/development/Dockerfile
+    networks:
+      - default
+      # - frontend
+    volumes:
+      - ./backend:/app
+    tty: true
+    stdin_open: true
+    depends_on:
+      - mongo
+    ports:
+      - "5000:5000"
+
+  # frontend:
+  #   container_name: react-name
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: docker-setup/react/development/Dockerfile
+  #   networks:
+  #     - frontend
+  #   environment:
+  #     - NODE_ENV=development
+  #   volumes:
+  #     - ./frontend:/frontend
+  #   depends_on:
+  #     - backend
+  #   tty: true
+  #   stdin_open: true
+  #   ports:
+  #     - "3000:3000"
+
+networks:
+  default:
+    name: backend-network
+  # frontend:
+  #   name: frontend-network
