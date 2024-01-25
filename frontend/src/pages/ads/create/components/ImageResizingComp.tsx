@@ -35,7 +35,7 @@ const ImageResizingComp = (props:any) => {
     // ==========================================================================================================
     return (
         <>
-                <Col xs={12} md={6} className='mb-4'>
+                <Col xs={12}  md={{ span: 6, offset: 3 }} className='mb-2'>
                     {
                         imageUrl ?
                          <div className="card-user_cab">

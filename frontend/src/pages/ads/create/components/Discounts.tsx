@@ -12,15 +12,13 @@ const Discounts = (props: any) => {
     // ==========================================================================================================
     return (
         <>
-            <Col xs={12} md={6}>
+            <Col xs={12} md={{ span: 6, offset: 3 }}>
                 <TextField
                     label="7) Введите цену со скидкой*:"
                     variant="outlined"
                     fullWidth
                     sx={{
                         mb: 1,
-                        pr: { sm: 0, md: 1 },
-                        width: { sm: "none", md: "50%" },
                     }}
                     error={Boolean(
                         !props.createObject.cost && props.flag === 0
@@ -29,9 +27,11 @@ const Discounts = (props: any) => {
                         props.changeCreateObject({ cost: e.target.value })
                     }
                 />
+                </Col>
+            <Col xs={12} md={{ span: 6, offset: 3 }}>
                 <FormControl
                     fullWidth
-                    sx={{ mb: 1, width: { sm: "none", md: "50%" } }}
+                    sx={{ mb: 1}}
                 >
                     <InputLabel
                         error={Boolean(
@@ -65,7 +65,7 @@ const Discounts = (props: any) => {
                     </Select>
                 </FormControl>
             </Col>
-            <Col xs={12} md={6}>
+            <Col xs={12} md={{ span: 6, offset: 3 }}  className="mb-2">
                 <FormControl fullWidth>
                     <InputLabel
                         id="demo-simple-select-label"

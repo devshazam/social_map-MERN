@@ -10,9 +10,8 @@ import { Map, YMaps } from "@pbe/react-yandex-maps";
 import DiscountsForms from "./components/DiscountsForms";
 import DistrictForm from "./components/DistrictForm";
 import EventsForms from "./components/EventsForms";
-import AvitoForms from "./components/AvitoForms";
 import Accordion from "react-bootstrap/Accordion";
-
+import AvitoForms from "./components/AvitoForms";
 import { fetchAdsList } from "../../../api/discountAPI";
 import {useDispatch} from "react-redux";
 import "./AllAds.scss";
@@ -138,7 +137,8 @@ const AllDiscounts = () => {
                     </Accordion>
                 </Col>
                 <Col xs={12} sm={9} lg={9} className="mb-3">
-                    <Row className="mb-5">
+                    {adCategory !== '4' &&
+                        <Row className="mb-5">
                         <div
                             style={{
                                 width: "100%",
@@ -194,6 +194,7 @@ const AllDiscounts = () => {
                             </a>
                         </div>
                     </Row>
+                    }
                     <Row className="mb-5 main-row">
                         {spiner ? (
                             <>

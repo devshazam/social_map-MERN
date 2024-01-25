@@ -12,7 +12,7 @@ import Alert from '@mui/material/Alert';
 import {useDispatch, useSelector} from "react-redux";
 
 
-const LoginPage = () => {
+const AlertPage = () => {
     const dispatch = useDispatch();
 
     const appUser = useSelector((state:any) => state.app);
@@ -37,5 +37,5 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export default AlertPage;
 

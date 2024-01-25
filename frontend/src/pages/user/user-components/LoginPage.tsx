@@ -1,10 +1,10 @@
-import {  useState } from "react";
+import { useState } from "react";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-import { login } from "../../api/userAPI";
-import {useDispatch} from "react-redux";
+import { login } from "../../../api/userAPI";
+import { useDispatch } from "react-redux";
 
 const LoginPage = () => {
     const dispatch = useDispatch();
@@ -19,17 +19,33 @@ const LoginPage = () => {
         if (email.split("").length > 200 || password.split("").length > 200) {
             alert("Одно из значений более 200 символов!");
             return;
-        } 
+        }
 
         login(email, password)
             .then((data: any) => {
-                dispatch({type: "ALERT", payload: {modal: true, variant: 'success', text: `Успешно!`}});
-                setTimeout(function() {window.location.replace("/"); }, 800); 
+                dispatch({
+                    type: "ALERT",
+                    payload: {
+                        modal: true,
+                        variant: "success",
+                        text: `Успешно!`,
+                    },
+                });
+                setTimeout(function () {
+                    window.location.replace("/");
+                }, 800);
             })
             .catch((error: any) => {
                 if (error.response && error.response.data) {
-                    dispatch({type: "ALERT", payload: {modal: true, variant: 'warning', text: `${error.response.data.message}`}});
-                } 
+                    dispatch({
+                        type: "ALERT",
+                        payload: {
+                            modal: true,
+                            variant: "warning",
+                            text: `${error.response.data.message}`,
+                        },
+                    });
+                }
             });
     };
 
@@ -69,4 +85,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-

@@ -41,14 +41,14 @@ const discountSchema = new Schema({
     cost: { type: String },
     adCategory: { type: String, required: true },
     name: {  type: String, required: true },
-    description: {  type: String, required: true },
+    description: {  type: String },
     district: { type: String },
-    address: { type: String, required: true },
-    latitude: { type: String, required: true },
-    longitude: { type: String, required: true },
+    address: { type: String },
+    latitude: { type: String },
+    longitude: { type: String },
     image: { type: String, required: true },
     dimensions: { type: String },
-    currentTime: { type: Number, required: true },
+    currentTime: { type: Number },
     userId: { type: Schema.Types.ObjectId, ref: "User" }
 
 }, { timestamps: true });

@@ -21,6 +21,7 @@ services:
     build:
       context: ./backend
       dockerfile: docker-setup/node/development/Dockerfile
+    restart: always
     networks:
       - default
       # - frontend

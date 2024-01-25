@@ -34,7 +34,7 @@ const MapChoiceComp = (props: any) => {
 
     return (
         <>
-            <Col xs={12} md={6} className="mb-2">
+            <Col xs={12}  md={{ span: 6, offset: 3 }} className="mb-2">
                 <TextField
                     id="outlined-basic"
                     variant="outlined"
@@ -65,10 +65,11 @@ const MapChoiceComp = (props: any) => {
                                     width="100%"
                                     height={300}
                                     // включаем модули, отвечающие за всплывающие окна над геообъектами
-                                    modules={[
-                                        "geoObject.addon.balloon",
-                                        "geoObject.addon.hint",
-                                    ]}
+                                    // modules={[
+                                    //     "geoObject.addon.balloon",
+                                    //     "geoObject.addon.hint",
+                                    // ]}
+                                    modules={['geoObject.addon.balloon', 'geoObject.addon.hint', "geolocation", "geocode"]}
                                 >
                                     <Placemark
                                         geometry={[props.createObject.latitude, props.createObject.longitude]}
@@ -77,13 +78,16 @@ const MapChoiceComp = (props: any) => {
                                             iconColor: "red", // цвет иконки
                                         }}
                                         properties={{
-                                            iconContent: "Правильно?", // пару символов помещается
-                                            hintContent: "<em>кликни меня</em>",
+                                            iconContent: "Правильно?!", // пару символов помещается
+                                            hintContent: `<em>кликни меня</em>`,
                                             balloonContent: `<div class="my-balloon">
-                                                    <p>
-                                                        Так будет выглядеть ваше объявление!
-                                                    </p>
-                                                    </div>`,
+                                                            <p class="my-balloon-one">
+                                                                Если не правильно, введите адрес еще раз! <br>Если Ваш адрес не найден, введите адрес по близости!
+                                                            </p>
+                                                            <p class="my-balloon-two">
+                                                                Если правильно, сделайте "следующий шаг"!
+                                                            </p>
+                                                            </div>`,
                                         }}
                                     />
                                 </Map>
@@ -95,6 +99,7 @@ const MapChoiceComp = (props: any) => {
                                     }}
                                     width="100%"
                                     height={300}
+                                    modules={['geoObject.addon.balloon', 'geoObject.addon.hint', "geolocation", "geocode"]}
                                 ></Map>
                             )}
                         </section>

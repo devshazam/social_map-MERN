@@ -4,16 +4,16 @@ import isEmail from "validator/lib/isEmail";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-import {useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 
-import { registration } from "../../api/userAPI";
+import { registration } from "../../../api/userAPI";
 
-const RegPage = (props:any) => {
+const RegPage = (props: any) => {
     const dispatch = useDispatch();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [phone, setPhone] = useState("");
-    const [name, setName] = useState(""); 
+    const [name, setName] = useState("");
 
     const makeReg = async () => {
         if (!email || !password || !phone || !name) {
@@ -36,13 +36,29 @@ const RegPage = (props:any) => {
 
         registration(email, password, name, phone, props.role)
             .then((data) => {
-                dispatch({type: "ALERT", payload: {modal: true, variant: 'success', text: `Успешно!`}});
-                setTimeout(function() {window.location.replace("/"); }, 800); 
+                dispatch({
+                    type: "ALERT",
+                    payload: {
+                        modal: true,
+                        variant: "success",
+                        text: `Успешно!`,
+                    },
+                });
+                setTimeout(function () {
+                    window.location.replace("/");
+                }, 800);
             })
             .catch((error) => {
                 if (error.response && error.response.data) {
-                    dispatch({type: "ALERT", payload: {modal: true, variant: 'warning', text: `${error.response.data.message}`}});
-                } 
+                    dispatch({
+                        type: "ALERT",
+                        payload: {
+                            modal: true,
+                            variant: "warning",
+                            text: `${error.response.data.message}`,
+                        },
+                    });
+                }
             });
     };
 

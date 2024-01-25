@@ -265,18 +265,6 @@ margin-right: 15px;
     color: black;
 }
 
-
-#mail-spinner{
-    position:fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-}
-#mail-spinner{
-    margin-top: 48vh;
-    margin-left: 48vw;
-}
 #goods-image{
     width: 100%;
 }

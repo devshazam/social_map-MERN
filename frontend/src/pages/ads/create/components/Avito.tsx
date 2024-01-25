@@ -25,7 +25,7 @@ const Discounts = (props: any) => {
 
     return (
         <>
-            <Col xs={12} md={6} className="mb-2">
+            <Col xs={12}  md={{ span: 6, offset: 3 }} >
                 <TextField
                     label="7) Введите цену товара*:"
                     variant="outlined"
@@ -41,7 +41,7 @@ const Discounts = (props: any) => {
                     }
                 />
             </Col>
-            <Col xs={12} md={6} className="mb-2">
+            <Col xs={12} md={{ span: 6, offset: 3 }} >
     
                 <FormControl
                     fullWidth
@@ -81,7 +81,7 @@ const Discounts = (props: any) => {
                 </FormControl>
                 </Col>
                 { props.createObject.avitoCategory && 
-                    <Col xs={12} md={6} className="mb-2">
+                    <Col xs={12} md={{ span: 6, offset: 3 }} >
                         <FormControl
                         fullWidth
                         sx={{ mb: 1, }}
@@ -126,7 +126,7 @@ const Discounts = (props: any) => {
                     globalParamsObject.avito.avitoCategoryToParam[+props.createObject.avitoCategory - 1][+props.createObject.avitoSubCategory - 1]
                 ].map((item: any, index2: any) => {
                     return (
-                        <Col xs={12} md={6} key={index2}>
+                        <Col xs={12} md={{ span: 6, offset: 3 }}  key={index2}>
                             {typeof item === "string" ? (
                                 <TextField
                                     label={item}

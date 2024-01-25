@@ -17,7 +17,6 @@ import {useDispatch} from "react-redux";
 const AdView: FC = () => {
     const dispatch = useDispatch();
     const { adId } = useParams<{adId?: string}>();
-
     // const stateUser = useSelector((state: any) => state.user.isAuth);
     const [adsItem, setAdsItem] = useState<any>(null);
 
@@ -50,55 +49,53 @@ const AdView: FC = () => {
                     )}
                 </Col>
                 <Col xs={12} lg={6}>
-                    {adsItem && (
-                        <h1>
-                            {globalParamsObject.main.adsCategory[adsItem.adCategory - 1]}
-                        </h1>
-                    )}
                     {adsItem ? 
-                        <ListGroup variant="flush">
-                            <ListGroup.Item>
-                                Название: {adsItem.name}
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                Описание: {adsItem.description}
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                Район: {globalParamsObject.main.districtsNames[adsItem.district - 1]}
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                Адрес: {adsItem.address}
-                            </ListGroup.Item>
-                            
-                            <ListGroup.Item>
-                                Название: {adsItem.name}
-                            </ListGroup.Item>
-{/* 1 */}
-                            { adsItem.cost  && 
-                            <ListGroup.Item>
-                                Цена (руб.): {adsItem.cost}
-                            </ListGroup.Item> }
-{/* СКИДКИ */}
-                            { adsItem.discount  && 
-                            <ListGroup.Item>
-                                Скидка (%): {globalParamsObject.discounts.discountSize[adsItem.discount - 1]}
-                            </ListGroup.Item> }
-                            { adsItem.discountCategory  && 
-                            <ListGroup.Item>
-                                Категория скидки: {globalParamsObject.discounts.discountsCategory[adsItem.discountCategory - 1]}
-                            </ListGroup.Item> }
-{/* Мероприятия */}
-                            { adsItem.startDate  && 
+                        <>
+                            <h1 className={`nav_${globalParamsObject.main.adsCategoryNames[+adsItem.adCategory - 1]}_link`}>
+                                {adsItem && globalParamsObject.main.adsCategory[+adsItem.adCategory - 1]}
+                            </h1>
+                            <ListGroup variant="flush">
                                 <ListGroup.Item>
-                                    Дата начала: {new Date(+adsItem.startDate).toISOString().split('T')[0]}
+                                    Название: {adsItem.name}
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    Описание: {adsItem.description}
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    Район: {globalParamsObject.main.districtsNames[adsItem.district - 1]}
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    Адрес: {adsItem.address}
+                                </ListGroup.Item>
+                                
+                                <ListGroup.Item>
+                                    Название: {adsItem.name}
+                                </ListGroup.Item>
+    {/* 1 */}
+                                { adsItem.cost  && 
+                                <ListGroup.Item>
+                                    Цена (руб.): {adsItem.cost}
                                 </ListGroup.Item> }
-                            { adsItem.endDate  && 
-                            <ListGroup.Item>
-                                Дата конца: {new Date(+adsItem.endDate).toISOString().split('T')[0]}
-                            </ListGroup.Item> }
-                        
+    {/* СКИДКИ */}
+                                { adsItem.discount  && 
+                                <ListGroup.Item>
+                                    Скидка (%): {globalParamsObject.discounts.discountSize[adsItem.discount - 1]}
+                                </ListGroup.Item> }
+                                { adsItem.discountCategory  && 
+                                <ListGroup.Item>
+                                    Категория скидки: {globalParamsObject.discounts.discountsCategory[adsItem.discountCategory - 1]}
+                                </ListGroup.Item> }
+    {/* Мероприятия */}
+                                { adsItem.startDate  && 
+                                    <ListGroup.Item>
+                                        Дата начала: {new Date(+adsItem.startDate).toISOString().split('T')[0]}
+                                    </ListGroup.Item> }
+                                { adsItem.endDate  && 
+                                <ListGroup.Item>
+                                    Дата конца: {new Date(+adsItem.endDate).toISOString().split('T')[0]}
+                                </ListGroup.Item> }
 {/* АВИТО */}
-                            { adsItem.avitoCategory  && 
+{ adsItem.avitoCategory  && 
                                 <ListGroup.Item>
                                     Категория объявления: {globalParamsObject.avito.avitoCategory[adsItem.avitoCategory - 1]}
                                 </ListGroup.Item> }
@@ -114,15 +111,16 @@ const AdView: FC = () => {
                                     );
                                 })
                             }
-                          
-                            <ListGroup.Item>
-                                <b>Имя продавца (компании): </b>{adsItem.userId.name}
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <b>Телефон: </b>{adsItem.userId.phone}
-                            </ListGroup.Item>
 
-                        </ListGroup>
+                                <ListGroup.Item>
+                                    <b>Имя продавца (компании): </b>{adsItem.userId.name}
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <b>Телефон: </b>{adsItem.userId.phone}
+                                </ListGroup.Item>
+
+                            </ListGroup>
+                        </>
                      : 
                         <Spinner animation="border" />
                     }

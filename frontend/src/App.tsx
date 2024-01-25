@@ -17,20 +17,19 @@ import Contacts from "./pages/main/Contacts";
 import { useDispatch } from "react-redux";
 import { check } from "../src/api/userAPI";
 
-import AllAds from "./pages/ads/show-ads-list/AllAds";
-import AllMap from "./pages/ads/show-ads-map/AllMap";
-// import CreateAd from "./pages/ads/create-ad/CreateAd";
-import CreateAdMidlware from "./pages/ads/create-ad/CreateAdMidlware";
-import AdView from "./pages/ads/Show-one-ad/OneAd";
-import UserAdsList from './pages/user-admin/UserAdsList'
-import UserUpdateOne from './pages/user-admin/UserUpdateOne'
+import AllAds from "./pages/ads/list/AllAds";
+import AllMap from "./pages/ads/map/AllMap";
+import CreateAdMidlware from "./pages/ads/create/CreateAdMidlware";
+import AdView from "./pages/ads/one/OneAd";
+import UserAdsList from './pages/user/UserAdsList'
+import UserUpdateOne from './pages/user/UserUpdateOne'
 import LoginReg from './pages/login-reg/LoginReg'
 import CompanyReg from './pages/login-reg/CompanyReg'
+// import AdvertMidlware from './pages/adverts/create/AdvertMidlware';
 
-import AlertPage from './components/modal/AlertPage';
-
-import UserPrivateCab from './pages/user-admin/UserPrivateCab';
-// import UserChangeAddress from './pages/user-admin/UserChangeAddress';
+import AlertPage from './components/AlertPage';
+import Soon from "./pages/main/Soon";
+import UserPrivateCab from './pages/user/UserPrivateCab';
 import './style.scss';
 
 const App: React.FC = () => {
@@ -66,7 +65,7 @@ const App: React.FC = () => {
     }
 
     return (
-        <div className="App">
+        <div className="App"> 
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Layout />}>
@@ -75,8 +74,10 @@ const App: React.FC = () => {
                         <Route path="/ads/:adCategory" element={<AllAds />} />
                         <Route path="/ads-map/:adCategory" element={<AllMap />} />
                         <Route path="/ad-view/:adId" element={<AdView />} />
+                        <Route path="/ad-view/charity" element={<AdView />} />
 
                         <Route path="/contacts" element={<Contacts />} />
+                        <Route path="/soon" element={<Soon />} />
                         <Route path="/oferta" element={<Oferta />} />
                         <Route path="/conditions" element={<Conditions />} />
                         <Route path="/login-registration" element={<LoginReg />} />
@@ -84,9 +85,9 @@ const App: React.FC = () => {
 
                         <Route path="/test" element={<Test />} />
                     </Route>
-
                         <Route path="/user/" element={<LayoutUser />}>
                             <Route path="/user/ads/create-ad/:adCategory" element={<CreateAdMidlware />} />
+                            {/* <Route path="/user/ads/create-advert" element={<AdvertMidlware />} /> */}
                             <Route path="/user/user-ads-list" element={<UserAdsList />} />
                             <Route path="/user/user-update-one/:adId" element={<UserUpdateOne />} />
                             <Route path="/user/private-cab" element={<UserPrivateCab />} />
@@ -94,7 +95,7 @@ const App: React.FC = () => {
                         </Route>
 
                             {/* <Route path="/company/" element={<LayoutCompany />}>
-                                <Route path="/company/ads/create-ad/:adCategory"  element={<CreateAdMidlware />} />
+                                <Route path="/company/ads/create/:adCategory"  element={<CreateAdMidlware />} />
                             </Route> */}
                 </Routes>
             </BrowserRouter>

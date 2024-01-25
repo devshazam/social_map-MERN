@@ -20,8 +20,8 @@ import { fetchAdByIdForUser, saveChangesOfDiscount } from "../../api/discountAPI
 import globalParamsObject from '../../parameters/mainAppParameterObject'
 // import {dimensionsToStyleObject} from '../../utils/helpFunctions'
 
-import EventDatePicker from './unique-components/Events'
-import AvitoDatePicker from './unique-components/Avito'
+import Events from './user-components/Events'
+import Avito from './user-components/Avito'
 
 import {useDispatch} from "react-redux";
 
@@ -161,12 +161,12 @@ const UserUpdateOne: FC = () => {
 
                                     {adsItem.startDate && 
                                         <ListGroup.Item>
-                                            <EventDatePicker changeCreateObject={changeCreateObject} createObject={adsItem}/>
+                                            <Events changeCreateObject={changeCreateObject} createObject={adsItem}/>
                                         </ListGroup.Item>
                                     }
 
                                     {adsItem.avitoCategory && 
-                                            <AvitoDatePicker changeCreateObject={changeCreateObject} createObject={adsItem}/>
+                                            <Avito changeCreateObject={changeCreateObject} createObject={adsItem}/>
                                     }
 
                             <Button variant="contained" fullWidth onClick={callSaveChanges}>

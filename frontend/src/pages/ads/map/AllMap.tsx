@@ -14,7 +14,6 @@ import Button from '@mui/material/Button';
 import DiscountsMapComp from './components/DiscountsMapComp';
 import CharityMap from './components/CharityMap';
 import EventMap from './components/EventMap';
-import AvitoMap from './components/AvitoMap';
 
 import { fetchDiscountByMap }from '../../../api/discountAPI';
 
@@ -98,7 +97,6 @@ const AllMap = () => {
                                                         { adCategory === '1' && <DiscountsMapComp  mainDataObject={{item, arrayCoordinates, index}} /> }
                                                         { adCategory === '2' && <CharityMap mainDataObject={{item, arrayCoordinates, index}} /> }
                                                         { adCategory === '3' && <EventMap mainDataObject={{item, arrayCoordinates, index}} /> }
-                                                        { adCategory === '4' && <AvitoMap mainDataObject={{item, arrayCoordinates, index}} /> }
                                                     </span>
                                                 );
                                             })

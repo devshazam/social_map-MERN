@@ -34,10 +34,11 @@ const Header = () => {
                         <Offcanvas.Body className="justify-content-between">
                             <Nav className="justify-content-end  pe-3 my-2 my-lg-0">
                                 
-                                <Nav.Link href="/ads/1">Скидки города</Nav.Link>
-                                <Nav.Link href="/ads/2">Благотворительность</Nav.Link>
-                                <Nav.Link href="/ads/3">Мероприятия</Nav.Link>
-                                <Nav.Link href="/ads/4">Объявления (новое и б/у)</Nav.Link>
+                                <Nav.Link href="/ads/1" className="header_nav nav_sales_link">Скидки💥</Nav.Link>
+                                <Nav.Link href="/ads/2" className="header_nav nav_charity_link">Благотворительность</Nav.Link>
+                                <Nav.Link href="/ads/3" className="header_nav nav_events_link">Мероприятия</Nav.Link>
+                                <Nav.Link href="/ads/4" className="header_nav nav_avito_link">Объявления</Nav.Link>
+                                <Nav.Link href="/soon" className="header_nav nav_real_link">Недвижимость</Nav.Link>
                                 {/* <NavDropdown
                                     title="Доска объявлений БУ"
                                     id="offcanvasNavbarDropdown-expand-lg"
@@ -75,7 +76,7 @@ const Header = () => {
                                     </NavDropdown.Item>
                                 </NavDropdown> */}
                                 {/* <Nav.Link href="/contacts">Карта доверия</Nav.Link> */}
-                                <Nav.Link href="/contacts">Контакты</Nav.Link>
+                                <Nav.Link href="/contacts"  className="header_nav">Контакты</Nav.Link>
                             </Nav>
                             {/* <Navbar.Text>
                                 <span className="label">
