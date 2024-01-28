@@ -1,5 +1,4 @@
-
-
+import React from "react";
 
 import {Placemark} from "@pbe/react-yandex-maps";
 

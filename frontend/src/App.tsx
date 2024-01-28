@@ -27,12 +27,14 @@ import LoginReg from './pages/login-reg/LoginReg'
 import CompanyReg from './pages/login-reg/CompanyReg'
 // import AdvertMidlware from './pages/adverts/create/AdvertMidlware';
 
+
 import AlertPage from './components/AlertPage';
 import Soon from "./pages/main/Soon";
 import UserPrivateCab from './pages/user/UserPrivateCab';
 import './style.scss';
 
 const App: React.FC = () => {
+
     const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
 
@@ -44,8 +46,10 @@ const App: React.FC = () => {
                     dispatch({ type: "AUTH", payload: true });
                     dispatch({ type: "USER", payload: data });
                 }
+            
             })
             .catch((error) => {
+                console.log('dev', error);
                 // if(error.response && error.response.data){
                 //     alert(`${error.response.data.message} - (${error.response.status})`);
                 // }else{
@@ -66,11 +70,12 @@ const App: React.FC = () => {
 
     return (
         <div className="App"> 
-            <BrowserRouter>
+            <BrowserRouter >
                 <Routes>
                     <Route path="/" element={<Layout />}>
                         <Route index element={<Home />} />
                         <Route path="/*" element={<Empty />} />
+                        <Route path="/404" element={<Empty />} />
                         <Route path="/ads/:adCategory" element={<AllAds />} />
                         <Route path="/ads-map/:adCategory" element={<AllMap />} />
                         <Route path="/ad-view/:adId" element={<AdView />} />

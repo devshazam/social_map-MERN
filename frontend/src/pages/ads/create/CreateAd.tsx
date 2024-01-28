@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+
+import React, { useState } from "react";
+import { useParams, useNavigate  } from "react-router-dom";
 
 import { Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
@@ -14,25 +15,29 @@ import Discounts from "./components/Discounts";
 import Events from "./components/Events";
 
 import globalParamsObject from "../../../parameters/mainAppParameterObject";
-import { redirect } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import Col from "react-bootstrap/Col";
 import Spinner from "react-bootstrap/Spinner";
 import Avito from "./components/Avito";
-// import './CreateAdMidlware.module.scss';
+import Real from "./components/Real";
 
 const CreateDiscount = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
-    const stateUser = useSelector((state: any) => state.user.user);
 
-    const { adCategory } = useParams<string>();
+// ALL Variabels
+    const { adCategory } = useParams<{adCategory?: string}>();
+    const stateUser = useSelector((state: any) => state.user.user);
 
     const [step, setStep] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(false);
     const [flag, setFlag] = useState<number>(1);
     const [createObject, setCreateObject] = useState<any>({});
+    
 
+
+    
     function changeCreateObject(agent1: any) {
         setCreateObject({ ...createObject, ...agent1 });
     }
@@ -46,7 +51,6 @@ const CreateDiscount = () => {
             setFlag(0);
             return;
         }
-
         setFlag(1);
         if(step === 0 && adCategory === '4'){
             setStep(step + 2);
@@ -83,11 +87,12 @@ const CreateDiscount = () => {
                 changeCreateObject={changeCreateObject}
                 createObject={createObject}
             />,
-            <Avito flag={flag}  changeCreateObject={changeCreateObject} createObject={createObject}/>
+            <Avito flag={flag}  changeCreateObject={changeCreateObject} createObject={createObject}/>,
+            <Real flag={flag}  changeCreateObject={changeCreateObject} createObject={createObject}/>,
         ],
     ];
 
-    let sendToServer = () => {
+    const sendToServer = () => {
         if (
             adCategory &&
             !globalParamsObject.main.checkAdCategory[+adCategory - 1][
@@ -120,7 +125,8 @@ const CreateDiscount = () => {
                     },
                 });
                 setTimeout(function () {
-                    window.location.replace("/user/user-ads-list");
+                    // window.location.replace("/user/user-ads-list");
+                    navigate(`/user/user-ads-list`); // <-- redirec
                 }, 800);
             })
             .catch((error: any) => {

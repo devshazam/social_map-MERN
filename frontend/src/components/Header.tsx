@@ -1,3 +1,5 @@
+import React from "react";
+
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -35,10 +37,10 @@ const Header = () => {
                             <Nav className="justify-content-end  pe-3 my-2 my-lg-0">
                                 
                                 <Nav.Link href="/ads/1" className="header_nav nav_sales_link">Скидки💥</Nav.Link>
-                                <Nav.Link href="/ads/2" className="header_nav nav_charity_link">Благотворительность</Nav.Link>
-                                <Nav.Link href="/ads/3" className="header_nav nav_events_link">Мероприятия</Nav.Link>
                                 <Nav.Link href="/ads/4" className="header_nav nav_avito_link">Объявления</Nav.Link>
-                                <Nav.Link href="/soon" className="header_nav nav_real_link">Недвижимость</Nav.Link>
+                                <Nav.Link href="/ads/5" className="header_nav nav_real_link">Недвижимость</Nav.Link>
+                                <Nav.Link href="/ads/3" className="header_nav nav_events_link">Мероприятия</Nav.Link>
+                                <Nav.Link href="/ads/2" className="header_nav nav_charity_link">Благотворительность</Nav.Link>
                                 {/* <NavDropdown
                                     title="Доска объявлений БУ"
                                     id="offcanvasNavbarDropdown-expand-lg"

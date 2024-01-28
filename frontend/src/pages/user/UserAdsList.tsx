@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import Col from "react-bootstrap/Col";
@@ -7,7 +7,7 @@ import Row from "react-bootstrap/Row";
 import Card from "react-bootstrap/Card";
 import Spinner from "react-bootstrap/Spinner";
 import Button from 'react-bootstrap/Button';
-
+import globalParamsObject from '../../parameters/mainAppParameterObject';
 import { fetchUserAdsList, deleteUserAdsList } from "../../api/discountAPI";
 // import {dimensionsToStyleObject} from '../../utils/helpFunctions'
 
@@ -93,6 +93,9 @@ const UserAdsList = () => {
                                                 <a href={"/ad-view/" + ad._id} style={{backgroundColor: '#cbcbcb'}}>
                                                     <div className="card-user_cab">
                                                         <div className="back_wrap_new">
+                                                            <p className={`ad_category_title ad_category_title_${globalParamsObject.main.adsCategoryNames[+ad.adCategory - 1]}`}>
+                                                                {ad && globalParamsObject.main.adsCategory[+ad.adCategory - 1]}
+                                                            </p>
                                                             <Card.Img className="card_img-user_cab"
                                                                 // style={ad.dimensions && {...dimensionsToStyleObject(JSON.parse(ad.dimensions))}}
                                                                 variant="top"

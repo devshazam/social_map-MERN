@@ -1,15 +1,14 @@
 import React from "react";
 
-
 import {Placemark} from "@pbe/react-yandex-maps";
 
 import {fspiralFromSameCoordinatesToYaMap} from '../../../../utils/helpFunctions'
 
 
-const CharityMap = (props: any) => {
+const AvitoMap = (props: any) => {
 
     // функция должно окрашивать метки в цвета в зависимости от длительности размещения, если старше 7 дней, то желтый или красный
-    let colorPoint = (props.mainDataObject.item.userId.role === "USER") ? 'blue' : 'red';
+    let colorPoint = (Math.ceil((new Date().getTime() - props.mainDataObject.item.currentTime) / 8.64e7) <= 2) ? 'red' : 'blue';
 
 
     return (
@@ -22,11 +21,13 @@ const CharityMap = (props: any) => {
                             iconOffset: fspiralFromSameCoordinatesToYaMap(props.mainDataObject.arrayCoordinates, props.mainDataObject.index, props.mainDataObject.item), // !!!!!!!!!!!!!!
                         }}
                         properties={{
-                            // iconContent: `${props.mainDataObject.item.cost}`, // пару символов помещается
+                            iconContent: `${props.mainDataObject.item.cost}р`, // пару символов помещается
                             hintContent: '<em>кликни меня</em>',
                             balloonContent: `<div class="my-balloon">
                                 <h4>${props.mainDataObject.item.name}</h4>
-                                <p>Забирайте бесплатно!</p>
+                                <p>
+                                    Цена: ${props.mainDataObject.item.cost}
+                                </p>
                                 <a href="/ad-view/${props.mainDataObject.item._id}">Посмотреть</a>
                                 </div>`,
                         }}
@@ -36,4 +37,4 @@ const CharityMap = (props: any) => {
     );
 };
 
-export default CharityMap;
+export default AvitoMap;

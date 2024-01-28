@@ -1,0 +1,14 @@
+# игнорировать папки
+build
+coverage
+node_modules/
+# игнорировать все файлы .HTML
+*.html
+# игнорировать .HTML в папке src
+src/*.html
+# игнорировать .HTML в папке src и во всех подпапка
+src/**/*.html
+
+.idea
+.DS_Store
+.vscode

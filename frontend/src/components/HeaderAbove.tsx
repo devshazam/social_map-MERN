@@ -1,3 +1,5 @@
+import React from "react";
+
 import './HeaderAbove.scss';
 import Container from "react-bootstrap/esm/Container";
 import Image from "react-bootstrap/Image";
@@ -54,6 +56,9 @@ const HeaderAbove = () => {
                                     <NavDropdown.Divider />
                                     <NavDropdown.Item href="/user/ads/create-ad/4">
                                         Создать Объявление
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item href="/user/ads/create-ad/5">
+                                        Создать Недвижимость
                                     </NavDropdown.Item>
                                     <NavDropdown.Item href="/user/ads/create-ad/2">
                                         Создать Благотворительность

@@ -21,14 +21,14 @@ app.use(express.json())
 app.use(express.static(path.resolve(__dirname, 'static')))
 app.use(fileUpload({}))
 
-// app.use(middlewareFunction) // пример использования посредника
+
+
+app.use('/api', router) 
+app.use(errorHandler)
 // function middlewareFunction(request, response, next){
 //     console.log("A cron job that runs every 2 seconds");
 //     next()
 //   }
-
-app.use('/api', router) 
-app.use(errorHandler)
 
 // исполнение по расписанию
 // cron.schedule(" */2 * * * * *", () => {

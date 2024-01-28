@@ -1,3 +1,4 @@
+import React from "react";
 
 import { Row } from "react-bootstrap";
 import Carousel from "react-bootstrap/Carousel";
@@ -8,6 +9,7 @@ import Image from "react-bootstrap/Image";
 import './Home.scss';
 
 export default function Home() {
+    console.log(12121212)
 
   
     return (
@@ -26,10 +28,7 @@ export default function Home() {
                             alt="First slide"
                         />
                         </a>
-                        {/* <Carousel.Caption>
-          <h3>Полиграфия в Волгограде!</h3>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-        </Carousel.Caption> */}
+
                     </Carousel.Item>
 
                     <Carousel.Item>
@@ -38,10 +37,7 @@ export default function Home() {
                             src="/files/main-banner/mediinaya_reklama.jpg"
                             alt="Second slide"
                         />
-                        {/* <Carousel.Caption>
-          <h3>Second slide label</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </Carousel.Caption> */}
+
                     </Carousel.Item>
                 </Carousel>
 
@@ -92,6 +88,9 @@ export default function Home() {
                         </a>
                     </Col> */}
                 </Row>
+
+                    <iframe className="youtube-video"  src="https://www.youtube.com/embed/RgECxaxUIb0?si=ajSKtrHoKWKY9VPm" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+                
                 <h1 style={{fontSize: '19px'}}>Первый агрегатор скидок и объявлений в Волгограде!</h1>
                 <p>Первый агрегатор скидок и объявлений в Волгограде это система поиска и систиматизации всех скидок, мероприятий, благотворительности и объявлений в городе! На страницах нашего сайта есть интерактивная карта на которой вы можете найти скидки, которые размещают для вас компании нашего города. Все скидки и объявления действуют до тех пор пока размещенны на сайте!
                     Каждый житель города (только жители города могут оставлять объявления) может оставить свое объявление о продаже или благотворительности (отдать бесплатно), за объявления о благотворительностью начисляются социальные баллы, которые позволят получать дополнительные скидки в магазинах родного города!

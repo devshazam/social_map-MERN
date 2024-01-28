@@ -11,6 +11,7 @@ const logError = (error: Error, info: ErrorInfo) => {
     })
     .catch((error:any) => {
         // если ошибка не запишется, то мы ее потеряли, а а= серверные ошибки пишутся на стороне сервера
+        console.log('dev', error);
     });
 
   };

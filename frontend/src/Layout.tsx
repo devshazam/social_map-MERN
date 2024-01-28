@@ -1,3 +1,4 @@
+import React from "react";
 
 import { Outlet } from "react-router-dom";
 import Header from "./components/Header";
@@ -6,7 +7,7 @@ import Footer from "./components/Footer";
 import HeaderAbove from "./components/HeaderAbove";
 
 
-export default function Layout() {
+const Layout: React.FC = () => {
     return (
         <>
             <HeaderAbove />
@@ -18,4 +19,6 @@ export default function Layout() {
  
         </>
     );
-}
+};
+
+export default Layout;

@@ -34,7 +34,7 @@ const AvitoForms = (props: any) => {
                         <option key={0} value={0}>
                             Все категории
                         </option>
-                        {globalParamsObject.avito.avitoCategory.map(
+                        {globalParamsObject.real.avitoCategory.map(
                             (item: any, index: any) => {
                                 return (
                                     <option key={index + 1} value={index + 1}>
@@ -68,7 +68,7 @@ const AvitoForms = (props: any) => {
                             <option key={0} value={0}>
                                 Все подкатегории
                             </option>
-                            {(props.filterObject.avitoCategory && Boolean(+props.filterObject.avitoCategory) )&& globalParamsObject.avito.avitoSubCategory[+props.filterObject.avitoCategory - 1].map(
+                            {(props.filterObject.avitoCategory && Boolean(+props.filterObject.avitoCategory) )&& globalParamsObject.real.avitoSubCategory[+props.filterObject.avitoCategory - 1].map(
                                 (item: any, index: any) => {
                                     return (
                                         <option key={index + 1} value={index + 1}>

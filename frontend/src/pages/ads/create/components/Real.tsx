@@ -10,7 +10,7 @@ import Select from "@mui/material/Select";
 
 import globalParamsObject from "../../../../parameters/mainAppParameterObject";
 
-const Avito = (props: any) => {
+const Discounts = (props: any) => {
     const [uniqObject, setUniqObject] = useState<any>({});
 
     useEffect(() => {
@@ -68,7 +68,7 @@ const Avito = (props: any) => {
                             })
                         }
                     >
-                        {globalParamsObject.avito.avitoCategory.map(
+                        {globalParamsObject.real.avitoCategory.map(
                             (item: any, index: any) => {
                                 return (
                                     <MenuItem key={index + 1} value={index + 1}>
@@ -107,7 +107,7 @@ const Avito = (props: any) => {
                                 })
                             }
                         >
-                                {props.createObject.avitoCategory && globalParamsObject.avito.avitoSubCategory[+props.createObject.avitoCategory - 1].map(
+                                {props.createObject.avitoCategory && globalParamsObject.real.avitoSubCategory[+props.createObject.avitoCategory - 1].map(
                                     (item: any, index: any) => {
                                         return (
                                             <MenuItem key={index + 1} value={index + 1}>
@@ -122,8 +122,8 @@ const Avito = (props: any) => {
                 }
 
             { (props.createObject.avitoCategory && props.createObject.avitoSubCategory) &&
-                globalParamsObject.avito.avitoParametrs[
-                    globalParamsObject.avito.avitoCategoryToParam[+props.createObject.avitoCategory - 1][+props.createObject.avitoSubCategory - 1]
+                globalParamsObject.real.avitoParametrs[
+                    globalParamsObject.real.avitoCategoryToParam[+props.createObject.avitoCategory - 1][+props.createObject.avitoSubCategory - 1]
                 ].map((item: any, index2: any) => {
                     return (
                         <Col xs={12} md={{ span: 6, offset: 3 }}  key={index2}>
@@ -177,4 +177,4 @@ const Avito = (props: any) => {
     );
 };
 
-export default Avito;
+export default Discounts;

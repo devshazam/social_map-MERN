@@ -1,5 +1,5 @@
 
-import { useState,  useRef, useEffect } from "react";
+import React, { useState,  useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import Row from "react-bootstrap/Row";
@@ -14,6 +14,7 @@ import Button from '@mui/material/Button';
 import DiscountsMapComp from './components/DiscountsMapComp';
 import CharityMap from './components/CharityMap';
 import EventMap from './components/EventMap';
+import RealMap from './components/RealMap';
 
 import { fetchDiscountByMap }from '../../../api/discountAPI';
 
@@ -67,7 +68,7 @@ const AllMap = () => {
     return (
         <>
             <Row className="mb-5">
-                { (adCategory === '1' || adCategory === '4') && <Button onClick={() => toggleDrawer(true)}>ОТКРЫТЬ ФИЛЬТРЫ</Button> }
+                { (adCategory === '1' || adCategory === '5') && <Button onClick={() => toggleDrawer(true)}>ОТКРЫТЬ ФИЛЬТРЫ</Button> }
 
                 <div style={{position: 'relative'}}>
                     {zoom < 12 && <div style={{display: 'flex', position: 'absolute', left: '0', top: '0', width: '100%', height: '100%', zIndex: '999'}}><p style={{fontSize: '50px', margin: 'auto', width: '80%', color: 'rgb(217 98 98 / 75%);', fontWeight: '100', textAlign: 'center' }}>Для появления объявлений увеличьте (приблизьте) карту!</p></div>}
@@ -97,6 +98,7 @@ const AllMap = () => {
                                                         { adCategory === '1' && <DiscountsMapComp  mainDataObject={{item, arrayCoordinates, index}} /> }
                                                         { adCategory === '2' && <CharityMap mainDataObject={{item, arrayCoordinates, index}} /> }
                                                         { adCategory === '3' && <EventMap mainDataObject={{item, arrayCoordinates, index}} /> }
+                                                        { adCategory === '5' && <RealMap mainDataObject={{item, arrayCoordinates, index}} /> }
                                                     </span>
                                                 );
                                             })
@@ -109,7 +111,7 @@ const AllMap = () => {
                 { adCategory === '1' && <p>* Обозначение цветов маркеров: <span style={{color:'white', backgroundColor: 'red'}}>Красный:</span> срок объявления до 7 дней; <span style={{color:'white', backgroundColor: 'yellow'}}>Желтый:</span> срок объявления от 7 до 30 дней; <span style={{color:'white', backgroundColor: 'blue'}}>Синий:</span> срок объявления более 30 дней!</p>}
                 { adCategory === '2' && <p>* Обозначение цветов маркеров: <span style={{color:'white', backgroundColor: 'red'}}>Красный:</span> объявление подано компанией; <span style={{color:'white', backgroundColor: 'blue'}}>Синий:</span> объявление подано персоной!</p>}
                 { adCategory === '3' && <p>* Обозначение цветов маркеров: <span style={{color:'white', backgroundColor: 'red'}}>Красный:</span> Мероприятие уже идет; <span style={{color:'white', backgroundColor: 'blue'}}>Синий:</span> мероприятие начнется через время!</p>}
-                { adCategory === '4' && <p>* Обозначение цветов маркеров: <span style={{color:'white', backgroundColor: 'red'}}>Красный:</span> срок объявления до 2 дней; <span style={{color:'white', backgroundColor: 'blue'}}>Синий:</span> срок объявления более 2 дней!</p>}
+                { adCategory === '5' && <p>* Обозначение цветов маркеров: <span style={{color:'white', backgroundColor: 'red'}}>Красный:</span> срок объявления до 2 дней; <span style={{color:'white', backgroundColor: 'blue'}}>Синий:</span> срок объявления более 2 дней!</p>}
             </Row>
             
             
@@ -139,17 +141,17 @@ const AllMap = () => {
                         </Select>
                     </FormControl>}
                     
-                    {adCategory === '4' && 
+                    {adCategory === '5' && 
                         <>
                             <FormControl fullWidth >
-                                <InputLabel  >Категория авито:</InputLabel>
+                                <InputLabel  >Категория недвижимости:</InputLabel>
                                 <Select
                                     value={mainObject.avitoCategory || ''}
                                     onChange={(e: any) => setMainObject({...mainObject, avitoCategory: e.target.value})}
                                 >
                                     <MenuItem key={0} value={0}>Все категории</MenuItem>
                                     { 
-                                        globalParamsObject.avito.avitoCategory.map((item:any, index:any) => {
+                                        globalParamsObject.real.avitoCategory.map((item:any, index:any) => {
                                             return(
                                                 <MenuItem key={index + 1} value={index + 1}>{item}</MenuItem>
                                             )
@@ -157,7 +159,7 @@ const AllMap = () => {
                                     }
                                 </Select>
                             </FormControl>
-                            { (mainObject.avitoCategory && Boolean(+mainObject.avitoCategory) ) && 
+                            { (Boolean(mainObject.avitoCategory) && Boolean(+mainObject.avitoCategory) ) && 
                                 <FormControl fullWidth >
                                     <InputLabel  >Подкатегория авито:</InputLabel>
                                     <Select
@@ -165,7 +167,7 @@ const AllMap = () => {
                                         onChange={(e: any) => setMainObject({...mainObject, avitoSubCategory: e.target.value})}
                                     >
                                         <MenuItem key={0} value={0}>Все категории</MenuItem>
-                                        {(mainObject.avitoCategory && Boolean(+mainObject.avitoCategory) )&& globalParamsObject.avito.avitoSubCategory[+mainObject.avitoCategory - 1].map(
+                                        {(mainObject.avitoCategory && Boolean(+mainObject.avitoCategory) )&& globalParamsObject.real.avitoSubCategory[+mainObject.avitoCategory - 1].map(
                                             (item: any, index: any) => {
                                                 return (
                                                     <MenuItem key={index + 1} value={index + 1}>{item}</MenuItem>

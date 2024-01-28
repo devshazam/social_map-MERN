@@ -133,7 +133,7 @@ class DiscountController {
             const funcAgent1 = await Discount.find({userId}) // WHERE sport: Tennis 
             .skip(offset).limit(limit) // skip тоже самое что offset
             .sort({ createdAt: -1 })
-            .select("name image dimensions")
+            .select("name image dimensions adCategory")
             .exec();
             return res.json(funcAgent1);
         } catch (error) {

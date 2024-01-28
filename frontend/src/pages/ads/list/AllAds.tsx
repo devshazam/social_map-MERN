@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
 import Col from "react-bootstrap/Col";
 import Pagination from "react-bootstrap/Pagination";
 import Row from "react-bootstrap/Row";
@@ -12,13 +13,16 @@ import DistrictForm from "./components/DistrictForm";
 import EventsForms from "./components/EventsForms";
 import Accordion from "react-bootstrap/Accordion";
 import AvitoForms from "./components/AvitoForms";
+import RealForms from "./components/RealForms";
 import { fetchAdsList } from "../../../api/discountAPI";
 import {useDispatch} from "react-redux";
 import "./AllAds.scss";
 
 const AllDiscounts = () => {
+    // const navigate = useNavigate();
     const dispatch = useDispatch();
     const { adCategory } = useParams();
+
 
     const [spiner, setSpiner] = useState(false);
     const [adsList, setAdsList] = useState([]);
@@ -42,6 +46,7 @@ const AllDiscounts = () => {
             .then((data: any) => {
                 setAdsList(data);
                 setCount(data.length);
+    
             })
             .catch((error: any) => {
                 if(error.response && error.response.data) {
@@ -98,6 +103,12 @@ const AllDiscounts = () => {
                         filterObject={filterObject}
                         />
                         )}
+                    {adCategory === "5" && (
+                        <RealForms
+                        changefilterObject={changefilterObject}
+                        filterObject={filterObject}
+                        />
+                        )}
                     <DistrictForm
                             changefilterObject={changefilterObject}
                             filterObject={filterObject}
@@ -124,6 +135,12 @@ const AllDiscounts = () => {
                                     )}
                                 {adCategory === "4" && (
                                     <AvitoForms
+                                    changefilterObject={changefilterObject}
+                                    filterObject={filterObject}
+                                    />
+                                    )}
+                                {adCategory === "5" && (
+                                    <RealForms
                                     changefilterObject={changefilterObject}
                                     filterObject={filterObject}
                                     />
