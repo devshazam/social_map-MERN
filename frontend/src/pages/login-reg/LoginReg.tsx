@@ -10,7 +10,7 @@ import LoginPage from "../user/user-components/LoginPage";
 import RegPage from "../user/user-components/RegPage";
 import { useDispatch } from "react-redux";
 
-import "./LoginReg.scss";
+import "./LoginRegStyle.scss";
 
 declare global {
     interface Window {

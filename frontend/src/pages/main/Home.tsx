@@ -6,7 +6,7 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 
-import './Home.scss';
+import './HomeStyle.scss';
 
 export default function Home() {
     console.log(12121212)
