@@ -1,4 +1,3 @@
-# Update_Deploy
-    - $ ssh root@92.53.115.66
-    Простое обновление:
-        cd /apps/client && . ./deploy.sh
+# Social map 
+It's project for placing social events on interactive map on web.
+In this project I use MERN stack.
